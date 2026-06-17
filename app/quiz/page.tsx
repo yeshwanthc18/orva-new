@@ -11,7 +11,7 @@ import { useLenis } from "@/hooks/useLenis";
 import { COLORS, QUIZ_QUESTIONS, QUIZ_PROFILES } from "@/lib/constants";
 import { TextGenerateEffect } from "@/components/ui/TextGenerateEffect";
 import { Spotlight } from "@/components/ui/Spotlight";
-import { MovingBorderLink, MovingBorderButton } from "@/components/ui/MovingBorderButton";
+import { Button } from "@/components/ui/Button";
 import { FloatingGeometry } from "@/components/ui/FloatingGeometry";
 import { GridPattern } from "@/components/ui/GridPattern";
 
@@ -267,9 +267,7 @@ export default function QuizPage() {
 
                 {/* CTA */}
                 <div className="text-center space-y-6">
-                  <MovingBorderLink href="/contact" containerClassName="h-14" duration={4000}>
-                    Talk to Daniela about your child&apos;s profile
-                  </MovingBorderLink>
+                  <Button href="/contact" variant="primary" size="lg">Talk to Daniela about your child&apos;s profile</Button>
                   <div>
                     <button
                       onClick={resetQuiz}

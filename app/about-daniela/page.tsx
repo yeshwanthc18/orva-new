@@ -9,7 +9,7 @@ import Trail from "@/components/Trail";
 import { useLenis } from "@/hooks/useLenis";
 import { COLORS, STUDENT_UNIVERSITIES } from "@/lib/constants";
 import { TextGenerateEffect } from "@/components/ui/TextGenerateEffect";
-import { MovingBorderLink } from "@/components/ui/MovingBorderButton";
+import { Button } from "@/components/ui/Button";
 import { InfiniteMovingCards } from "@/components/ui/InfiniteMovingCards";
 import { FloatingGeometry } from "@/components/ui/FloatingGeometry";
 import { GridPattern } from "@/components/ui/GridPattern";
@@ -124,9 +124,7 @@ export default function AboutDanielaPage() {
                   </p>
                 </div>
 
-                <MovingBorderLink href="/contact" containerClassName="h-14" duration={4000}>
-                  Talk to Daniela
-                </MovingBorderLink>
+                <Button href="/contact" variant="primary" size="lg">Talk to Daniela</Button>
               </motion.div>
             </div>
           </div>
@@ -242,9 +240,10 @@ export default function AboutDanielaPage() {
               <p className="text-lg mb-8 leading-relaxed text-white/80">
                 Connect with Daniela for a personalized consultation.
               </p>
-              <MovingBorderLink href="/contact" containerClassName="h-14" duration={4000}>
-                Talk to Daniela
-              </MovingBorderLink>
+              <div className="flex flex-wrap gap-4 justify-center">
+                <Button href="/contact" variant="primary" size="lg">Talk to Daniela</Button>
+                <Button href="/stories" variant="secondary" size="lg">Read Stories</Button>
+              </div>
             </motion.div>
           </div>
         </section>

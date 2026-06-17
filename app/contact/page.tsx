@@ -10,7 +10,7 @@ import Trail from "@/components/Trail";
 import { useLenis } from "@/hooks/useLenis";
 import { COLORS, CONTACT_INFO } from "@/lib/constants";
 import { TextGenerateEffect } from "@/components/ui/TextGenerateEffect";
-import { MovingBorderButton } from "@/components/ui/MovingBorderButton";
+import { Button } from "@/components/ui/Button";
 import { FloatingGeometry } from "@/components/ui/FloatingGeometry";
 import { GridPattern } from "@/components/ui/GridPattern";
 
@@ -182,17 +182,7 @@ export default function ContactPage() {
                     </motion.div>
                   )}
 
-                  <MovingBorderButton
-                    containerClassName="h-14 w-full md:w-auto"
-                    duration={4000}
-                    as="button"
-                    onClick={() => {
-                      const formEl = document.querySelector('form') as HTMLFormElement;
-                      if (formEl) formEl.requestSubmit();
-                    }}
-                  >
-                    Start the Conversation
-                  </MovingBorderButton>
+                  <Button type="submit" variant="primary" size="lg">Start the Conversation</Button>
 
                   <p className="text-xs" style={{ color: COLORS.textMuted }}>
                     We read every message personally. No spam, ever.

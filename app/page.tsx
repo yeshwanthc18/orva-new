@@ -13,7 +13,7 @@ import { useLenis } from "@/hooks/useLenis";
 import { InfiniteMovingCards } from "@/components/ui/InfiniteMovingCards";
 import { TextGenerateEffect } from "@/components/ui/TextGenerateEffect";
 import { LampEffect } from "@/components/ui/LampEffect";
-import { MovingBorderLink } from "@/components/ui/MovingBorderButton";
+import { Button } from "@/components/ui/Button";
 import { BentoGrid, BentoGridItem } from "@/components/ui/BentoGrid";
 import { Spotlight } from "@/components/ui/Spotlight";
 import { FloatingGeometry } from "@/components/ui/FloatingGeometry";
@@ -115,12 +115,14 @@ export default function Page() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.7, delay: 0.7 }}
               >
-                <MovingBorderLink href="/contact" containerClassName="h-14" duration={4000}>
-                  Talk to Daniela
-                  <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </MovingBorderLink>
+                <div className="flex flex-wrap gap-3">
+                  <Button href="/contact" variant="primary" size="lg">
+                    Talk to Daniela
+                  </Button>
+                  <Button href="/why-orva" variant="secondary" size="lg">
+                    Why Orva
+                  </Button>
+                </div>
               </motion.div>
             </div>
 
@@ -241,12 +243,9 @@ export default function Page() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.7, delay: 0.7 }}
               >
-                <MovingBorderLink href="/contact" containerClassName="h-12" duration={4000}>
+                <Button href="/contact" variant="primary" size="lg">
                   Talk to ORVA
-                  <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </MovingBorderLink>
+                </Button>
               </motion.div>
             </div>
           </div>
@@ -453,12 +452,9 @@ export default function Page() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.7, delay: 0.6 }}
                 >
-                  <MovingBorderLink href="/contact" containerClassName="h-14" duration={4000}>
+                  <Button href="/contact" variant="primary" size="lg">
                     Talk to ORVA
-                    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </MovingBorderLink>
+                  </Button>
                 </motion.div>
               </div>
 
@@ -526,14 +522,14 @@ export default function Page() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.15 }}
-              className="flex justify-center"
+              className="flex flex-wrap gap-4 justify-center"
             >
-              <MovingBorderLink href="/contact" containerClassName="h-14" duration={3000}>
+              <Button href="/contact" variant="primary" size="lg">
                 Talk to ORVA Strategist
-                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </MovingBorderLink>
+              </Button>
+              <Button href="/quiz" variant="secondary" size="lg">
+                Take the Quiz
+              </Button>
             </motion.div>
           </div>
         </motion.section>

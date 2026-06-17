@@ -10,7 +10,7 @@ import Trail from "@/components/Trail";
 import { useLenis } from "@/hooks/useLenis";
 import { COLORS, STUDENT_STORIES } from "@/lib/constants";
 import { TextGenerateEffect } from "@/components/ui/TextGenerateEffect";
-import { MovingBorderLink } from "@/components/ui/MovingBorderButton";
+import { Button } from "@/components/ui/Button";
 import { FloatingGeometry } from "@/components/ui/FloatingGeometry";
 import { GridPattern } from "@/components/ui/GridPattern";
 import { ScrollRevealStrip } from "@/components/ui/ScrollAnimations";
@@ -120,9 +120,10 @@ export default function StoriesPage() {
               <p className="text-lg mb-8 leading-relaxed" style={{ color: COLORS.textLight }}>
                 Every ambitious student deserves guidance from advisors who understand not just universities, but the career and life that follows.
               </p>
-              <MovingBorderLink href="/contact" containerClassName="h-14" duration={4000}>
-                Talk to Orva
-              </MovingBorderLink>
+              <div className="flex flex-wrap gap-4 justify-center">
+                <Button href="/contact" variant="primary" size="lg">Talk to Orva</Button>
+                <Button href="/quiz" variant="secondary" size="lg">Find Your Fit</Button>
+              </div>
             </motion.div>
           </div>
         </section>

@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -9,7 +10,7 @@ import Trail from "@/components/Trail";
 import { useLenis } from "@/hooks/useLenis";
 import { COLORS, WHY_ORVA_POINTS, IS_ORVA_RIGHT_PAIN_POINTS, KEY_NUMBERS } from "@/lib/constants";
 import { TextGenerateEffect } from "@/components/ui/TextGenerateEffect";
-import { MovingBorderLink } from "@/components/ui/MovingBorderButton";
+import { Button } from "@/components/ui/Button";
 import { Spotlight } from "@/components/ui/Spotlight";
 import { FloatingGeometry } from "@/components/ui/FloatingGeometry";
 import { GridPattern } from "@/components/ui/GridPattern";
@@ -24,7 +25,7 @@ export default function WhyOrvaPage() {
       <Trail />
       <Navbar />
       <main className="pt-16">
-        {/* Hero Section with background image */}
+        {/* Hero Section */}
         <section className="relative min-h-[70vh] flex items-center overflow-hidden">
           <div className="absolute inset-0">
             <Image src="/images/img01.jpeg" alt="Students at university" fill className="object-cover" sizes="100vw" priority />
@@ -32,11 +33,7 @@ export default function WhyOrvaPage() {
           </div>
           <FloatingGeometry variant="dark" density="sparse" />
           <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-12 py-20 md:py-32">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
+            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
               <span className="label text-white/80 mb-6">Why Orva</span>
               <TextGenerateEffect
                 words="Six things we do best."
@@ -49,11 +46,15 @@ export default function WhyOrvaPage() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.5 }}
-                className="text-lg md:text-xl leading-relaxed max-w-2xl"
+                className="text-lg md:text-xl leading-relaxed max-w-2xl mb-8"
                 style={{ color: "rgba(251,249,246,0.7)" }}
               >
                 We are a boutique consultancy dedicated to helping families in the GCC navigate the world&apos;s best universities. Not rankings, not templates. Genuine guidance built for your child.
               </motion.p>
+              <div className="flex flex-wrap gap-4">
+                <Button href="/contact" variant="primary" size="lg">Talk to Orva</Button>
+                <Button href="/how-it-works" variant="secondary" size="lg">See How It Works</Button>
+              </div>
             </motion.div>
           </div>
         </section>
@@ -67,49 +68,33 @@ export default function WhyOrvaPage() {
           </ScrollRevealStrip>
         </div>
 
-        {/* Six Points Section — Cards with imagery */}
-        <section className="relative py-20 md:py-32 px-6 md:px-12" style={{ background: COLORS.warmCream }}>
+        {/* Six Points — Scroll-based stacking cards */}
+        <section className="relative" style={{ background: COLORS.warmCream }}>
           <GridPattern variant="light" />
-          <div className="relative z-10 max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {WHY_ORVA_POINTS.map((point, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: idx * 0.08 }}
-                  className="group relative p-8 rounded-2xl bg-white border border-black/[0.06] hover:border-red-300/60 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden"
-                >
-                  {/* Animated corner accent */}
-                  <div className="absolute -top-6 -right-6 w-16 h-16 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <svg viewBox="0 0 60 60" className="w-full h-full animate-spin-slow">
-                      <circle cx="30" cy="30" r="25" fill="none" stroke="rgba(213,30,32,0.1)" strokeWidth="0.5" strokeDasharray="4 6" />
-                    </svg>
-                  </div>
-                  {/* Subtle background pattern */}
-                  <div className="absolute top-0 right-0 w-24 h-24 opacity-[0.04] group-hover:opacity-[0.08] transition-opacity">
-                    <Image src={`/images/img${String(idx + 8).padStart(2, '0')}.jpeg`} alt="" fill className="object-cover rounded-2xl" sizes="96px" />
-                  </div>
-                  <div className="relative z-10">
-                    <div className="flex items-center gap-4 mb-4">
-                      <span className="text-4xl font-black" style={{ color: COLORS.primary }}>{point.number}</span>
-                    </div>
-                    <h3 className="text-xl font-bold mb-3" style={{ color: COLORS.textDark }}>{point.title}</h3>
-                    <p className="text-sm leading-relaxed" style={{ color: COLORS.textLight }}>{point.description}</p>
-                  </div>
-                </motion.div>
-              ))}
+          <div className="relative z-10">
+            <div className="max-w-4xl mx-auto px-6 md:px-12 pt-20 md:pt-28 pb-8">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="text-center mb-4"
+              >
+                <span className="label mb-4">What Sets Us Apart</span>
+                <h2 className="text-3xl md:text-5xl font-bold leading-tight mt-4" style={{ color: COLORS.textDark }}>
+                  Six reasons families choose Orva.
+                </h2>
+              </motion.div>
             </div>
+            <StackingSection cards={WHY_ORVA_POINTS} />
           </div>
         </section>
 
-        {/* Is ORVA Right For You — Dark section with image */}
+        {/* Is ORVA Right For You */}
         <section className="relative overflow-hidden noise-bg" style={{ background: COLORS.deepBlack }}>
           <Spotlight fill="#D51E20" />
           <FloatingGeometry variant="dark" density="normal" />
           <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-0 items-center relative z-10">
-            {/* Content */}
             <div className="lg:col-span-3 px-6 md:px-12 py-20 md:py-28">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
@@ -155,13 +140,13 @@ export default function WhyOrvaPage() {
                 <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(251,249,246,0.8)" }}>
                   Orva is boutique by choice. Every family receives genuinely personalised guidance — from advisors who represent the world&apos;s best universities and understand what it takes to get there.
                 </p>
-                <MovingBorderLink href="/contact" containerClassName="h-12" duration={4000}>
-                  Talk to ORVA
-                </MovingBorderLink>
+                <div className="flex flex-wrap gap-3">
+                  <Button href="/contact" variant="primary" size="md">Talk to ORVA</Button>
+                  <Button href="/quiz" variant="secondary" size="md">Take the Quiz</Button>
+                </div>
               </motion.div>
             </div>
 
-            {/* Side Image */}
             <motion.div
               initial={{ opacity: 0, x: 40 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -171,7 +156,6 @@ export default function WhyOrvaPage() {
             >
               <Image src="/images/img03.jpeg" alt="Family guidance" fill className="object-cover" sizes="40vw" />
               <div className="absolute inset-0 bg-gradient-to-l from-transparent to-[#0F0F0F]" />
-              {/* Decorative rotating ring on image */}
               <div className="absolute top-10 right-10 w-32 h-32 animate-spin-slow opacity-20">
                 <svg viewBox="0 0 100 100" className="w-full h-full">
                   <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(213,30,32,0.6)" strokeWidth="0.5" strokeDasharray="4 8" />
@@ -181,7 +165,7 @@ export default function WhyOrvaPage() {
           </div>
         </section>
 
-        {/* Key Numbers Section */}
+        {/* Key Numbers */}
         <section className="relative py-20 md:py-28 px-6 md:px-12 overflow-hidden" style={{ background: COLORS.warmSand }}>
           <GridPattern variant="light" />
           <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
@@ -196,7 +180,7 @@ export default function WhyOrvaPage() {
               className="text-center mb-16"
             >
               <span className="label mb-6">By The Numbers</span>
-              <h2 className="text-3xl md:text-5xl font-bold leading-tight" style={{ color: COLORS.textDark }}>
+              <h2 className="text-3xl md:text-5xl font-bold leading-tight mt-4" style={{ color: COLORS.textDark }}>
                 The proof is in the outcomes.
               </h2>
             </motion.div>
@@ -219,7 +203,7 @@ export default function WhyOrvaPage() {
           </div>
         </section>
 
-        {/* Pull Quote with background */}
+        {/* Pull Quote */}
         <section className="relative py-20 md:py-32 overflow-hidden">
           <div className="absolute inset-0">
             <Image src="/images/img12.jpeg" alt="" fill className="object-cover" sizes="100vw" />
@@ -236,7 +220,8 @@ export default function WhyOrvaPage() {
               <blockquote className="text-2xl md:text-4xl font-bold text-white mb-8 leading-tight tracking-tight">
                 We are ambitious for every child we advise. But what drives us is simple: we want them to thrive — at the world&apos;s best universities, and in the life that follows.
               </blockquote>
-              <p className="text-lg text-white/80">— ORVA, Founder</p>
+              <p className="text-lg text-white/80 mb-10">— ORVA, Founder</p>
+              <Button href="/about-daniela" variant="primary" size="lg">Meet Daniela</Button>
             </motion.div>
           </div>
         </section>
@@ -245,7 +230,6 @@ export default function WhyOrvaPage() {
         <section className="relative overflow-hidden" style={{ background: COLORS.warmCream }}>
           <FloatingGeometry variant="light" density="sparse" />
           <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-0 items-center">
-            {/* Image */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -255,7 +239,6 @@ export default function WhyOrvaPage() {
             >
               <Image src="/images/img16.jpeg" alt="Future careers" fill className="object-cover" sizes="50vw" />
               <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#FBF9F6]/60" />
-              {/* Floating decorative element */}
               <div className="absolute bottom-12 left-12 w-20 h-20 animate-float">
                 <svg viewBox="0 0 80 80" className="w-full h-full">
                   <rect x="10" y="10" width="60" height="60" fill="none" stroke="rgba(213,30,32,0.3)" strokeWidth="0.5" rx="8" transform="rotate(15 40 40)" />
@@ -263,7 +246,6 @@ export default function WhyOrvaPage() {
               </div>
             </motion.div>
 
-            {/* Content */}
             <div className="px-8 md:px-16 py-20 md:py-28">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
@@ -283,9 +265,10 @@ export default function WhyOrvaPage() {
                     Choosing the right university is important. Choosing the right future is everything.
                   </p>
                 </div>
-                <MovingBorderLink href="/contact" containerClassName="h-14" duration={4000}>
-                  Talk to ORVA
-                </MovingBorderLink>
+                <div className="flex flex-wrap gap-3">
+                  <Button href="/contact" variant="primary" size="lg">Talk to ORVA</Button>
+                  <Button href="/how-it-works" variant="secondary" size="lg">Our Process</Button>
+                </div>
               </motion.div>
             </div>
           </div>
@@ -293,5 +276,73 @@ export default function WhyOrvaPage() {
       </main>
       <Footer />
     </>
+  );
+}
+
+function StackingSection({ cards }: { cards: typeof WHY_ORVA_POINTS }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
+
+  return (
+    <div ref={containerRef} className="relative" style={{ height: `${(cards.length + 1) * 50}vh` }}>
+      <div className="sticky top-20 h-[80vh] flex items-center justify-center overflow-hidden">
+        <div className="relative w-full max-w-3xl mx-auto px-6 h-[400px]">
+          {cards.map((card, idx) => (
+            <StackCard key={card.number} card={card} index={idx} total={cards.length} progress={scrollYProgress} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function StackCard({
+  card,
+  index,
+  total,
+  progress,
+}: {
+  card: (typeof WHY_ORVA_POINTS)[0];
+  index: number;
+  total: number;
+  progress: ReturnType<typeof useScroll>["scrollYProgress"];
+}) {
+  const start = index / total;
+  const end = (index + 0.8) / total;
+
+  const opacity = useTransform(progress, [start, start + 0.03, end, end + 0.05], [0, 1, 1, index === total - 1 ? 1 : 0.4]);
+  const scale = useTransform(progress, [start, start + 0.05], [0.9, 1]);
+  const y = useTransform(progress, [start, start + 0.06], [80, index * 8]);
+  const rotateX = useTransform(progress, [start, start + 0.06], [8, 0]);
+
+  return (
+    <motion.div
+      style={{
+        opacity,
+        scale,
+        y,
+        rotateX,
+        position: "absolute",
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: index,
+        transformOrigin: "center bottom",
+      }}
+      className="bg-white rounded-2xl border border-black/[0.06] p-7 md:p-9 shadow-[0_4px_32px_rgba(0,0,0,0.06)]"
+    >
+      <div className="flex items-start gap-5 md:gap-7">
+        <div className="flex-shrink-0 w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-[#D51E20] via-[#F45104] to-[#FA8322] flex items-center justify-center shadow-lg">
+          <span className="text-white text-lg md:text-xl font-black">{card.number}</span>
+        </div>
+        <div className="flex-1 min-w-0">
+          <h3 className="text-lg md:text-2xl font-bold mb-2" style={{ color: COLORS.textDark }}>{card.title}</h3>
+          <p className="text-sm md:text-base leading-relaxed" style={{ color: COLORS.textLight }}>{card.description}</p>
+        </div>
+      </div>
+    </motion.div>
   );
 }
