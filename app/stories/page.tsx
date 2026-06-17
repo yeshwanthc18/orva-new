@@ -9,6 +9,9 @@ import Cursor from "@/components/Cursor";
 import Trail from "@/components/Trail";
 import { useLenis } from "@/hooks/useLenis";
 import { COLORS, STUDENT_STORIES } from "@/lib/constants";
+import { LampEffect } from "@/components/ui/LampEffect";
+import { TextGenerateEffect } from "@/components/ui/TextGenerateEffect";
+import { MovingBorderLink } from "@/components/ui/MovingBorderButton";
 
 export default function StoriesPage() {
   useLenis();
@@ -20,36 +23,33 @@ export default function StoriesPage() {
       <Navbar />
       <main className="pt-16">
         {/* Hero Section */}
-        <section
-          className="relative py-20 md:py-32 px-6 md:px-12"
-          style={{
-            background: `linear-gradient(135deg, ${COLORS.primary} 0%, ${COLORS.primaryDark} 100%)`,
-          }}
-        >
-          <div className="max-w-4xl mx-auto">
+        <LampEffect color="#D51E20">
+          <div className="max-w-4xl mx-auto px-6 md:px-12 pt-20 md:pt-32 pb-20 md:pb-40">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <div className="flex items-center gap-3 mb-6">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-50 bg-white"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
-                </span>
-                <span className="text-[11px] font-bold tracking-[0.35em] uppercase text-white/80">
-                  Real stories
-                </span>
-              </div>
-              <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
-                Real journeys. Real outcomes.
-              </h1>
-              <p className="text-lg md:text-xl text-white/70 leading-relaxed max-w-2xl">
+              <span className="label text-white/80 mb-6">Real stories</span>
+              <TextGenerateEffect
+                words="Real journeys. Real outcomes."
+                className="text-[clamp(40px,7vw,72px)] leading-[1.1] tracking-tight mb-8"
+                style={{ color: COLORS.warmCream }}
+                filter
+                duration={0.5}
+              />
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.5 }}
+                className="text-lg md:text-xl leading-relaxed max-w-2xl"
+                style={{ color: "rgba(251,249,246,0.7)" }}
+              >
                 Every child&apos;s journey with Orva is different. What they share is this: the right decision, made with confidence.
-              </p>
+              </motion.p>
             </motion.div>
           </div>
-        </section>
+        </LampEffect>
 
         {/* Student Stories Section */}
         <section className="relative py-20 md:py-32 px-6 md:px-12" style={{ background: COLORS.warmCream }}>
@@ -63,7 +63,36 @@ export default function StoriesPage() {
         </section>
 
         {/* Quote Strip Section */}
-        <QuoteSection />
+        <LampEffect color="#D51E20">
+          <div className="max-w-4xl mx-auto px-6 md:px-12 py-20 md:py-32 text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <svg
+                width="48"
+                height="48"
+                viewBox="0 0 48 48"
+                fill="none"
+                className="mx-auto mb-8 opacity-40"
+              >
+                <path
+                  d="M12 32c0-5.333 2.667-10.667 8-14.667C14.667 20 12 24 12 28c0 4 2 8 6 10-2-1-4-4-6-6zm24 0c0-5.333 2.667-10.667 8-14.667-5.333 2.667-8 7-8 11c0 4 2 8 6 10-2-1-4-4-6-6z"
+                  fill="currentColor"
+                  className="text-white"
+                />
+              </svg>
+              <blockquote className="text-2xl md:text-4xl font-light text-white mb-8 leading-relaxed">
+                &ldquo;We are ambitious for every child we advise. But what drives us is simple: we want them to thrive — at the world&apos;s best universities, and in the life that follows.&rdquo;
+              </blockquote>
+              <p className="text-lg text-white/80 font-semibold tracking-wide">
+                — ORVA, Founder
+              </p>
+            </motion.div>
+          </div>
+        </LampEffect>
 
         {/* CTA Section */}
         <section className="relative py-20 md:py-28 px-6 md:px-12" style={{ background: COLORS.warmSand }}>
@@ -71,43 +100,18 @@ export default function StoriesPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
-              <h2
-                className="text-3xl md:text-5xl font-bold mb-6 leading-tight"
-                style={{ color: COLORS.textDark }}
-              >
+              <h2 className="text-3xl md:text-5xl font-bold mb-6 leading-tight" style={{ color: COLORS.textDark }}>
                 Your story could be next
               </h2>
-              <p
-                className="text-lg mb-8 leading-relaxed"
-                style={{ color: COLORS.textLight }}
-              >
+              <p className="text-lg mb-8 leading-relaxed" style={{ color: COLORS.textLight }}>
                 Every ambitious student deserves guidance from advisors who understand not just universities, but the career and life that follows.
               </p>
-              <a
-                href="/contact"
-                className="inline-flex items-center gap-3 px-8 py-4 text-white font-bold text-sm tracking-wide uppercase rounded-full hover:opacity-90 transition-opacity duration-200"
-                style={{
-                  background: `linear-gradient(135deg, ${COLORS.primary}, #F45104)`,
-                }}
-              >
+              <MovingBorderLink href="/contact" containerClassName="h-14" duration={4000}>
                 Talk to Orva
-                <svg
-                  width="16"
-                  height="16"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2.5}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                  />
-                </svg>
-              </a>
+              </MovingBorderLink>
             </motion.div>
           </div>
         </section>
@@ -124,9 +128,8 @@ interface StoryCardProps {
 
 function StoryCard({ story, index }: StoryCardProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: false, amount: 0.3 });
+  const isInView = useInView(ref, { once: true, amount: 0.3 });
 
-  // Parallax effect for image
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
@@ -142,55 +145,39 @@ function StoryCard({ story, index }: StoryCardProps) {
       ref={ref}
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
       transition={{ duration: 0.6 }}
       className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center"
     >
-      {/* Image on the left for even indices */}
       {isEvenIndex && (
         <div className="order-2 md:order-1">
           <StoryImage story={story} imageY={imageY} imageScale={imageScale} />
         </div>
       )}
 
-      {/* Story content */}
       <div className={`order-1 ${isEvenIndex ? "md:order-2" : "order-1"}`}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="h-full flex flex-col justify-center"
+          className="h-full flex flex-col justify-center p-6 md:p-8 rounded-2xl bg-white border border-black/[0.06] hover:border-red-300/50 hover:shadow-lg transition-all duration-300"
         >
-          {/* Header */}
           <div className="mb-6">
-            <h3
-              className="text-xs md:text-sm font-bold tracking-[0.15em] uppercase mb-2"
-              style={{ color: COLORS.primary }}
-            >
-              {story.name} · {story.subject} · {story.university}
+            <h3 className="text-xs md:text-sm font-bold tracking-[0.15em] uppercase mb-2" style={{ color: COLORS.primary }}>
+              {story.name} &middot; {story.subject} &middot; {story.university}
             </h3>
-            <p
-              className="text-sm md:text-base font-medium"
-              style={{ color: COLORS.textMuted }}
-            >
-              {story.location} · {story.tag}
+            <p className="text-sm md:text-base font-medium" style={{ color: COLORS.textMuted }}>
+              {story.location} &middot; {story.tag}
             </p>
           </div>
 
-          {/* Divider */}
-          <div
-            className="w-12 h-1 mb-6"
-            style={{ background: COLORS.primary }}
-          />
+          <div className="w-12 h-1 mb-6 rounded-full" style={{ background: COLORS.primary }} />
 
-          {/* Story text */}
-          <p
-            className="text-base md:text-lg leading-relaxed mb-8"
-            style={{ color: COLORS.textDark }}
-          >
+          <p className="text-base md:text-lg leading-relaxed mb-8" style={{ color: COLORS.textDark }}>
             {story.story}
           </p>
 
-          {/* Subtle accent */}
           <div
             className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest"
             style={{ color: COLORS.primary }}
@@ -201,7 +188,6 @@ function StoryCard({ story, index }: StoryCardProps) {
         </motion.div>
       </div>
 
-      {/* Image on the right for odd indices */}
       {!isEvenIndex && (
         <div className="order-1 md:order-2">
           <StoryImage story={story} imageY={imageY} imageScale={imageScale} />
@@ -221,73 +207,20 @@ function StoryImage({ story, imageY, imageScale }: StoryImageProps) {
   return (
     <motion.div
       style={{ y: imageY, scale: imageScale }}
-      className="relative overflow-hidden rounded-lg shadow-lg border border-white/20"
+      className="relative overflow-hidden rounded-2xl shadow-xl border border-white/20 group"
       transition={{ ease: "easeOut" }}
     >
-      <div className="relative w-full aspect-[4/5] overflow-hidden rounded-lg">
+      <div className="relative w-full aspect-[4/5] overflow-hidden rounded-2xl">
         <Image
           src={story.image}
           alt={story.name}
           fill
-          className="object-cover hover:scale-110 transition-transform duration-500"
+          className="object-cover group-hover:scale-110 transition-transform duration-700"
           sizes="(max-width: 768px) 100vw, 50vw"
           priority={false}
         />
-
-        {/* Subtle overlay gradient for visual interest */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
       </div>
     </motion.div>
-  );
-}
-
-function QuoteSection() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: false, amount: 0.5 });
-
-  return (
-    <motion.section
-      ref={ref}
-      className="relative py-20 md:py-32 px-6 md:px-12 overflow-hidden"
-      style={{
-        background: `linear-gradient(135deg, ${COLORS.primaryDark} 0%, ${COLORS.primary} 100%)`,
-      }}
-    >
-      {/* Background accent elements */}
-      <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-white/5 blur-3xl -z-10" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-white/5 blur-3xl -z-10" />
-
-      <div className="max-w-4xl mx-auto text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <div className="mb-8">
-            <svg
-              width="48"
-              height="48"
-              viewBox="0 0 48 48"
-              fill="none"
-              className="mx-auto mb-8 opacity-40"
-            >
-              <path
-                d="M12 32c0-5.333 2.667-10.667 8-14.667C14.667 20 12 24 12 28c0 4 2 8 6 10-2-1-4-4-6-6zm24 0c0-5.333 2.667-10.667 8-14.667-5.333 2.667-8 7-8 11c0 4 2 8 6 10-2-1-4-4-6-6z"
-                fill="currentColor"
-                className="text-white"
-              />
-            </svg>
-          </div>
-
-          <blockquote className="text-2xl md:text-4xl font-light text-white mb-8 leading-relaxed">
-            &quot;We are ambitious for every child we advise. But what drives us is simple: we want them to thrive — at the world&apos;s best universities, and in the life that follows.&quot;
-          </blockquote>
-
-          <p className="text-lg text-white/80 font-semibold tracking-wide">
-            — ORVA, Founder
-          </p>
-        </motion.div>
-      </div>
-    </motion.section>
   );
 }
