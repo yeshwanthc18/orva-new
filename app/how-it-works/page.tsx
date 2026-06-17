@@ -1,18 +1,18 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Cursor from "@/components/Cursor";
 import Trail from "@/components/Trail";
 import { useLenis } from "@/hooks/useLenis";
 import { COLORS, PROCESS_STEPS, ACCEPTANCE_TIMELINE, WHATS_INCLUDED } from "@/lib/constants";
-import { LampEffect } from "@/components/ui/LampEffect";
 import { TextGenerateEffect } from "@/components/ui/TextGenerateEffect";
 import { MovingBorderLink } from "@/components/ui/MovingBorderButton";
 import { BentoGrid, BentoGridItem } from "@/components/ui/BentoGrid";
-import { SpotlightHero, Spotlight } from "@/components/ui/Spotlight";
+import { Spotlight } from "@/components/ui/Spotlight";
 
 export default function HowItWorksPage() {
   useLenis();
@@ -24,9 +24,13 @@ export default function HowItWorksPage() {
       <Trail />
       <Navbar />
       <main className="pt-16">
-        {/* Hero Section */}
-        <LampEffect color="#D51E20">
-          <div className="max-w-4xl mx-auto px-6 md:px-12 pt-20 md:pt-32 pb-20 md:pb-40">
+        {/* Hero Section with background image */}
+        <section className="relative min-h-[70vh] flex items-center overflow-hidden">
+          <div className="absolute inset-0">
+            <Image src="/images/img05.jpeg" alt="Students studying" fill className="object-cover" sizes="100vw" priority />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0F0F0F] via-[#0F0F0F]/85 to-[#0F0F0F]/50" />
+          </div>
+          <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-12 py-20 md:py-32">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -51,95 +55,98 @@ export default function HowItWorksPage() {
               </motion.p>
             </motion.div>
           </div>
-        </LampEffect>
+        </section>
 
-        {/* Process Steps — Bento Grid */}
+        {/* Process Steps — Cards with Step Images */}
         <section className="relative py-20 md:py-32 px-6 md:px-12" style={{ background: COLORS.warmCream }}>
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <span className="label mb-6">The Process</span>
+              <span className="label mb-4">The Process</span>
               <h2 className="text-3xl md:text-5xl font-bold leading-tight" style={{ color: COLORS.textDark }}>
                 Four phases. One strategy.
               </h2>
             </div>
-            <BentoGrid className="lg:grid-cols-2">
-              {PROCESS_STEPS.map((step) => (
-                <BentoGridItem
+
+            <div className="space-y-8">
+              {PROCESS_STEPS.map((step, idx) => (
+                <motion.div
                   key={step.number}
-                  className="min-h-[220px]"
-                  title={
-                    <div className="flex items-center gap-4">
-                      <div
-                        className="inline-flex items-center justify-center w-12 h-12 rounded-full text-xl font-bold text-white"
-                        style={{ background: COLORS.primary }}
-                      >
-                        {step.number}
-                      </div>
-                      <span>{step.title}</span>
-                    </div>
-                  }
-                  description={step.description}
-                  icon={
-                    <div className="flex items-center gap-3 text-xs font-bold tracking-[0.15em] uppercase">
-                      <span style={{ color: COLORS.primary }}>{step.year}</span>
-                      <span style={{ color: COLORS.textMuted }}>{step.age}</span>
-                    </div>
-                  }
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, delay: idx * 0.1 }}
+                  className={`grid grid-cols-1 lg:grid-cols-12 gap-0 rounded-2xl overflow-hidden bg-white border border-black/[0.06] hover:border-red-300/50 hover:shadow-xl transition-all duration-300 ${idx % 2 !== 0 ? "lg:flex-row-reverse" : ""}`}
                 >
-                  <div className="pt-4 border-t border-black/[0.06] mt-4" style={{ color: COLORS.primary }}>
-                    <p className="font-semibold text-sm">The window from here</p>
-                    <p className="text-sm mt-2 opacity-80">{step.windowText}</p>
+                  {/* Image */}
+                  <div className={`relative h-[240px] lg:h-auto lg:col-span-4 ${idx % 2 !== 0 ? "lg:order-2" : ""}`}>
+                    <Image
+                      src={`/images/img${String(idx + 8).padStart(2, '0')}.jpeg`}
+                      alt={step.title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 1024px) 100vw, 33vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent lg:bg-none" />
+                    <div className="absolute top-4 left-4 lg:top-6 lg:left-6 w-14 h-14 rounded-full flex items-center justify-center text-2xl font-bold text-white" style={{ background: COLORS.primary }}>
+                      {step.number}
+                    </div>
                   </div>
-                </BentoGridItem>
+
+                  {/* Content */}
+                  <div className={`lg:col-span-8 p-6 md:p-10 ${idx % 2 !== 0 ? "lg:order-1" : ""}`}>
+                    <div className="flex items-center gap-3 mb-3 text-xs font-bold tracking-[0.15em] uppercase">
+                      <span style={{ color: COLORS.primary }}>{step.year}</span>
+                      <span style={{ color: COLORS.textMuted }}>&bull; {step.age}</span>
+                    </div>
+                    <h3 className="text-2xl md:text-3xl font-bold mb-4" style={{ color: COLORS.textDark }}>{step.title}</h3>
+                    <p className="text-base leading-relaxed mb-6" style={{ color: COLORS.textLight }}>{step.description}</p>
+                    <div className="pt-4 border-t border-black/[0.06]" style={{ color: COLORS.primary }}>
+                      <p className="font-semibold text-sm">The window from here</p>
+                      <p className="text-sm mt-2 opacity-80">{step.windowText}</p>
+                    </div>
+                  </div>
+                </motion.div>
               ))}
-            </BentoGrid>
+            </div>
           </div>
         </section>
 
         {/* Acceptance Timeline Section */}
-        <SpotlightHero>
-          <section className="relative py-20 md:py-32 px-6 md:px-12" style={{ background: COLORS.warmSand }}>
-            <Spotlight className="absolute top-0 left-0 w-full h-full" fill="#D51E20" />
-            <div className="relative z-10 max-w-5xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8 }}
-                className="mb-16 text-center"
-              >
-                <span className="label mb-6">The Acceptance Timeline</span>
-                <h2 className="text-3xl md:text-5xl font-bold mb-6 leading-tight" style={{ color: COLORS.textDark }}>
-                  The families who reach world&apos;s Top 100 universities start early. See where you are...
-                </h2>
-                <p className="text-lg max-w-2xl mx-auto" style={{ color: COLORS.textLight }}>
-                  Click your child&apos;s current year. See what the best-prepared families have already done — and what&apos;s still possible from here.
-                </p>
-              </motion.div>
+        <section className="relative py-20 md:py-32 px-6 md:px-12 overflow-hidden" style={{ background: COLORS.warmSand }}>
+          <Spotlight fill="#D51E20" />
+          <div className="relative z-10 max-w-5xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="mb-16 text-center"
+            >
+              <span className="label mb-4">The Acceptance Timeline</span>
+              <h2 className="text-3xl md:text-5xl font-bold mb-6 leading-tight" style={{ color: COLORS.textDark }}>
+                The families who reach world&apos;s Top 100 universities start early.
+              </h2>
+              <p className="text-lg max-w-2xl mx-auto" style={{ color: COLORS.textLight }}>
+                Click your child&apos;s current year. See what the best-prepared families have already done — and what&apos;s still possible from here.
+              </p>
+            </motion.div>
 
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="space-y-4"
-              >
-                {ACCEPTANCE_TIMELINE.map((timeline) => (
-                  <TimelineAccordion
-                    key={timeline.year}
-                    timeline={timeline}
-                    isExpanded={expandedYear === timeline.year}
-                    onToggle={() => setExpandedYear(expandedYear === timeline.year ? null : timeline.year)}
-                  />
-                ))}
-              </motion.div>
+            <div className="space-y-4">
+              {ACCEPTANCE_TIMELINE.map((timeline) => (
+                <TimelineAccordion
+                  key={timeline.year}
+                  timeline={timeline}
+                  isExpanded={expandedYear === timeline.year}
+                  onToggle={() => setExpandedYear(expandedYear === timeline.year ? null : timeline.year)}
+                />
+              ))}
             </div>
-          </section>
-        </SpotlightHero>
+          </div>
+        </section>
 
-        {/* What's Included Section — Bento Grid */}
+        {/* What's Included — Bento Grid with icons */}
         <section className="relative py-20 md:py-32 px-6 md:px-12" style={{ background: COLORS.warmCream }}>
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -147,52 +154,59 @@ export default function HowItWorksPage() {
               transition={{ duration: 0.8 }}
               className="text-center mb-16"
             >
-              <span className="label mb-6">What&apos;s Included</span>
+              <span className="label mb-4">What&apos;s Included</span>
               <h2 className="text-3xl md:text-5xl font-bold mb-6 leading-tight" style={{ color: COLORS.textDark }}>
                 One programme. One strategy.
               </h2>
               <p className="text-lg max-w-2xl mx-auto" style={{ color: COLORS.textLight }}>
-                Everything included — not as an upgrade, but as standard. No tiers. No upsells. No one-off sessions.
+                Everything included — not as an upgrade, but as standard.
               </p>
             </motion.div>
 
-            <BentoGrid className="md:grid-cols-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
-                { key: "strategy", label: "Strategy", subtitle: "Your personalised roadmap" },
-                { key: "profile", label: "Profile", subtitle: "Building competitive advantage" },
-                { key: "applications", label: "Applications", subtitle: "10-15 universities supported" },
-                { key: "family", label: "Family", subtitle: "We support the whole family" },
-              ].map((category) => (
-                <BentoGridItem
+                { key: "strategy", label: "Strategy", subtitle: "Your personalised roadmap", img: "/images/img02.jpeg" },
+                { key: "profile", label: "Profile", subtitle: "Building competitive advantage", img: "/images/img06.jpeg" },
+                { key: "applications", label: "Applications", subtitle: "10-15 universities supported", img: "/images/img04.jpeg" },
+                { key: "family", label: "Family", subtitle: "We support the whole family", img: "/images/img03.jpeg" },
+              ].map((category, idx) => (
+                <motion.div
                   key={category.key}
-                  title={category.label}
-                  description={category.subtitle}
-                  icon={
-                    <span className="text-xs font-bold tracking-[0.15em] uppercase" style={{ color: COLORS.primary }}>
-                      {category.key}
-                    </span>
-                  }
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, delay: idx * 0.1 }}
+                  className="group relative p-8 rounded-2xl bg-white border border-black/[0.06] hover:border-red-300/50 hover:shadow-xl transition-all duration-300 overflow-hidden"
                 >
-                  <ul className="space-y-3 mt-4">
-                    {WHATS_INCLUDED[category.key as keyof typeof WHATS_INCLUDED].map((item, idx) => (
-                      <li key={idx} className="flex gap-3">
-                        <span
-                          className="flex-shrink-0 w-2 h-2 rounded-full mt-1.5"
-                          style={{ background: COLORS.primary }}
-                        ></span>
-                        <span className="text-sm" style={{ color: COLORS.textLight }}>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </BentoGridItem>
+                  {/* Background image accent */}
+                  <div className="absolute top-0 right-0 w-32 h-32 opacity-[0.04] group-hover:opacity-[0.08] transition-opacity rounded-bl-full overflow-hidden">
+                    <Image src={category.img} alt="" fill className="object-cover" sizes="128px" />
+                  </div>
+                  <div className="relative z-10">
+                    <h3 className="text-2xl font-bold mb-1" style={{ color: COLORS.textDark }}>{category.label}</h3>
+                    <p className="text-sm font-semibold tracking-[0.1em] uppercase mb-6" style={{ color: COLORS.primary }}>{category.subtitle}</p>
+                    <ul className="space-y-3">
+                      {WHATS_INCLUDED[category.key as keyof typeof WHATS_INCLUDED].map((item, i) => (
+                        <li key={i} className="flex gap-3">
+                          <span className="flex-shrink-0 w-2 h-2 rounded-full mt-2" style={{ background: COLORS.primary }}></span>
+                          <span className="text-sm" style={{ color: COLORS.textLight }}>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </motion.div>
               ))}
-            </BentoGrid>
+            </div>
           </div>
         </section>
 
-        {/* CTA Strip */}
-        <LampEffect color="#D51E20">
-          <div className="max-w-4xl mx-auto px-6 md:px-12 py-16 md:py-20 text-center">
+        {/* CTA Strip with background */}
+        <section className="relative py-20 md:py-28 overflow-hidden">
+          <div className="absolute inset-0">
+            <Image src="/images/img14.jpeg" alt="" fill className="object-cover" sizes="100vw" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#520A0B]/95 to-[#D51E20]/90" />
+          </div>
+          <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-12 text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -207,7 +221,7 @@ export default function HowItWorksPage() {
               </MovingBorderLink>
             </motion.div>
           </div>
-        </LampEffect>
+        </section>
       </main>
       <Footer />
     </>
@@ -223,21 +237,14 @@ function TimelineAccordion({
   isExpanded: boolean;
   onToggle: () => void;
 }) {
-  const variants = {
-    closed: { opacity: 0, height: 0 },
-    open: { opacity: 1, height: "auto" },
-  };
-
   return (
-    <div className="border-2 border-black/[0.06] rounded-xl overflow-hidden transition-all duration-300 hover:border-red-300/40 bg-white hover:shadow-lg">
+    <div className="border border-black/[0.06] rounded-2xl overflow-hidden transition-all duration-300 hover:border-red-300/40 bg-white hover:shadow-lg">
       <button
         onClick={onToggle}
         className="w-full p-6 md:p-8 flex items-center justify-between hover:opacity-80 transition-opacity"
       >
         <div className="text-left">
-          <h3 className="text-xl md:text-2xl font-bold mb-2" style={{ color: COLORS.textDark }}>
-            {timeline.year}
-          </h3>
+          <h3 className="text-xl md:text-2xl font-bold mb-2" style={{ color: COLORS.textDark }}>{timeline.year}</h3>
           <p className="text-sm font-semibold tracking-[0.1em] uppercase" style={{ color: COLORS.primary }}>
             {timeline.age} &bull; {timeline.phase}
           </p>
@@ -245,13 +252,7 @@ function TimelineAccordion({
         <motion.svg
           animate={{ rotate: isExpanded ? 180 : 0 }}
           transition={{ duration: 0.3 }}
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke={COLORS.primary}
-          strokeWidth="2"
-          className="flex-shrink-0"
+          width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={COLORS.primary} strokeWidth="2" className="flex-shrink-0"
         >
           <polyline points="6 9 12 15 18 9"></polyline>
         </motion.svg>
@@ -260,18 +261,15 @@ function TimelineAccordion({
       <AnimatePresence>
         {isExpanded && (
           <motion.div
-            initial="closed"
-            animate="open"
-            exit="closed"
-            variants={variants}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="border-t-2 border-black/[0.06]"
+            className="border-t border-black/[0.06]"
           >
             <div className="p-6 md:p-8 space-y-6">
               <div>
-                <h4 className="text-lg font-bold mb-4" style={{ color: COLORS.textDark }}>
-                  What the strongest applicants are already doing
-                </h4>
+                <h4 className="text-lg font-bold mb-4" style={{ color: COLORS.textDark }}>What the strongest applicants are already doing</h4>
                 <ul className="space-y-3">
                   {timeline.strongestAlready.map((item, idx) => (
                     <li key={idx} className="flex gap-3">
@@ -281,11 +279,8 @@ function TimelineAccordion({
                   ))}
                 </ul>
               </div>
-
               <div>
-                <h4 className="text-lg font-bold mb-4" style={{ color: COLORS.textDark }}>
-                  What ORVA does at this stage
-                </h4>
+                <h4 className="text-lg font-bold mb-4" style={{ color: COLORS.textDark }}>What ORVA does at this stage</h4>
                 <ul className="space-y-3">
                   {timeline.orvaDoes.map((item, idx) => (
                     <li key={idx} className="flex gap-3">
@@ -295,20 +290,13 @@ function TimelineAccordion({
                   ))}
                 </ul>
               </div>
-
-              <div
-                className="p-4 rounded-lg"
-                style={{ background: `${COLORS.primary}08`, borderLeft: `4px solid ${COLORS.primary}` }}
-              >
+              <div className="p-4 rounded-xl" style={{ background: `${COLORS.primary}08`, borderLeft: `4px solid ${COLORS.primary}` }}>
                 <p className="font-semibold mb-2" style={{ color: COLORS.primary }}>The window from here</p>
                 <p style={{ color: COLORS.textLight }}>{timeline.window}</p>
               </div>
-
-              <div>
-                <MovingBorderLink href="/contact" containerClassName="h-10" duration={4000}>
-                  Get Started
-                </MovingBorderLink>
-              </div>
+              <MovingBorderLink href="/contact" containerClassName="h-10" duration={4000}>
+                Get Started
+              </MovingBorderLink>
             </div>
           </motion.div>
         )}
