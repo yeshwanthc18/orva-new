@@ -3,22 +3,14 @@ import { useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { usePathname } from "next/navigation";
-import AnnouncementBar from "./AnnouncementBar";
-
-const NAV = [
-  ["Story", "/story"],
-  ["Services", "/services"],
-  ["Resources", "/resources"],
-  ["Team", "/team"],
-  ["Contact", "/contact"],
-];
+import { NAV_LINKS } from "@/lib/constants";
 
 export default function Navbar() {
   const pathname = usePathname();
   const isHome = pathname === "/";
 
   const [ready, setReady] = useState(false);
-  const [useRedLogo, setUseRedLogo] = useState(!isHome); // true on non‑home, false on home initially
+  const [useRedLogo, setUseRedLogo] = useState(!isHome);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
 
@@ -29,7 +21,6 @@ export default function Navbar() {
     return () => clearTimeout(t);
   }, []);
 
-  // Only on the home page do we need the scroll‑based transition
   const getHeroThresholds = () => {
     if (typeof window !== "undefined") {
       const heroHeight = window.innerHeight * 1.5;
@@ -41,20 +32,14 @@ export default function Navbar() {
   const thresholds = getHeroThresholds();
   const transitionEndThreshold = thresholds[1];
 
-  // Update logo state based on scroll only on the home page
   useEffect(() => {
     if (!isHome) return;
     const unsubscribe = scrollY.on("change", (latestScroll) => {
-      if (latestScroll >= transitionEndThreshold) {
-        setUseRedLogo(true);
-      } else {
-        setUseRedLogo(false);
-      }
+      setUseRedLogo(latestScroll >= transitionEndThreshold);
     });
     return () => unsubscribe();
   }, [scrollY, transitionEndThreshold, isHome]);
 
-  // Dynamic styles – only used on the home page
   const backgroundColor = isHome
     ? useTransform(scrollY, thresholds, ["transparent", "rgba(248, 246, 242, 0.98)"])
     : undefined;
@@ -64,13 +49,9 @@ export default function Navbar() {
     : undefined;
 
   const borderBottom = isHome
-    ? useTransform(scrollY, thresholds, [
-        "1px solid transparent",
-        "1px solid rgba(56, 2, 2, 0.1)",
-      ])
+    ? useTransform(scrollY, thresholds, ["1px solid transparent", "1px solid rgba(56, 2, 2, 0.1)"])
     : undefined;
 
-  // Static styles for non‑home pages
   const staticNavStyles = {
     backgroundColor: "rgba(248, 246, 242, 0.98)",
     backdropFilter: "blur(20px) saturate(180%)",
@@ -78,13 +59,7 @@ export default function Navbar() {
     borderBottom: "1px solid rgba(56, 2, 2, 0.1)",
   };
 
-  // Logo source – white logo only on home page while the hero is visible
   const logoSrc = isHome && !useRedLogo ? "/orva-logo-white.svg" : "/orva-logo-red.svg";
-
-  // Link & CTA colors remain static (already use the correct values)
-  const linkColor = "rgba(56, 2, 2, 0.65)";
-  const ctaBorder = "1.5px solid #D51E20";
-  const ctaColor = "#D51E20";
 
   return (
     <>
@@ -123,34 +98,34 @@ export default function Navbar() {
         }
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          {/* Logo */}
-          <a
-            href="/"
-            className="flex-shrink-0 flex items-center hover:opacity-80 transition-opacity duration-200"
-          >
+          <a href="/" className="flex-shrink-0 flex items-center hover:opacity-80 transition-opacity duration-200">
             <motion.img
               src={logoSrc}
               alt="ORVA Education"
               style={{ height: 28, width: "auto" }}
               className="h-7 w-auto sm:h-8"
-              // Simple fade transition between logo variants
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
-              key={logoSrc} // Forces re‑mount for a clean swap
+              key={logoSrc}
             />
+            <span
+              className="ml-2 text-[10px] font-bold tracking-[0.2em] uppercase hidden sm:inline"
+              style={{ color: useRedLogo || !isHome ? "#D51E20" : "rgba(248,246,242,0.6)" }}
+            >
+              Elite Admissions.
+            </span>
           </a>
 
-          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-1 flex-1 justify-center">
-            {NAV.map(([label, href], i) => (
+            {NAV_LINKS.map(([label, href], i) => (
               <motion.a
                 key={href}
                 href={href}
                 initial={{ opacity: 0, y: -5 }}
                 animate={ready ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
                 transition={{ delay: 0.05 * i, duration: 0.4 }}
-                style={{ color: linkColor }}
+                style={{ color: "rgba(56, 2, 2, 0.65)" }}
                 className="relative px-3 lg:px-4 py-2 text-xs sm:text-sm font-semibold uppercase tracking-wider hover:text-red-600 transition-colors duration-200 group"
               >
                 {label}
@@ -159,14 +134,13 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* CTA Button – desktop */}
           <motion.a
             href="/contact"
             initial={{ opacity: 0 }}
             animate={ready ? { opacity: 1 } : { opacity: 1 }}
             transition={{ delay: 0.1, duration: 0.4 }}
-            style={{ color: ctaColor, borderColor: ctaBorder }}
-            className="hidden sm:flex items-center gap-2 px-4 sm:px-5 py-1.5 sm:py-2 border-1.5 border-red-600 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider hover:bg-red-600 hover:text-white hover:shadow-lg transition-all duration-300 cursor-pointer group"
+            className="hidden sm:flex items-center gap-2 px-4 sm:px-5 py-1.5 sm:py-2 border-[1.5px] border-red-600 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider hover:bg-red-600 hover:text-white hover:shadow-lg transition-all duration-300 cursor-pointer group"
+            style={{ color: "#D51E20" }}
             onMouseEnter={(e) => {
               const el = e.currentTarget;
               el.style.background = "#D51E20";
@@ -180,60 +154,27 @@ export default function Navbar() {
               el.style.boxShadow = "none";
             }}
           >
-            <span>Begin</span>
-            <svg
-              width="14"
-              height="14"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2.5}
-              className="w-3 h-3 group-hover:translate-x-1 transition-transform duration-200"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M17 8l4 4m0 0l-4 4m4-4H3"
-              />
+            <span>Talk to ORVA</span>
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} className="w-3 h-3 group-hover:translate-x-1 transition-transform duration-200">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
           </motion.a>
 
-          {/* Mobile CTA Button */}
           <motion.a
             href="/contact"
             initial={{ opacity: 0 }}
             animate={ready ? { opacity: 1 } : { opacity: 1 }}
             transition={{ delay: 0.1, duration: 0.4 }}
-            style={{ color: ctaColor, borderColor: ctaBorder }}
             className="sm:hidden flex items-center justify-center w-10 h-10 border border-red-600 rounded-full hover:bg-red-600 hover:text-white transition-all duration-300"
-            onMouseEnter={(e) => {
-              const el = e.currentTarget;
-              el.style.background = "#D51E20";
-              el.style.color = "#f8f6f2";
-            }}
-            onMouseLeave={(e) => {
-              const el = e.currentTarget;
-              el.style.background = "transparent";
-              el.style.color = "#D51E20";
-            }}
+            style={{ color: "#D51E20" }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "#D51E20"; e.currentTarget.style.color = "#f8f6f2"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#D51E20"; }}
           >
-            <svg
-              width="16"
-              height="16"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2.5}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M17 8l4 4m0 0l-4 4m4-4H3"
-              />
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
           </motion.a>
 
-          {/* Mobile Menu Button */}
           <motion.button
             initial={{ opacity: 0 }}
             animate={ready ? { opacity: 1 } : { opacity: 1 }}
@@ -243,27 +184,13 @@ export default function Navbar() {
             aria-label="Toggle menu"
             aria-expanded={isMobileMenuOpen}
           >
-            <svg
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-              style={{ color: useRedLogo ? "#1C1C1C" : "#1C1C1C" }}
-              className="transition-transform duration-300"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
-              />
+            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} style={{ color: "#1C1C1C" }} className="transition-transform duration-300">
+              <path strokeLinecap="round" strokeLinejoin="round" d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
             </svg>
           </motion.button>
         </div>
       </motion.header>
 
-      {/* Mobile Menu Overlay */}
       <motion.div
         initial={{ opacity: 0, pointerEvents: "none" }}
         animate={isMobileMenuOpen ? { opacity: 1, pointerEvents: "auto" } : { opacity: 0, pointerEvents: "none" }}
@@ -272,7 +199,6 @@ export default function Navbar() {
         onClick={() => setIsMobileMenuOpen(false)}
       />
 
-      {/* Mobile Menu */}
       <motion.div
         initial={{ opacity: 0, y: -10, pointerEvents: "none" }}
         animate={isMobileMenuOpen ? { opacity: 1, y: 0, pointerEvents: "auto" } : { opacity: 0, y: -10, pointerEvents: "none" }}
@@ -280,7 +206,7 @@ export default function Navbar() {
         className="fixed top-16 left-0 right-0 md:hidden bg-white/95 backdrop-blur-md border-b border-black/10 z-40"
       >
         <nav className="max-w-7xl mx-auto px-4 py-6 space-y-2">
-          {NAV.map(([label, href], i) => (
+          {NAV_LINKS.map(([label, href], i) => (
             <motion.a
               key={href}
               href={href}
@@ -293,6 +219,13 @@ export default function Navbar() {
               {label}
             </motion.a>
           ))}
+          <a
+            href="/contact"
+            className="block px-4 py-3 mt-4 text-sm font-bold uppercase tracking-wider text-white bg-red-600 rounded-lg text-center hover:bg-red-700 transition-colors"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Talk to ORVA
+          </a>
         </nav>
       </motion.div>
     </>
