@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
@@ -12,7 +12,8 @@ import { COLORS, QUIZ_QUESTIONS, QUIZ_PROFILES } from "@/lib/constants";
 import { TextGenerateEffect } from "@/components/ui/TextGenerateEffect";
 import { Spotlight } from "@/components/ui/Spotlight";
 import { MovingBorderLink, MovingBorderButton } from "@/components/ui/MovingBorderButton";
-import { LampEffect } from "@/components/ui/LampEffect";
+import { FloatingGeometry } from "@/components/ui/FloatingGeometry";
+import { GridPattern } from "@/components/ui/GridPattern";
 
 type ProfileKey = keyof typeof QUIZ_PROFILES;
 
@@ -103,6 +104,7 @@ export default function QuizPage() {
             <div className="absolute inset-0 bg-gradient-to-r from-[#FBF9F6] via-[#FBF9F6]/95 to-[#FBF9F6]/80" />
           </div>
           <Spotlight fill="#D51E20" className="absolute inset-0" />
+          <FloatingGeometry variant="light" density="sparse" />
           <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-12 py-16 md:py-28">
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
               <span className="label mb-6">Find Your Fit</span>
@@ -129,7 +131,8 @@ export default function QuizPage() {
         {/* Quiz */}
         {!showResult && (
           <section className="relative py-16 md:py-24 px-6 md:px-12" style={{ background: COLORS.warmCream }}>
-            <div className="max-w-3xl mx-auto">
+            <GridPattern variant="light" />
+            <div className="relative z-10 max-w-3xl mx-auto">
               {/* Progress */}
               <div className="flex items-center justify-between mb-10">
                 <span className="text-sm font-bold uppercase tracking-widest" style={{ color: COLORS.primary }}>
@@ -169,7 +172,7 @@ export default function QuizPage() {
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.3, delay: idx * 0.05 }}
                           onClick={() => handleSelectAnswer(option.id)}
-                          className="w-full text-left p-5 rounded-2xl border border-black/[0.06] bg-white hover:border-red-300/60 hover:shadow-lg transition-all duration-300 group"
+                          className="w-full text-left p-5 rounded-2xl border border-black/[0.06] bg-white hover:border-red-300/60 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 group"
                           whileHover={{ scale: 1.01 }}
                           whileTap={{ scale: 0.99 }}
                         >
@@ -194,11 +197,12 @@ export default function QuizPage() {
 
         {/* Result */}
         {showResult && result && (
-          <section className="relative py-20 md:py-32 overflow-hidden">
+          <section className="relative py-20 md:py-32 overflow-hidden noise-bg">
             <div className="absolute inset-0">
               <Image src="/images/img11.jpeg" alt="" fill className="object-cover" sizes="100vw" />
               <div className="absolute inset-0 bg-gradient-to-b from-[#520A0B]/95 via-[#0F0F0F]/90 to-[#0F0F0F]" />
             </div>
+            <FloatingGeometry variant="dark" density="normal" />
             <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-12">
               <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="space-y-10">
                 {/* Profile */}
@@ -217,11 +221,11 @@ export default function QuizPage() {
 
                 {/* UK vs US */}
                 <div className="grid grid-cols-2 gap-6">
-                  <div className="text-center p-6 rounded-2xl bg-white/10 border border-white/10 backdrop-blur-md">
+                  <div className="text-center p-6 rounded-2xl bg-white/10 border border-white/10 backdrop-blur-md hover:-translate-y-1 transition-transform duration-300">
                     <div className="text-4xl font-bold text-white mb-2">{result.ukPercent}%</div>
                     <div className="text-white/70 font-medium">UK Fit</div>
                   </div>
-                  <div className="text-center p-6 rounded-2xl bg-white/10 border border-white/10 backdrop-blur-md">
+                  <div className="text-center p-6 rounded-2xl bg-white/10 border border-white/10 backdrop-blur-md hover:-translate-y-1 transition-transform duration-300">
                     <div className="text-4xl font-bold text-white mb-2">{result.usPercent}%</div>
                     <div className="text-white/70 font-medium">US Fit</div>
                   </div>
@@ -237,7 +241,7 @@ export default function QuizPage() {
                         initial={{ opacity: 0, x: -10 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.4, delay: 0.5 + idx * 0.1 }}
-                        className="p-5 rounded-2xl bg-white/10 border border-white/[0.06] backdrop-blur-md hover:bg-white/15 transition-colors"
+                        className="p-5 rounded-2xl bg-white/10 border border-white/[0.06] backdrop-blur-md hover:bg-white/15 hover:-translate-y-0.5 transition-all duration-300"
                       >
                         <div className="flex items-start gap-4">
                           <div className="text-lg font-bold rounded-full h-10 w-10 flex items-center justify-center flex-shrink-0 bg-white/20 text-white">

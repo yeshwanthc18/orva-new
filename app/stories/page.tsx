@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -11,6 +11,9 @@ import { useLenis } from "@/hooks/useLenis";
 import { COLORS, STUDENT_STORIES } from "@/lib/constants";
 import { TextGenerateEffect } from "@/components/ui/TextGenerateEffect";
 import { MovingBorderLink } from "@/components/ui/MovingBorderButton";
+import { FloatingGeometry } from "@/components/ui/FloatingGeometry";
+import { GridPattern } from "@/components/ui/GridPattern";
+import { ScrollRevealStrip } from "@/components/ui/ScrollAnimations";
 
 export default function StoriesPage() {
   useLenis();
@@ -27,6 +30,7 @@ export default function StoriesPage() {
             <Image src="/images/img06.jpeg" alt="Student stories" fill className="object-cover" sizes="100vw" priority />
             <div className="absolute inset-0 bg-gradient-to-r from-[#0F0F0F] via-[#0F0F0F]/85 to-[#0F0F0F]/50" />
           </div>
+          <FloatingGeometry variant="dark" density="sparse" />
           <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-12 py-20 md:py-32">
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
               <span className="label text-white/80 mb-6">Real stories</span>
@@ -50,9 +54,19 @@ export default function StoriesPage() {
           </div>
         </section>
 
+        {/* Scrolling text strip */}
+        <div className="py-3 overflow-hidden" style={{ background: COLORS.deepBlack }}>
+          <ScrollRevealStrip direction="left">
+            <span className="text-[clamp(14px,1.5vw,18px)] font-bold text-white/8 uppercase tracking-[0.2em]">
+              Success &bull; Confidence &bull; Growth &bull; Discovery &bull; Achievement &bull; Success &bull; Confidence &bull; Growth &bull; Discovery &bull; Achievement &bull; Success &bull; Confidence &bull; Growth &bull; Discovery &bull; Achievement
+            </span>
+          </ScrollRevealStrip>
+        </div>
+
         {/* Student Stories Section */}
         <section className="relative py-20 md:py-32 px-6 md:px-12" style={{ background: COLORS.warmCream }}>
-          <div className="max-w-7xl mx-auto">
+          <GridPattern variant="light" />
+          <div className="relative z-10 max-w-7xl mx-auto">
             <div className="space-y-24">
               {STUDENT_STORIES.map((story, index) => (
                 <StoryCard key={index} story={story} index={index} />
@@ -62,11 +76,12 @@ export default function StoriesPage() {
         </section>
 
         {/* Quote Strip Section with background */}
-        <section className="relative py-20 md:py-32 overflow-hidden">
+        <section className="relative py-20 md:py-32 overflow-hidden noise-bg">
           <div className="absolute inset-0">
             <Image src="/images/img12.jpeg" alt="" fill className="object-cover" sizes="100vw" />
             <div className="absolute inset-0 bg-gradient-to-r from-[#520A0B]/95 to-[#D51E20]/85" />
           </div>
+          <FloatingGeometry variant="dark" density="normal" />
           <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-12 text-center">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -90,8 +105,9 @@ export default function StoriesPage() {
         </section>
 
         {/* CTA Section */}
-        <section className="relative py-20 md:py-28 px-6 md:px-12" style={{ background: COLORS.warmSand }}>
-          <div className="max-w-3xl mx-auto text-center">
+        <section className="relative py-20 md:py-28 px-6 md:px-12 overflow-hidden" style={{ background: COLORS.warmSand }}>
+          <FloatingGeometry variant="light" density="sparse" />
+          <div className="relative z-10 max-w-3xl mx-auto text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -155,6 +171,12 @@ function StoryCard({ story, index }: StoryCardProps) {
           <p className="text-white text-sm font-bold">{story.name} &middot; {story.university}</p>
           <p className="text-white/70 text-xs mt-1">{story.location} &middot; {story.tag}</p>
         </div>
+        {/* Decorative rotating element */}
+        <div className="absolute top-4 right-4 w-12 h-12 animate-spin-slow opacity-20">
+          <svg viewBox="0 0 50 50" className="w-full h-full">
+            <circle cx="25" cy="25" r="20" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="0.5" strokeDasharray="3 5" />
+          </svg>
+        </div>
       </motion.div>
 
       {/* Content */}
@@ -164,7 +186,7 @@ function StoryCard({ story, index }: StoryCardProps) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="p-6 md:p-8 rounded-2xl bg-white border border-black/[0.06] hover:border-red-300/50 hover:shadow-lg transition-all duration-300"
+          className="p-6 md:p-8 rounded-2xl bg-white border border-black/[0.06] hover:border-red-300/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
         >
           <div className="mb-4">
             <h3 className="text-xs font-bold tracking-[0.15em] uppercase mb-1" style={{ color: COLORS.primary }}>

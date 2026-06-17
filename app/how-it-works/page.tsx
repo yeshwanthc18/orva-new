@@ -11,8 +11,10 @@ import { useLenis } from "@/hooks/useLenis";
 import { COLORS, PROCESS_STEPS, ACCEPTANCE_TIMELINE, WHATS_INCLUDED } from "@/lib/constants";
 import { TextGenerateEffect } from "@/components/ui/TextGenerateEffect";
 import { MovingBorderLink } from "@/components/ui/MovingBorderButton";
-import { BentoGrid, BentoGridItem } from "@/components/ui/BentoGrid";
 import { Spotlight } from "@/components/ui/Spotlight";
+import { FloatingGeometry } from "@/components/ui/FloatingGeometry";
+import { GridPattern } from "@/components/ui/GridPattern";
+import { ScrollRevealStrip, ParallaxSection } from "@/components/ui/ScrollAnimations";
 
 export default function HowItWorksPage() {
   useLenis();
@@ -30,6 +32,7 @@ export default function HowItWorksPage() {
             <Image src="/images/img05.jpeg" alt="Students studying" fill className="object-cover" sizes="100vw" priority />
             <div className="absolute inset-0 bg-gradient-to-r from-[#0F0F0F] via-[#0F0F0F]/85 to-[#0F0F0F]/50" />
           </div>
+          <FloatingGeometry variant="dark" density="sparse" />
           <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-12 py-20 md:py-32">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -57,9 +60,19 @@ export default function HowItWorksPage() {
           </div>
         </section>
 
+        {/* Scrolling text strip */}
+        <div className="py-4 overflow-hidden" style={{ background: COLORS.deepBlack }}>
+          <ScrollRevealStrip direction="right">
+            <span className="text-[clamp(16px,2vw,22px)] font-bold text-white/10 uppercase tracking-[0.2em]">
+              Discover &bull; Plan &bull; Build &bull; Apply &bull; Succeed &bull; Discover &bull; Plan &bull; Build &bull; Apply &bull; Succeed &bull; Discover &bull; Plan &bull; Build &bull; Apply &bull; Succeed
+            </span>
+          </ScrollRevealStrip>
+        </div>
+
         {/* Process Steps — Cards with Step Images */}
         <section className="relative py-20 md:py-32 px-6 md:px-12" style={{ background: COLORS.warmCream }}>
-          <div className="max-w-7xl mx-auto">
+          <GridPattern variant="light" />
+          <div className="relative z-10 max-w-7xl mx-auto">
             <div className="text-center mb-16">
               <span className="label mb-4">The Process</span>
               <h2 className="text-3xl md:text-5xl font-bold leading-tight" style={{ color: COLORS.textDark }}>
@@ -75,7 +88,7 @@ export default function HowItWorksPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.7, delay: idx * 0.1 }}
-                  className={`grid grid-cols-1 lg:grid-cols-12 gap-0 rounded-2xl overflow-hidden bg-white border border-black/[0.06] hover:border-red-300/50 hover:shadow-xl transition-all duration-300 ${idx % 2 !== 0 ? "lg:flex-row-reverse" : ""}`}
+                  className="grid grid-cols-1 lg:grid-cols-12 gap-0 rounded-2xl overflow-hidden bg-white border border-black/[0.06] hover:border-red-300/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
                 >
                   {/* Image */}
                   <div className={`relative h-[240px] lg:h-auto lg:col-span-4 ${idx % 2 !== 0 ? "lg:order-2" : ""}`}>
@@ -89,6 +102,12 @@ export default function HowItWorksPage() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent lg:bg-none" />
                     <div className="absolute top-4 left-4 lg:top-6 lg:left-6 w-14 h-14 rounded-full flex items-center justify-center text-2xl font-bold text-white" style={{ background: COLORS.primary }}>
                       {step.number}
+                    </div>
+                    {/* Floating element */}
+                    <div className="absolute bottom-4 right-4 w-12 h-12 animate-float opacity-30">
+                      <svg viewBox="0 0 50 50" className="w-full h-full">
+                        <circle cx="25" cy="25" r="20" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="0.5" strokeDasharray="3 5" />
+                      </svg>
                     </div>
                   </div>
 
@@ -112,8 +131,9 @@ export default function HowItWorksPage() {
         </section>
 
         {/* Acceptance Timeline Section */}
-        <section className="relative py-20 md:py-32 px-6 md:px-12 overflow-hidden" style={{ background: COLORS.warmSand }}>
+        <section className="relative py-20 md:py-32 px-6 md:px-12 overflow-hidden noise-bg" style={{ background: COLORS.warmSand }}>
           <Spotlight fill="#D51E20" />
+          <FloatingGeometry variant="light" density="sparse" />
           <div className="relative z-10 max-w-5xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -144,9 +164,10 @@ export default function HowItWorksPage() {
           </div>
         </section>
 
-        {/* What's Included — Bento Grid with icons */}
+        {/* What's Included — Cards with icons */}
         <section className="relative py-20 md:py-32 px-6 md:px-12" style={{ background: COLORS.warmCream }}>
-          <div className="max-w-6xl mx-auto">
+          <GridPattern variant="light" />
+          <div className="relative z-10 max-w-6xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -176,11 +197,17 @@ export default function HowItWorksPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.7, delay: idx * 0.1 }}
-                  className="group relative p-8 rounded-2xl bg-white border border-black/[0.06] hover:border-red-300/50 hover:shadow-xl transition-all duration-300 overflow-hidden"
+                  className="group relative p-8 rounded-2xl bg-white border border-black/[0.06] hover:border-red-300/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden"
                 >
                   {/* Background image accent */}
                   <div className="absolute top-0 right-0 w-32 h-32 opacity-[0.04] group-hover:opacity-[0.08] transition-opacity rounded-bl-full overflow-hidden">
                     <Image src={category.img} alt="" fill className="object-cover" sizes="128px" />
+                  </div>
+                  {/* Corner spin animation */}
+                  <div className="absolute -bottom-4 -right-4 w-14 h-14 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <svg viewBox="0 0 50 50" className="w-full h-full animate-spin-slow">
+                      <rect x="10" y="10" width="30" height="30" fill="none" stroke="rgba(213,30,32,0.15)" strokeWidth="0.5" transform="rotate(45 25 25)" />
+                    </svg>
                   </div>
                   <div className="relative z-10">
                     <h3 className="text-2xl font-bold mb-1" style={{ color: COLORS.textDark }}>{category.label}</h3>
@@ -206,6 +233,7 @@ export default function HowItWorksPage() {
             <Image src="/images/img14.jpeg" alt="" fill className="object-cover" sizes="100vw" />
             <div className="absolute inset-0 bg-gradient-to-r from-[#520A0B]/95 to-[#D51E20]/90" />
           </div>
+          <FloatingGeometry variant="dark" density="sparse" />
           <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-12 text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}

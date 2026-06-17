@@ -11,7 +11,8 @@ import { useLenis } from "@/hooks/useLenis";
 import { COLORS, CONTACT_INFO } from "@/lib/constants";
 import { TextGenerateEffect } from "@/components/ui/TextGenerateEffect";
 import { MovingBorderButton } from "@/components/ui/MovingBorderButton";
-import { BentoGrid, BentoGridItem } from "@/components/ui/BentoGrid";
+import { FloatingGeometry } from "@/components/ui/FloatingGeometry";
+import { GridPattern } from "@/components/ui/GridPattern";
 
 const INPUT_BASE =
   "w-full bg-white border border-black/10 rounded-xl px-4 py-3.5 text-sm text-[#181818] font-[Cairo,sans-serif] outline-none transition-all duration-200 focus:border-red-500/50 focus:shadow-md focus:ring-2 focus:ring-red-500/10";
@@ -49,6 +50,7 @@ export default function ContactPage() {
             <Image src="/images/img13.jpeg" alt="Contact ORVA" fill className="object-cover" sizes="100vw" priority />
             <div className="absolute inset-0 bg-gradient-to-r from-[#0F0F0F] via-[#0F0F0F]/90 to-[#0F0F0F]/60" />
           </div>
+          <FloatingGeometry variant="dark" density="sparse" />
           <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-12 py-20 md:py-32">
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
               <span className="label text-white/80 mb-6">Get In Touch</span>
@@ -73,8 +75,9 @@ export default function ContactPage() {
         </section>
 
         {/* Contact Info Cards */}
-        <section className="py-16 md:py-24 px-6 md:px-12" style={{ background: COLORS.warmCream }}>
-          <div className="max-w-5xl mx-auto">
+        <section className="relative py-16 md:py-24 px-6 md:px-12" style={{ background: COLORS.warmCream }}>
+          <GridPattern variant="light" />
+          <div className="relative z-10 max-w-5xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {CONTACT_INFO.map((info, idx) => (
                 <motion.div
@@ -83,7 +86,7 @@ export default function ContactPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: idx * 0.1 }}
-                  className="p-6 md:p-8 rounded-2xl bg-white border border-black/[0.06] hover:border-red-300/50 hover:shadow-lg transition-all duration-300"
+                  className="group p-6 md:p-8 rounded-2xl bg-white border border-black/[0.06] hover:border-red-300/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
                 >
                   <div className="w-10 h-10 rounded-full flex items-center justify-center mb-4" style={{ background: `${COLORS.primary}12` }}>
                     <span className="text-lg">
@@ -104,7 +107,8 @@ export default function ContactPage() {
 
         {/* Contact Form with side image */}
         <section className="relative overflow-hidden" style={{ background: COLORS.warmSand }}>
-          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-0">
+          <FloatingGeometry variant="light" density="sparse" />
+          <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-0">
             {/* Form */}
             <div className="px-6 md:px-12 lg:px-16 py-16 md:py-24">
               <motion.div
@@ -211,6 +215,12 @@ export default function ContactPage() {
               <div className="absolute bottom-8 left-8 right-8 p-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20">
                 <p className="text-white text-lg font-bold mb-2">30 minutes. Zero obligation.</p>
                 <p className="text-white/70 text-sm">Every journey starts with an honest conversation.</p>
+              </div>
+              {/* Decorative rotating element */}
+              <div className="absolute top-8 right-8 w-16 h-16 animate-spin-slow opacity-20">
+                <svg viewBox="0 0 60 60" className="w-full h-full">
+                  <circle cx="30" cy="30" r="25" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="0.5" strokeDasharray="4 6" />
+                </svg>
               </div>
             </motion.div>
           </div>

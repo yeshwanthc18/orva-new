@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import Cursor from "@/components/Cursor";
 import Trail from "@/components/Trail";
@@ -16,6 +16,9 @@ import { LampEffect } from "@/components/ui/LampEffect";
 import { MovingBorderLink } from "@/components/ui/MovingBorderButton";
 import { BentoGrid, BentoGridItem } from "@/components/ui/BentoGrid";
 import { Spotlight } from "@/components/ui/Spotlight";
+import { FloatingGeometry } from "@/components/ui/FloatingGeometry";
+import { GridPattern } from "@/components/ui/GridPattern";
+import { ScrollRevealStrip, RotateOnScroll } from "@/components/ui/ScrollAnimations";
 import {
   COLORS,
   HERO_STATS,
@@ -26,6 +29,9 @@ import {
 
 export default function Page() {
   useLenis();
+  const ctaRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: ctaScroll } = useScroll({ target: ctaRef, offset: ["start end", "end start"] });
+  const ctaScale = useTransform(ctaScroll, [0, 0.5, 1], [0.95, 1, 0.98]);
 
   return (
     <>
@@ -37,7 +43,7 @@ export default function Page() {
         <Hero />
 
         {/* University Marquee */}
-        <section style={{ padding: "48px 0", background: COLORS.deepBlack, overflow: "hidden" }}>
+        <section className="relative" style={{ padding: "48px 0", background: COLORS.deepBlack, overflow: "hidden" }}>
           <InfiniteMovingCards
             items={UNIVERSITY_MARQUEE.map((uni) => ({
               content: (
@@ -53,9 +59,10 @@ export default function Page() {
           />
         </section>
 
-        {/* What We Do — Split with Image */}
-        <section className="relative overflow-hidden" style={{ background: COLORS.deepBlack }}>
-          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-0 items-stretch">
+        {/* What We Do — Split with Image + Floating Geometry */}
+        <section className="relative overflow-hidden noise-bg" style={{ background: COLORS.deepBlack }}>
+          <FloatingGeometry variant="dark" density="normal" />
+          <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-0 items-stretch">
             {/* Left — Content */}
             <div className="px-8 md:px-16 py-20 md:py-32 flex flex-col justify-center">
               <motion.div
@@ -93,7 +100,7 @@ export default function Page() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.7, delay: 0.6 }}
-                className="mb-10 py-6 pl-6 border-l-2"
+                className="mb-10 py-6 pl-6 border-l-2 rounded-r-xl"
                 style={{ borderColor: COLORS.primary, background: "rgba(213,30,32,0.04)" }}
               >
                 <p className="text-lg md:text-xl font-medium italic leading-relaxed" style={{ color: COLORS.warmCream }}>
@@ -117,31 +124,43 @@ export default function Page() {
               </motion.div>
             </div>
 
-            {/* Right — Image */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.9, delay: 0.2 }}
-              className="relative hidden lg:block min-h-[600px]"
-            >
-              <Image
-                src="/images/img02.jpeg"
-                alt="Students at university"
-                fill
-                className="object-cover"
-                sizes="50vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#0F0F0F] via-transparent to-transparent" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F0F]/60 via-transparent to-transparent" />
-            </motion.div>
+            {/* Right — Image with rotating frame */}
+            <div className="relative hidden lg:block min-h-[600px]">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.9, delay: 0.2 }}
+                className="absolute inset-0"
+              >
+                <Image src="/images/img02.jpeg" alt="Students at university" fill className="object-cover" sizes="50vw" />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#0F0F0F] via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F0F]/60 via-transparent to-transparent" />
+              </motion.div>
+              {/* Rotating decorative ring over image */}
+              <RotateOnScroll className="absolute top-10 right-10 w-32 h-32 opacity-30" range={[0, 360]}>
+                <svg viewBox="0 0 100 100" className="w-full h-full">
+                  <circle cx="50" cy="50" r="45" fill="none" stroke="#D51E20" strokeWidth="0.5" strokeDasharray="4 6" />
+                </svg>
+              </RotateOnScroll>
+            </div>
           </div>
         </section>
 
-        {/* Is ORVA Right For You */}
+        {/* Scroll-driven text strip */}
+        <section className="py-6 overflow-hidden" style={{ background: COLORS.deepBlack, borderTop: "1px solid rgba(213,30,32,0.1)", borderBottom: "1px solid rgba(213,30,32,0.1)" }}>
+          <ScrollRevealStrip direction="right">
+            <span className="text-[80px] md:text-[120px] font-black tracking-tighter text-white/[0.03] whitespace-nowrap">
+              OXFORD &nbsp; CAMBRIDGE &nbsp; HARVARD &nbsp; MIT &nbsp; STANFORD &nbsp; LSE &nbsp; UCL &nbsp; IMPERIAL &nbsp; YALE &nbsp; PRINCETON
+            </span>
+          </ScrollRevealStrip>
+        </section>
+
+        {/* Is ORVA Right For You + Grid Pattern */}
         <section className="relative overflow-hidden" style={{ background: COLORS.deepBlack }}>
+          <GridPattern variant="dark" />
           <Spotlight fill="#D51E20" />
-          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-0 items-center relative z-10">
+          <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-0 items-center">
             {/* Left Image Column */}
             <motion.div
               initial={{ opacity: 0, x: -40 }}
@@ -150,15 +169,15 @@ export default function Page() {
               transition={{ duration: 0.8 }}
               className="hidden lg:block lg:col-span-2 relative h-[700px]"
             >
-              <Image
-                src="/images/img07.jpeg"
-                alt="Student contemplating future"
-                fill
-                className="object-cover"
-                sizes="40vw"
-              />
+              <Image src="/images/img07.jpeg" alt="Student contemplating future" fill className="object-cover" sizes="40vw" />
               <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#0F0F0F]" />
               <div className="absolute inset-0 bg-black/20" />
+              {/* Floating decorative element */}
+              <div className="absolute bottom-12 left-12 animate-float">
+                <div className="w-16 h-16 rounded-full border border-red-600/30 flex items-center justify-center">
+                  <div className="w-3 h-3 rounded-full bg-red-600/50 animate-pulse-glow" />
+                </div>
+              </div>
             </motion.div>
 
             {/* Right Content */}
@@ -195,7 +214,7 @@ export default function Page() {
                     transition={{ duration: 0.6, delay: 0.2 + i * 0.1 }}
                     className="flex items-start gap-5 group"
                   >
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 bg-red-600/10 border border-red-600/30 group-hover:bg-red-600/20 transition-colors">
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 bg-red-600/10 border border-red-600/30 group-hover:bg-red-600/20 group-hover:scale-110 transition-all duration-300">
                       <span className="text-red-500 text-lg font-bold">&rarr;</span>
                     </div>
                     <p className="text-lg md:text-xl leading-relaxed" style={{ color: COLORS.warmCream }}>
@@ -233,11 +252,10 @@ export default function Page() {
           </div>
         </section>
 
-        {/* Key Numbers — with background imagery */}
+        {/* Key Numbers — with Grid Pattern */}
         <section className="relative py-20 md:py-28 px-6 md:px-12 overflow-hidden" style={{ background: COLORS.warmCream }}>
-          <div className="absolute top-0 right-0 w-1/2 h-full opacity-[0.04] pointer-events-none">
-            <Image src="/images/img11.jpeg" alt="" fill className="object-cover" sizes="50vw" />
-          </div>
+          <GridPattern variant="light" />
+          <FloatingGeometry variant="light" density="sparse" />
           <div className="relative z-10 max-w-7xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -265,7 +283,7 @@ export default function Page() {
                   }
                   description={stat.label}
                   icon={
-                    <div className="w-8 h-8 rounded-full" style={{ background: `${COLORS.primary}15` }} />
+                    <div className="w-8 h-8 rounded-full animate-pulse-glow" style={{ background: `${COLORS.primary}15` }} />
                   }
                 />
               ))}
@@ -273,10 +291,20 @@ export default function Page() {
           </div>
         </section>
 
-        {/* Why Orva — 6 Cards with side image */}
-        <section className="relative overflow-hidden" style={{ background: COLORS.deepBlack }}>
+        {/* Scroll-driven text strip — reversed */}
+        <section className="py-4 overflow-hidden" style={{ background: COLORS.warmSand }}>
+          <ScrollRevealStrip direction="left">
+            <span className="text-[60px] md:text-[90px] font-black tracking-tighter whitespace-nowrap" style={{ color: `${COLORS.primary}08` }}>
+              STRATEGY &nbsp; PROFILE &nbsp; APPLICATIONS &nbsp; FUTURE &nbsp; CAREER &nbsp; UNIVERSITY &nbsp; AMBITION &nbsp; EXCELLENCE
+            </span>
+          </ScrollRevealStrip>
+        </section>
+
+        {/* Why Orva — 6 Cards with side image + Floating elements */}
+        <section className="relative overflow-hidden noise-bg" style={{ background: COLORS.deepBlack }}>
+          <FloatingGeometry variant="dark" density="dense" />
           <Spotlight fill="#D51E20" />
-          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-0 relative z-10">
+          <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-0">
             {/* Content — 8 cols */}
             <div className="lg:col-span-8 px-8 md:px-12 py-20 md:py-28">
               <motion.div
@@ -309,7 +337,7 @@ export default function Page() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.2 + i * 0.08 }}
-                    className="group relative p-6 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm hover:border-red-600/40 hover:bg-white/[0.05] transition-all duration-300"
+                    className="group relative p-6 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm hover:border-red-600/40 hover:bg-white/[0.05] hover:-translate-y-1 transition-all duration-300"
                   >
                     <div className="text-2xl font-black mb-3" style={{ color: COLORS.primary }}>
                       {point.number}
@@ -320,6 +348,12 @@ export default function Page() {
                     <p className="text-sm leading-relaxed" style={{ color: "rgba(251,249,246,0.6)" }}>
                       {point.description}
                     </p>
+                    {/* Animated corner accent */}
+                    <div className="absolute top-3 right-3 w-6 h-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <svg viewBox="0 0 24 24" className="w-full h-full animate-spin-slow">
+                        <circle cx="12" cy="12" r="10" fill="none" stroke="rgba(213,30,32,0.3)" strokeWidth="0.5" strokeDasharray="3 5" />
+                      </svg>
+                    </div>
                   </motion.div>
                 ))}
               </div>
@@ -329,7 +363,7 @@ export default function Page() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.7, delay: 0.7 }}
-                className="mt-12 py-6 pl-6 border-l-2"
+                className="mt-12 py-6 pl-6 border-l-2 rounded-r-xl"
                 style={{ borderColor: COLORS.primary, background: "rgba(213,30,32,0.04)" }}
               >
                 <p className="text-lg md:text-xl font-medium italic leading-relaxed" style={{ color: COLORS.warmCream }}>
@@ -339,8 +373,16 @@ export default function Page() {
               </motion.div>
             </div>
 
-            {/* Right — Stacked images */}
+            {/* Right — Stacked images with rotating ornament */}
             <div className="hidden lg:flex lg:col-span-4 flex-col gap-0 relative">
+              {/* Rotating ornament between images */}
+              <RotateOnScroll className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-20 h-20" range={[0, 720]}>
+                <svg viewBox="0 0 80 80" className="w-full h-full">
+                  <circle cx="40" cy="40" r="35" fill="none" stroke="#D51E20" strokeWidth="1" strokeDasharray="6 4" />
+                  <circle cx="40" cy="40" r="25" fill="none" stroke="#D51E20" strokeWidth="0.5" opacity="0.5" />
+                  <circle cx="40" cy="40" r="4" fill="#D51E20" opacity="0.6" />
+                </svg>
+              </RotateOnScroll>
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -365,10 +407,11 @@ export default function Page() {
           </div>
         </section>
 
-        {/* The Future — with Lamp Effect and Image */}
+        {/* The Future — with Lamp Effect, Image, Floating Geometry */}
         <LampEffect color="#D51E20">
-          <section style={{ background: COLORS.deepBlack }} className="px-6 md:px-12 py-20 md:py-28">
-            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <section style={{ background: COLORS.deepBlack }} className="relative px-6 md:px-12 py-20 md:py-28">
+            <FloatingGeometry variant="dark" density="sparse" />
+            <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
@@ -419,7 +462,7 @@ export default function Page() {
                 </motion.div>
               </div>
 
-              {/* Image */}
+              {/* Image with rotating frame */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -433,17 +476,28 @@ export default function Page() {
                   <p className="text-white text-sm font-bold">Future-proof career planning</p>
                   <p className="text-white/60 text-xs mt-1">AI-aware university and major selection</p>
                 </div>
+                {/* Animated ring decoration */}
+                <div className="absolute -top-4 -right-4 w-24 h-24 animate-spin-slow opacity-40">
+                  <svg viewBox="0 0 100 100" className="w-full h-full">
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="#D51E20" strokeWidth="1" strokeDasharray="8 4" />
+                  </svg>
+                </div>
               </motion.div>
             </div>
           </section>
         </LampEffect>
 
-        {/* CTA Strip with background image */}
-        <section className="relative py-20 md:py-28 overflow-hidden" style={{ background: COLORS.deepBlack }}>
-          <div className="absolute inset-0 opacity-10">
+        {/* CTA Strip with background image + scale animation */}
+        <motion.section
+          ref={ctaRef}
+          style={{ scale: ctaScale }}
+          className="relative py-24 md:py-32 overflow-hidden rounded-none"
+        >
+          <div className="absolute inset-0 opacity-15">
             <Image src="/images/img14.jpeg" alt="" fill className="object-cover" sizes="100vw" />
           </div>
           <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F0F] via-[#0F0F0F]/90 to-[#0F0F0F]/80" />
+          <FloatingGeometry variant="dark" density="sparse" />
           <div className="relative z-10 max-w-3xl mx-auto text-center px-6 md:px-12">
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
@@ -482,7 +536,7 @@ export default function Page() {
               </MovingBorderLink>
             </motion.div>
           </div>
-        </section>
+        </motion.section>
       </main>
       <Footer />
     </>

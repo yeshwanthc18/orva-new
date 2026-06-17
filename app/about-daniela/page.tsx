@@ -11,6 +11,9 @@ import { COLORS, STUDENT_UNIVERSITIES } from "@/lib/constants";
 import { TextGenerateEffect } from "@/components/ui/TextGenerateEffect";
 import { MovingBorderLink } from "@/components/ui/MovingBorderButton";
 import { InfiniteMovingCards } from "@/components/ui/InfiniteMovingCards";
+import { FloatingGeometry } from "@/components/ui/FloatingGeometry";
+import { GridPattern } from "@/components/ui/GridPattern";
+import { ScrollRevealStrip } from "@/components/ui/ScrollAnimations";
 
 export default function AboutDanielaPage() {
   useLenis();
@@ -28,6 +31,7 @@ export default function AboutDanielaPage() {
             <div className="absolute inset-0 bg-gradient-to-r from-[#0F0F0F] via-[#0F0F0F]/80 to-transparent" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F0F]/60 to-transparent" />
           </div>
+          <FloatingGeometry variant="dark" density="sparse" />
           <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-12 py-20 md:py-40">
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
               <span className="label text-white/80 mb-6">The Founder</span>
@@ -62,7 +66,8 @@ export default function AboutDanielaPage() {
 
         {/* Founder Bio Section — Side by side */}
         <section className="relative py-20 md:py-32 px-6 md:px-12" style={{ background: COLORS.warmCream }}>
-          <div className="max-w-7xl mx-auto">
+          <GridPattern variant="light" />
+          <div className="relative z-10 max-w-7xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               {/* Image Column */}
               <motion.div
@@ -84,6 +89,12 @@ export default function AboutDanielaPage() {
                 <div className="absolute bottom-6 left-6 right-6 p-4 rounded-xl bg-white/10 backdrop-blur-md border border-white/20">
                   <p className="text-white text-sm font-bold tracking-wider uppercase">HEC Paris Executive MBA</p>
                   <p className="text-white/70 text-xs mt-1">Ranked #1 in Europe</p>
+                </div>
+                {/* Decorative floating ring */}
+                <div className="absolute top-6 right-6 w-16 h-16 animate-spin-slow opacity-30">
+                  <svg viewBox="0 0 60 60" className="w-full h-full">
+                    <circle cx="30" cy="30" r="25" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="0.5" strokeDasharray="4 6" />
+                  </svg>
                 </div>
               </motion.div>
 
@@ -135,7 +146,8 @@ export default function AboutDanielaPage() {
         </section>
 
         {/* Where Our Students Go */}
-        <section className="relative py-20 md:py-32 px-6 md:px-12 overflow-hidden" style={{ background: COLORS.deepBlack }}>
+        <section className="relative py-20 md:py-32 px-6 md:px-12 overflow-hidden noise-bg" style={{ background: COLORS.deepBlack }}>
+          <FloatingGeometry variant="dark" density="normal" />
           <div className="absolute inset-0 opacity-[0.06]">
             <Image src="/images/img11.jpeg" alt="" fill className="object-cover" sizes="100vw" />
           </div>
@@ -201,12 +213,22 @@ export default function AboutDanielaPage() {
           </div>
         </section>
 
+        {/* Scrolling strip before CTA */}
+        <div className="py-3 overflow-hidden" style={{ background: COLORS.deepBlack }}>
+          <ScrollRevealStrip direction="right">
+            <span className="text-[clamp(14px,1.5vw,18px)] font-bold text-white/8 uppercase tracking-[0.2em]">
+              Oxford &bull; Cambridge &bull; Imperial &bull; LSE &bull; UCL &bull; Harvard &bull; Stanford &bull; MIT &bull; Columbia &bull; Oxford &bull; Cambridge &bull; Imperial &bull; LSE &bull; UCL &bull; Harvard &bull; Stanford &bull; MIT &bull; Columbia
+            </span>
+          </ScrollRevealStrip>
+        </div>
+
         {/* CTA Section with image background */}
         <section className="relative py-20 md:py-28 overflow-hidden">
           <div className="absolute inset-0">
             <Image src="/images/img13.jpeg" alt="" fill className="object-cover" sizes="100vw" />
             <div className="absolute inset-0 bg-gradient-to-r from-[#520A0B]/95 to-[#D51E20]/90" />
           </div>
+          <FloatingGeometry variant="dark" density="sparse" />
           <div className="relative z-10 max-w-3xl mx-auto px-6 md:px-12 text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}

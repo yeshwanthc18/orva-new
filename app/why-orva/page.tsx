@@ -1,7 +1,6 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -9,11 +8,12 @@ import Cursor from "@/components/Cursor";
 import Trail from "@/components/Trail";
 import { useLenis } from "@/hooks/useLenis";
 import { COLORS, WHY_ORVA_POINTS, IS_ORVA_RIGHT_PAIN_POINTS, KEY_NUMBERS } from "@/lib/constants";
-import { LampEffect } from "@/components/ui/LampEffect";
 import { TextGenerateEffect } from "@/components/ui/TextGenerateEffect";
-import { Spotlight } from "@/components/ui/Spotlight";
 import { MovingBorderLink } from "@/components/ui/MovingBorderButton";
-import { BentoGrid, BentoGridItem } from "@/components/ui/BentoGrid";
+import { Spotlight } from "@/components/ui/Spotlight";
+import { FloatingGeometry } from "@/components/ui/FloatingGeometry";
+import { GridPattern } from "@/components/ui/GridPattern";
+import { ScrollRevealStrip } from "@/components/ui/ScrollAnimations";
 
 export default function WhyOrvaPage() {
   useLenis();
@@ -30,6 +30,7 @@ export default function WhyOrvaPage() {
             <Image src="/images/img01.jpeg" alt="Students at university" fill className="object-cover" sizes="100vw" priority />
             <div className="absolute inset-0 bg-gradient-to-r from-[#0F0F0F] via-[#0F0F0F]/85 to-[#0F0F0F]/60" />
           </div>
+          <FloatingGeometry variant="dark" density="sparse" />
           <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-12 py-20 md:py-32">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -57,9 +58,19 @@ export default function WhyOrvaPage() {
           </div>
         </section>
 
+        {/* Scrolling text strip */}
+        <div className="py-4 overflow-hidden" style={{ background: COLORS.deepBlack }}>
+          <ScrollRevealStrip direction="left">
+            <span className="text-[clamp(16px,2vw,22px)] font-bold text-white/10 uppercase tracking-[0.2em]">
+              Strategy &bull; Profile Building &bull; Applications &bull; Family Support &bull; Career Futures &bull; Personalised Guidance &bull; Strategy &bull; Profile Building &bull; Applications &bull; Family Support &bull; Career Futures &bull; Personalised Guidance
+            </span>
+          </ScrollRevealStrip>
+        </div>
+
         {/* Six Points Section — Cards with imagery */}
         <section className="relative py-20 md:py-32 px-6 md:px-12" style={{ background: COLORS.warmCream }}>
-          <div className="max-w-7xl mx-auto">
+          <GridPattern variant="light" />
+          <div className="relative z-10 max-w-7xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {WHY_ORVA_POINTS.map((point, idx) => (
                 <motion.div
@@ -68,8 +79,14 @@ export default function WhyOrvaPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: idx * 0.08 }}
-                  className={`group relative p-8 rounded-2xl bg-white border border-black/[0.06] hover:border-red-300/60 hover:shadow-xl transition-all duration-300 overflow-hidden ${idx === 0 || idx === 3 ? "md:col-span-2 lg:col-span-1" : ""}`}
+                  className="group relative p-8 rounded-2xl bg-white border border-black/[0.06] hover:border-red-300/60 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden"
                 >
+                  {/* Animated corner accent */}
+                  <div className="absolute -top-6 -right-6 w-16 h-16 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <svg viewBox="0 0 60 60" className="w-full h-full animate-spin-slow">
+                      <circle cx="30" cy="30" r="25" fill="none" stroke="rgba(213,30,32,0.1)" strokeWidth="0.5" strokeDasharray="4 6" />
+                    </svg>
+                  </div>
                   {/* Subtle background pattern */}
                   <div className="absolute top-0 right-0 w-24 h-24 opacity-[0.04] group-hover:opacity-[0.08] transition-opacity">
                     <Image src={`/images/img${String(idx + 8).padStart(2, '0')}.jpeg`} alt="" fill className="object-cover rounded-2xl" sizes="96px" />
@@ -88,8 +105,9 @@ export default function WhyOrvaPage() {
         </section>
 
         {/* Is ORVA Right For You — Dark section with image */}
-        <section className="relative overflow-hidden" style={{ background: COLORS.deepBlack }}>
+        <section className="relative overflow-hidden noise-bg" style={{ background: COLORS.deepBlack }}>
           <Spotlight fill="#D51E20" />
+          <FloatingGeometry variant="dark" density="normal" />
           <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-0 items-center relative z-10">
             {/* Content */}
             <div className="lg:col-span-3 px-6 md:px-12 py-20 md:py-28">
@@ -153,12 +171,19 @@ export default function WhyOrvaPage() {
             >
               <Image src="/images/img03.jpeg" alt="Family guidance" fill className="object-cover" sizes="40vw" />
               <div className="absolute inset-0 bg-gradient-to-l from-transparent to-[#0F0F0F]" />
+              {/* Decorative rotating ring on image */}
+              <div className="absolute top-10 right-10 w-32 h-32 animate-spin-slow opacity-20">
+                <svg viewBox="0 0 100 100" className="w-full h-full">
+                  <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(213,30,32,0.6)" strokeWidth="0.5" strokeDasharray="4 8" />
+                </svg>
+              </div>
             </motion.div>
           </div>
         </section>
 
         {/* Key Numbers Section */}
         <section className="relative py-20 md:py-28 px-6 md:px-12 overflow-hidden" style={{ background: COLORS.warmSand }}>
+          <GridPattern variant="light" />
           <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
             <Image src="/images/img15.jpeg" alt="" fill className="object-cover" sizes="100vw" />
           </div>
@@ -184,7 +209,7 @@ export default function WhyOrvaPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: idx * 0.1 }}
-                  className="text-center p-6 md:p-8 rounded-2xl bg-white border border-black/[0.06] hover:shadow-lg transition-all duration-300"
+                  className="text-center p-6 md:p-8 rounded-2xl bg-white border border-black/[0.06] hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
                 >
                   <div className="text-4xl md:text-5xl font-black mb-3" style={{ color: COLORS.primary }}>{stat.value}</div>
                   <p className="text-sm leading-relaxed" style={{ color: COLORS.textLight }}>{stat.label}</p>
@@ -200,6 +225,7 @@ export default function WhyOrvaPage() {
             <Image src="/images/img12.jpeg" alt="" fill className="object-cover" sizes="100vw" />
             <div className="absolute inset-0 bg-gradient-to-r from-[#520A0B]/95 to-[#D51E20]/90" />
           </div>
+          <FloatingGeometry variant="dark" density="sparse" />
           <div className="relative z-10 max-w-3xl mx-auto px-6 md:px-12 text-center">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -217,7 +243,8 @@ export default function WhyOrvaPage() {
 
         {/* The Future Section */}
         <section className="relative overflow-hidden" style={{ background: COLORS.warmCream }}>
-          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-0 items-center">
+          <FloatingGeometry variant="light" density="sparse" />
+          <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-0 items-center">
             {/* Image */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
@@ -228,6 +255,12 @@ export default function WhyOrvaPage() {
             >
               <Image src="/images/img16.jpeg" alt="Future careers" fill className="object-cover" sizes="50vw" />
               <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#FBF9F6]/60" />
+              {/* Floating decorative element */}
+              <div className="absolute bottom-12 left-12 w-20 h-20 animate-float">
+                <svg viewBox="0 0 80 80" className="w-full h-full">
+                  <rect x="10" y="10" width="60" height="60" fill="none" stroke="rgba(213,30,32,0.3)" strokeWidth="0.5" rx="8" transform="rotate(15 40 40)" />
+                </svg>
+              </div>
             </motion.div>
 
             {/* Content */}
