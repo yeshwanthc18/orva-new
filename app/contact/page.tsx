@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/Button";
 import { FloatingGeometry } from "@/components/ui/FloatingGeometry";
 import { GridPattern } from "@/components/ui/GridPattern";
 import { supabase } from "@/lib/supabase";
+import EventPreheader from "@/components/PreHeader";
 
 const INPUT_BASE =
   "w-full bg-white border border-black/10 rounded-xl px-4 py-3.5 text-sm text-[#181818] font-[Cairo,sans-serif] outline-none transition-all duration-200 focus:border-red-500/50 focus:shadow-md focus:ring-2 focus:ring-red-500/10";
@@ -22,8 +23,20 @@ const LABEL_BASE =
   "block text-[10px] tracking-[0.2em] uppercase font-bold text-[rgba(24,24,24,0.4)] mb-2";
 
 const TIME_SLOTS = [
-  "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
-  "12:00", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00",
+  "09:00",
+  "09:30",
+  "10:00",
+  "10:30",
+  "11:00",
+  "11:30",
+  "12:00",
+  "14:00",
+  "14:30",
+  "15:00",
+  "15:30",
+  "16:00",
+  "16:30",
+  "17:00",
 ];
 
 function getAvailableDates(): string[] {
@@ -46,14 +59,23 @@ function getAvailableDates(): string[] {
 
 function formatDate(dateStr: string): string {
   const date = new Date(dateStr + "T00:00:00");
-  return date.toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" });
+  return date.toLocaleDateString("en-GB", {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+  });
 }
 
 export default function ContactPage() {
   useLenis();
   const [step, setStep] = useState<"form" | "booking" | "success">("form");
   const [form, setForm] = useState({
-    childName: "", schoolName: "", email: "", whatsapp: "", year: "", message: "",
+    childName: "",
+    schoolName: "",
+    email: "",
+    whatsapp: "",
+    year: "",
+    message: "",
   });
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
@@ -62,7 +84,11 @@ export default function ContactPage() {
 
   const availableDates = useMemo(() => getAvailableDates(), []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
@@ -96,10 +122,18 @@ export default function ContactPage() {
 
     setStep("success");
   };
+  const [isPreheaderOpen, setIsPreheaderOpen] = useState(true);
 
   const reset = () => {
     setStep("form");
-    setForm({ childName: "", schoolName: "", email: "", whatsapp: "", year: "", message: "" });
+    setForm({
+      childName: "",
+      schoolName: "",
+      email: "",
+      whatsapp: "",
+      year: "",
+      message: "",
+    });
     setSelectedDate("");
     setSelectedTime("");
   };
@@ -108,18 +142,32 @@ export default function ContactPage() {
     <>
       <Cursor />
       <Trail />
-      <Navbar />
+      <EventPreheader onClose={setIsPreheaderOpen} />
+      <Navbar isPreheaderOpen={isPreheaderOpen} />
       <main className="pt-16">
         {/* Hero */}
         <section className="relative min-h-[60vh] flex items-center overflow-hidden">
           <div className="absolute inset-0">
-            <Image src="/images/img13.jpeg" alt="Contact ORVA" fill className="object-cover" sizes="100vw" priority />
+            <Image
+              src="/images/image13.png"
+              alt="Contact ORVA"
+              fill
+              className="object-cover"
+              sizes="100vw"
+              priority
+            />
             <div className="absolute inset-0 bg-gradient-to-r from-[#0F0F0F] via-[#0F0F0F]/90 to-[#0F0F0F]/60" />
           </div>
           <FloatingGeometry variant="dark" density="sparse" />
           <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-12 py-20 md:py-32">
-            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-              <span className="label text-white/80 mb-8">Book a Consultation</span>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <span className="label text-white/80 mb-8">
+                Book a Consultation
+              </span>
               <TextGenerateEffect
                 words="The first conversation is always free."
                 className="text-[clamp(36px,6vw,56px)] leading-[1.1] tracking-tight mb-8 mt-6"
@@ -134,14 +182,16 @@ export default function ContactPage() {
                 className="text-lg md:text-xl leading-relaxed max-w-3xl"
                 style={{ color: "rgba(251,249,246,0.7)" }}
               >
-                No pitch. No obligation. Just 30 honest minutes about your child. If there&apos;s a fit, we&apos;ll tell you. If there isn&apos;t, we&apos;ll tell you that too.
+                No pitch. No obligation. Just 30 honest minutes about your
+                child. If there&apos;s a fit, we&apos;ll tell you. If there
+                isn&apos;t, we&apos;ll tell you that too.
               </motion.p>
             </motion.div>
           </div>
         </section>
 
         {/* Contact Info Cards */}
-        <section className="relative py-16 md:py-24 px-6 md:px-12" style={{ background: COLORS.warmCream }}>
+        {/* <section className="relative py-16 md:py-24 px-6 md:px-12" style={{ background: COLORS.warmCream }}>
           <GridPattern variant="light" />
           <div className="relative z-10 max-w-5xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -169,10 +219,13 @@ export default function ContactPage() {
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* Booking Form Section */}
-        <section className="relative overflow-hidden" style={{ background: COLORS.warmSand }}>
+        <section
+          className="relative overflow-hidden mt-20"
+          style={{ background: COLORS.warmSand }}
+        >
           <FloatingGeometry variant="light" density="sparse" />
           <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-0">
             {/* Form / Booking Steps */}
@@ -188,40 +241,96 @@ export default function ContactPage() {
                   >
                     {/* Step indicator */}
                     <div className="flex items-center gap-3 mb-8">
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#D51E20] to-[#FA8322] flex items-center justify-center text-white text-xs font-bold">1</div>
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#D51E20] to-[#FA8322] flex items-center justify-center text-white text-xs font-bold">
+                        1
+                      </div>
                       <div className="h-[2px] flex-1 bg-black/[0.06]" />
-                      <div className="w-8 h-8 rounded-full bg-black/[0.06] flex items-center justify-center text-[rgba(28,28,28,0.3)] text-xs font-bold">2</div>
+                      <div className="w-8 h-8 rounded-full bg-black/[0.06] flex items-center justify-center text-[rgba(28,28,28,0.3)] text-xs font-bold">
+                        2
+                      </div>
                     </div>
 
-                    <h2 className="text-2xl md:text-3xl font-bold mb-2" style={{ color: COLORS.textDark }}>Tell us about your child</h2>
-                    <p className="text-base mb-8" style={{ color: COLORS.textLight }}>We&apos;ll get back to you personally to confirm.</p>
+                    <h2
+                      className="text-2xl md:text-3xl font-bold mb-2"
+                      style={{ color: COLORS.textDark }}
+                    >
+                      Tell us about your child
+                    </h2>
+                    <p
+                      className="text-base mb-8"
+                      style={{ color: COLORS.textLight }}
+                    >
+                      We&apos;ll get back to you personally to confirm.
+                    </p>
 
                     <form onSubmit={handleFormNext} className="space-y-5">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
-                          <label className={LABEL_BASE}>Your child&apos;s name</label>
-                          <input type="text" name="childName" value={form.childName} onChange={handleChange} placeholder="First and last name" className={INPUT_BASE} required />
+                          <label className={LABEL_BASE}>
+                            Your child&apos;s name
+                          </label>
+                          <input
+                            type="text"
+                            name="childName"
+                            value={form.childName}
+                            onChange={handleChange}
+                            placeholder="First and last name"
+                            className={INPUT_BASE}
+                            required
+                          />
                         </div>
                         <div>
                           <label className={LABEL_BASE}>School name</label>
-                          <input type="text" name="schoolName" value={form.schoolName} onChange={handleChange} placeholder="Current school" className={INPUT_BASE} required />
+                          <input
+                            type="text"
+                            name="schoolName"
+                            value={form.schoolName}
+                            onChange={handleChange}
+                            placeholder="Current school"
+                            className={INPUT_BASE}
+                            required
+                          />
                         </div>
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
                           <label className={LABEL_BASE}>Your email</label>
-                          <input type="email" name="email" value={form.email} onChange={handleChange} placeholder="your@email.com" className={INPUT_BASE} required />
+                          <input
+                            type="email"
+                            name="email"
+                            value={form.email}
+                            onChange={handleChange}
+                            placeholder="your@email.com"
+                            className={INPUT_BASE}
+                            required
+                          />
                         </div>
                         <div>
-                          <label className={LABEL_BASE}>Your WhatsApp number</label>
-                          <input type="tel" name="whatsapp" value={form.whatsapp} onChange={handleChange} placeholder="+971 50 123 4567" className={INPUT_BASE} required />
+                          <label className={LABEL_BASE}>
+                            Your WhatsApp number
+                          </label>
+                          <input
+                            type="tel"
+                            name="whatsapp"
+                            value={form.whatsapp}
+                            onChange={handleChange}
+                            placeholder="+971 50 123 4567"
+                            className={INPUT_BASE}
+                            required
+                          />
                         </div>
                       </div>
 
                       <div>
-                        <label className={LABEL_BASE}>Your child&apos;s current year</label>
-                        <select name="year" value={form.year} onChange={handleChange} className={`${INPUT_BASE} appearance-none`}
+                        <label className={LABEL_BASE}>
+                          Your child&apos;s current year
+                        </label>
+                        <select
+                          name="year"
+                          value={form.year}
+                          onChange={handleChange}
+                          className={`${INPUT_BASE} appearance-none`}
                           style={{
                             backgroundImage: `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(24,24,24,.5)' stroke-width='2'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e")`,
                             backgroundRepeat: "no-repeat",
@@ -241,13 +350,22 @@ export default function ContactPage() {
                       </div>
 
                       <div>
-                        <label className={LABEL_BASE}>What are you hoping to achieve?</label>
-                        <textarea name="message" value={form.message} onChange={handleChange}
+                        <label className={LABEL_BASE}>
+                          What are you hoping to achieve?
+                        </label>
+                        <textarea
+                          name="message"
+                          value={form.message}
+                          onChange={handleChange}
                           placeholder="Tell us a little about your child and what you're thinking about."
-                          className={`${INPUT_BASE} resize-none`} rows={4} />
+                          className={`${INPUT_BASE} resize-none`}
+                          rows={4}
+                        />
                       </div>
 
-                      <Button type="submit" variant="primary" size="lg">Choose a Time</Button>
+                      <Button type="submit" variant="primary" size="lg">
+                        Choose a Time
+                      </Button>
                     </form>
                   </motion.div>
                 )}
@@ -263,14 +381,39 @@ export default function ContactPage() {
                     {/* Step indicator */}
                     <div className="flex items-center gap-3 mb-8">
                       <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#D51E20] to-[#FA8322] flex items-center justify-center text-white text-xs font-bold">
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                        <svg
+                          width="12"
+                          height="12"
+                          viewBox="0 0 12 12"
+                          fill="none"
+                        >
+                          <path
+                            d="M2 6l3 3 5-5"
+                            stroke="white"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
                       </div>
                       <div className="h-[2px] flex-1 bg-gradient-to-r from-[#D51E20] to-[#FA8322]" />
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#D51E20] to-[#FA8322] flex items-center justify-center text-white text-xs font-bold">2</div>
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#D51E20] to-[#FA8322] flex items-center justify-center text-white text-xs font-bold">
+                        2
+                      </div>
                     </div>
 
-                    <h2 className="text-2xl md:text-3xl font-bold mb-2" style={{ color: COLORS.textDark }}>Pick a date and time</h2>
-                    <p className="text-base mb-8" style={{ color: COLORS.textLight }}>30-minute consultation with Daniela. Free, no obligation.</p>
+                    <h2
+                      className="text-2xl md:text-3xl font-bold mb-2"
+                      style={{ color: COLORS.textDark }}
+                    >
+                      Pick a date and time
+                    </h2>
+                    <p
+                      className="text-base mb-8"
+                      style={{ color: COLORS.textLight }}
+                    >
+                      30-minute consultation with Daniela. Free, no obligation.
+                    </p>
 
                     {/* Date Selection */}
                     <div className="mb-8">
@@ -280,13 +423,21 @@ export default function ContactPage() {
                           <button
                             key={date}
                             type="button"
-                            onClick={() => { setSelectedDate(date); setSelectedTime(""); }}
+                            onClick={() => {
+                              setSelectedDate(date);
+                              setSelectedTime("");
+                            }}
                             className={`p-3 rounded-xl text-center transition-all duration-200 border text-xs font-bold ${
                               selectedDate === date
                                 ? "bg-gradient-to-br from-[#D51E20] to-[#FA8322] text-white border-transparent shadow-lg scale-105"
                                 : "bg-white border-black/[0.06] hover:border-red-300/60 hover:shadow-md"
                             }`}
-                            style={{ color: selectedDate === date ? undefined : COLORS.textDark }}
+                            style={{
+                              color:
+                                selectedDate === date
+                                  ? undefined
+                                  : COLORS.textDark,
+                            }}
                           >
                             {formatDate(date)}
                           </button>
@@ -296,8 +447,14 @@ export default function ContactPage() {
 
                     {/* Time Selection */}
                     {selectedDate && (
-                      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
-                        <label className={LABEL_BASE}>Select a time (Dubai time, GMT+4)</label>
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <label className={LABEL_BASE}>
+                          Select a time (Dubai time, GMT+4)
+                        </label>
                         <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-7 gap-2 mt-3">
                           {TIME_SLOTS.map((time) => (
                             <button
@@ -309,7 +466,12 @@ export default function ContactPage() {
                                   ? "bg-gradient-to-br from-[#D51E20] to-[#FA8322] text-white border-transparent shadow-lg scale-105"
                                   : "bg-white border-black/[0.06] hover:border-red-300/60 hover:shadow-md"
                               }`}
-                              style={{ color: selectedTime === time ? undefined : COLORS.textDark }}
+                              style={{
+                                color:
+                                  selectedTime === time
+                                    ? undefined
+                                    : COLORS.textDark,
+                              }}
                             >
                               {time}
                             </button>
@@ -319,7 +481,9 @@ export default function ContactPage() {
                     )}
 
                     {error && (
-                      <p className="text-sm text-red-600 font-semibold mt-4">{error}</p>
+                      <p className="text-sm text-red-600 font-semibold mt-4">
+                        {error}
+                      </p>
                     )}
 
                     <div className="flex flex-wrap gap-3 mt-8">
@@ -327,11 +491,21 @@ export default function ContactPage() {
                         onClick={handleBooking}
                         variant="primary"
                         size="lg"
-                        className={!selectedDate || !selectedTime || submitting ? "opacity-50 pointer-events-none" : ""}
+                        className={
+                          !selectedDate || !selectedTime || submitting
+                            ? "opacity-50 pointer-events-none"
+                            : ""
+                        }
                       >
                         {submitting ? "Booking..." : "Confirm Booking"}
                       </Button>
-                      <Button onClick={() => setStep("form")} variant="secondary" size="md">Back</Button>
+                      <Button
+                        onClick={() => setStep("form")}
+                        variant="secondary"
+                        size="md"
+                      >
+                        Back
+                      </Button>
                     </div>
                   </motion.div>
                 )}
@@ -345,21 +519,46 @@ export default function ContactPage() {
                     className="text-center py-12"
                   >
                     <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-[#D51E20] to-[#FA8322] flex items-center justify-center">
-                      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <svg
+                        width="32"
+                        height="32"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="white"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
                         <polyline points="20 6 9 17 4 12"></polyline>
                       </svg>
                     </div>
-                    <h2 className="text-3xl font-bold mb-4" style={{ color: COLORS.textDark }}>Booking Confirmed</h2>
-                    <p className="text-lg mb-2" style={{ color: COLORS.textLight }}>
+                    <h2
+                      className="text-3xl font-bold mb-4"
+                      style={{ color: COLORS.textDark }}
+                    >
+                      Booking Confirmed
+                    </h2>
+                    <p
+                      className="text-lg mb-2"
+                      style={{ color: COLORS.textLight }}
+                    >
                       Your consultation is scheduled for:
                     </p>
-                    <p className="text-xl font-bold mb-6" style={{ color: COLORS.primary }}>
+                    <p
+                      className="text-xl font-bold mb-6"
+                      style={{ color: COLORS.primary }}
+                    >
                       {formatDate(selectedDate)} at {selectedTime} (Dubai time)
                     </p>
-                    <p className="text-base mb-8" style={{ color: COLORS.textMuted }}>
+                    <p
+                      className="text-base mb-8"
+                      style={{ color: COLORS.textMuted }}
+                    >
                       We&apos;ll send a confirmation to {form.email} shortly.
                     </p>
-                    <Button onClick={reset} variant="secondary" size="md">Book Another</Button>
+                    <Button onClick={reset} variant="secondary" size="md">
+                      Book Another
+                    </Button>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -373,16 +572,34 @@ export default function ContactPage() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="hidden lg:block relative min-h-[700px]"
             >
-              <Image src="/images/img07.jpeg" alt="Consultation" fill className="object-cover" sizes="50vw" />
+              <Image
+                src="/images/image15.png"
+                alt="Consultation"
+                fill
+                className="object-cover"
+                sizes="50vw"
+              />
               <div className="absolute inset-0 bg-gradient-to-l from-transparent to-[#F5F2ED]/40" />
               {/* Glassmorphism overlay */}
               <div className="absolute bottom-8 left-8 right-8 p-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20">
-                <p className="text-white text-lg font-bold mb-2">30 minutes. Zero obligation.</p>
-                <p className="text-white/70 text-sm">Every journey starts with an honest conversation.</p>
+                <p className="text-white text-lg font-bold mb-2">
+                  30 minutes. Zero obligation.
+                </p>
+                <p className="text-white/70 text-sm">
+                  Every journey starts with an honest conversation.
+                </p>
               </div>
               <div className="absolute top-8 right-8 w-16 h-16 animate-spin-slow opacity-20">
                 <svg viewBox="0 0 60 60" className="w-full h-full">
-                  <circle cx="30" cy="30" r="25" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="0.5" strokeDasharray="4 6" />
+                  <circle
+                    cx="30"
+                    cy="30"
+                    r="25"
+                    fill="none"
+                    stroke="rgba(255,255,255,0.5)"
+                    strokeWidth="0.5"
+                    strokeDasharray="4 6"
+                  />
                 </svg>
               </div>
             </motion.div>

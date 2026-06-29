@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -9,41 +9,72 @@ import Trail from "@/components/Trail";
 import { useLenis } from "@/hooks/useLenis";
 import { ServiceCard, ProcessSteps, PricingTiers } from "@/components/services";
 import { COLORS } from "@/lib/constants";
+import EventPreheader from "@/components/PreHeader";
 
 const SERVICES = [
   {
     id: "01",
     title: "University Selection & Strategy",
-    description: "Identifying the perfect universities that align with your aspirations, academic profile, and long-term goals. We assess fit across academics, culture, location, and post-graduation opportunities.",
-    features: ["Profile Assessment", "University Database Analysis", "Risk-Safety-Target Framework", "International Rankings Review"],
+    description:
+      "Identifying the perfect universities that align with your aspirations, academic profile, and long-term goals. We assess fit across academics, culture, location, and post-graduation opportunities.",
+    features: [
+      "Profile Assessment",
+      "University Database Analysis",
+      "Risk-Safety-Target Framework",
+      "International Rankings Review",
+    ],
     img: "/images/img02.jpeg",
   },
   {
     id: "02",
     title: "Application & Essay Guidance",
-    description: "Crafting compelling application materials that showcase your authentic voice. From brainstorming to final polish, every essay reflects your unique story.",
-    features: ["Essay Strategy & Planning", "Brainstorming Sessions", "Iterative Writing Support", "Interview Preparation"],
+    description:
+      "Crafting compelling application materials that showcase your authentic voice. From brainstorming to final polish, every essay reflects your unique story.",
+    features: [
+      "Essay Strategy & Planning",
+      "Brainstorming Sessions",
+      "Iterative Writing Support",
+      "Interview Preparation",
+    ],
     img: "/images/img03.jpeg",
   },
   {
     id: "03",
     title: "Standardized Test Coaching",
-    description: "Comprehensive SAT/ACT preparation tailored to your learning style. We focus on understanding concepts, not just test tactics.",
-    features: ["Diagnostic Testing", "Personalized Study Plans", "Section-Specific Tutoring", "Score Optimization Strategy"],
+    description:
+      "Comprehensive SAT/ACT preparation tailored to your learning style. We focus on understanding concepts, not just test tactics.",
+    features: [
+      "Diagnostic Testing",
+      "Personalized Study Plans",
+      "Section-Specific Tutoring",
+      "Score Optimization Strategy",
+    ],
     img: "/images/img04.jpeg",
   },
   {
     id: "04",
     title: "Scholarship & Financial Aid",
-    description: "Navigating the complex world of scholarships, grants, and financial packages. Maximizing your financial aid opportunities.",
-    features: ["Scholarship Search & Matching", "FAFSA Guidance", "Aid Package Analysis", "Negotiation Support"],
+    description:
+      "Navigating the complex world of scholarships, grants, and financial packages. Maximizing your financial aid opportunities.",
+    features: [
+      "Scholarship Search & Matching",
+      "FAFSA Guidance",
+      "Aid Package Analysis",
+      "Negotiation Support",
+    ],
     img: "/images/img05.jpeg",
   },
   {
     id: "05",
     title: "Visa & Transition Support",
-    description: "From visa applications to settling into university life. We handle the logistics so you can focus on your journey.",
-    features: ["Visa Application Assistance", "Accommodation Sourcing", "Pre-Arrival Orientation", "Ongoing Support Network"],
+    description:
+      "From visa applications to settling into university life. We handle the logistics so you can focus on your journey.",
+    features: [
+      "Visa Application Assistance",
+      "Accommodation Sourcing",
+      "Pre-Arrival Orientation",
+      "Ongoing Support Network",
+    ],
     img: "/images/img06.jpeg",
   },
 ];
@@ -52,25 +83,29 @@ const PROCESS_STEPS = [
   {
     number: "01",
     title: "Discovery Session",
-    description: "We begin with an in-depth conversation to understand your strengths, interests, goals, and family values. This foundation shapes everything that follows.",
+    description:
+      "We begin with an in-depth conversation to understand your strengths, interests, goals, and family values. This foundation shapes everything that follows.",
     timeline: "Week 1-2",
   },
   {
     number: "02",
     title: "Strategic Planning",
-    description: "Based on discovery insights, we create a personalized roadmap including university targets, test preparation timeline, and application strategy.",
+    description:
+      "Based on discovery insights, we create a personalized roadmap including university targets, test preparation timeline, and application strategy.",
     timeline: "Week 3-4",
   },
   {
     number: "03",
     title: "Preparation Phase",
-    description: "Intensive support for test prep, essay writing, interview training, and application submission. Weekly check-ins and iterative feedback.",
+    description:
+      "Intensive support for test prep, essay writing, interview training, and application submission. Weekly check-ins and iterative feedback.",
     timeline: "Month 2-6",
   },
   {
     number: "04",
     title: "Decision & Enrollment",
-    description: "Analyzing offers, understanding aid packages, visa processes, and transitioning to your chosen university. We stay with you through enrollment.",
+    description:
+      "Analyzing offers, understanding aid packages, visa processes, and transitioning to your chosen university. We stay with you through enrollment.",
     timeline: "Month 7-9",
   },
 ];
@@ -124,16 +159,16 @@ const PRICING_TIERS = [
   },
 ];
 
-
-
 export default function ServicesPage() {
   useLenis();
+  const [isPreheaderOpen, setIsPreheaderOpen] = useState(true);
 
   return (
     <>
       <Cursor />
       <Trail />
-      <Navbar />
+      <EventPreheader onClose={setIsPreheaderOpen} />
+      <Navbar isPreheaderOpen={isPreheaderOpen} />
       <main className="pt-16">
         {/* Hero Section */}
         <section
@@ -161,7 +196,9 @@ export default function ServicesPage() {
                 Comprehensive University Guidance
               </h1>
               <p className="text-lg md:text-xl text-white/70 leading-relaxed max-w-2xl">
-                From strategy to enrollment, we provide end-to-end support designed specifically for ambitious GCC students and their families.
+                From strategy to enrollment, we provide end-to-end support
+                designed specifically for ambitious GCC students and their
+                families.
               </p>
             </motion.div>
           </div>
@@ -191,11 +228,18 @@ export default function ServicesPage() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <h2 className="text-3xl md:text-5xl font-bold mb-6 leading-tight" style={{ color: COLORS.textDark }}>
+              <h2
+                className="text-3xl md:text-5xl font-bold mb-6 leading-tight"
+                style={{ color: COLORS.textDark }}
+              >
                 Ready to Start Your Journey?
               </h2>
-              <p className="text-lg mb-8 leading-relaxed" style={{ color: COLORS.textLight }}>
-                Schedule a free consultation to discuss your goals and find the right service package for you.
+              <p
+                className="text-lg mb-8 leading-relaxed"
+                style={{ color: COLORS.textLight }}
+              >
+                Schedule a free consultation to discuss your goals and find the
+                right service package for you.
               </p>
               <a
                 href="/contact"
@@ -228,5 +272,3 @@ export default function ServicesPage() {
     </>
   );
 }
-
-

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { X } from "lucide-react";
+import AnimatedGradientSection from "./AnimatedGradient";
 
 export default function AnnouncementBar() {
   const [visible, setVisible] = useState(true);
@@ -22,6 +23,7 @@ export default function AnnouncementBar() {
   if (!visible) return null;
 
   return (
+    <AnimatedGradientSection className="py-32">
     <div
       style={{
         //position: "fixed",
@@ -97,5 +99,6 @@ export default function AnnouncementBar() {
         </button>
       </div>
     </div>
+    </AnimatedGradientSection>
   );
 }

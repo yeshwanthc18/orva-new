@@ -56,7 +56,7 @@ export default function Loader() {
             initial={{ opacity:0, y:8 }}
             animate={ph==='hold' ? { opacity:1, y:0 } : { opacity:0, y: ph==='fly' ? -6 : 8 }}
             transition={{ duration:.38 }}>
-            Rise.&nbsp;&nbsp;Guided.
+            Elite&nbsp;&nbsp;Admissions.
           </motion.p>
 
           {/* Progress */}

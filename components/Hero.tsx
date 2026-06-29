@@ -9,6 +9,7 @@ import {
   useMotionValue,
   Variants,
 } from "framer-motion";
+import { Button } from "./ui/Button";
 
 // Free Unsplash — Oxford Radcliffe Camera, iconic university
 const UNI_URL =
@@ -126,7 +127,7 @@ export default function Hero() {
             y: bgY,
             x: bgMx,
             background:
-              "radial-gradient(circle at 8% 6%, #ff5a1f 0%, #ea3a12 18%, #d61b0e 40%, #b4040c 68%, #8d0008 100%)",
+              "radial-gradient(circle at 8% 6%, #F75105 0%, #e63d0b 30%, #c42711 65%, #AA1A12 100%)",
             zIndex: 0,
             opacity: 0.7,
           }}
@@ -223,7 +224,7 @@ export default function Hero() {
           }}
         >
           <motion.img
-            src="/girl.png"
+            src="/girl-new.png"
             alt="Student portrait reference cutout"
             initial={{ opacity: 0, scale: 0.97, y: 25 }}
             animate={ready ? { opacity: 1, scale: 1, y: 0 } : {}}
@@ -297,7 +298,7 @@ export default function Hero() {
             opacity: 0.5,
           }}
         >
-          <motion.div
+          {/* <motion.div
             variants={stagger}
             initial="hidden"
             animate={ready ? "show" : "hidden"}
@@ -333,7 +334,7 @@ export default function Hero() {
               Guiding ambitious students from ambition to admission and into a
               thriving first year at the right university.
             </motion.p>
-          </motion.div>
+          </motion.div> */}
         </motion.div>
 
         {/* ═══════════════════════════════════════════
@@ -362,38 +363,16 @@ export default function Hero() {
               alignItems: "center",
             }}
           >
-            <a
-              href="#contact"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 10,
-                padding: "14px 34px",
-                background: "#f8f6f2",
-                color: "#380202",
-                borderRadius: 999,
-                fontWeight: 700,
-                fontSize: 13,
-                letterSpacing: ".02em",
-                textDecoration: "none",
-                boxShadow: "0 8px 30px rgba(0,0,0,0.35)",
-                transition: "transform .2s ease, background-color .2s",
-              }}
-              onMouseEnter={(e) => {
-                const el = e.currentTarget;
-                el.style.transform = "translateY(-2px)";
-                el.style.backgroundColor = "#fdc98e";
-              }}
-              onMouseLeave={(e) => {
-                const el = e.currentTarget;
-                el.style.transform = "translateY(0)";
-                el.style.backgroundColor = "#f8f6f2";
-              }}
+            <Button
+              href="/contact"
+              variant="primary"
+              size="lg"
+              className="inline-flex items-center gap-2"
             >
-              Begin Your Journey
+              <span>Begin Your Journey</span>
+
               <svg
-                width="14"
-                height="14"
+                className="w-4 h-4 shrink-0"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -405,35 +384,15 @@ export default function Hero() {
                   d="M17 8l4 4m0 0l-4 4m4-4H3"
                 />
               </svg>
-            </a>
-            <a
-              href="#story"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                padding: "14px 34px",
-                border: "1.5px solid rgba(248, 246, 242, 0.25)",
-                color: "#f8f6f2",
-                borderRadius: 999,
-                fontWeight: 600,
-                fontSize: 13,
-                textDecoration: "none",
-                backdropFilter: "blur(4px)",
-                transition: "border-color .2s, background-color .2s",
-              }}
-              onMouseEnter={(e) => {
-                const el = e.currentTarget;
-                el.style.borderColor = "#fdc98e";
-                el.style.backgroundColor = "rgba(253,201,142,0.08)";
-              }}
-              onMouseLeave={(e) => {
-                const el = e.currentTarget;
-                el.style.borderColor = "rgba(248, 246, 242, 0.25)";
-                el.style.backgroundColor = "transparent";
-              }}
+            </Button>
+            <Button
+              href="/contact"
+              variant="secondaryLight"
+              size="lg"
+              className="inline-flex"
             >
               Our Story
-            </a>
+            </Button>
           </motion.div>
         </motion.div>
 
@@ -452,24 +411,26 @@ export default function Hero() {
             gap: 28,
           }}
         >
-          {["UAE", "KSA", "QAT", "UK", "USA"].map((c) => (
-            <span
-              key={c}
-              style={{
-                fontSize: 11,
-                letterSpacing: ".25em",
-                fontWeight: 700,
-                textTransform: "uppercase",
-                color: "rgba(248, 246, 242, 0.65)",
-                writingMode: "vertical-lr",
-                textOrientation: "mixed",
-                transform: "rotate(180deg)",
-                userSelect: "none",
-              }}
-            >
-              {c}
-            </span>
-          ))}
+          {["Online Globally", "Jeddah", "Riyadh", "Abu Dhabi", "Dubai"].map(
+            (c) => (
+              <span
+                key={c}
+                style={{
+                  fontSize: 11,
+                  letterSpacing: ".25em",
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  color: "rgba(248, 246, 242, 0.65)",
+                  writingMode: "vertical-lr",
+                  textOrientation: "mixed",
+                  transform: "rotate(180deg)",
+                  userSelect: "none",
+                }}
+              >
+                {c}
+              </span>
+            ),
+          )}
         </div>
 
         {/* ═══════════════════════════════════════════
@@ -493,10 +454,10 @@ export default function Hero() {
           }}
         >
           {[
-            ["500+", "Students"],
-            ["150+", "Universities"],
-            ["7", "Countries"],
-            ["98%", "Placement"],
+            ["Top 100", "Universities"],
+            ["15+", "Experience"],
+            ["50", "Families"],
+            ["100%", "Personalized"],
           ].map(([n, l]) => (
             <div key={l} style={{ textAlign: "left" }}>
               <div

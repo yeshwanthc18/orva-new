@@ -1,6 +1,6 @@
 export const COLORS = {
-  primary: "#D51E20",
-  primaryDark: "#520A0B",
+  primary: "#F75105",
+  primaryDark: "#AA1A12",
   deepBlack: "#0F0F0F",
   warmCream: "#FBF9F6",
   warmSand: "#F5F2ED",
@@ -12,7 +12,7 @@ export const COLORS = {
 export const NAV_LINKS = [
   ["Why Orva", "/why-orva"],
   ["How It Works", "/how-it-works"],
-  ["About Daniela", "/about-daniela"],
+  ["Blogs", "/resources"],
   ["Contact", "/contact"],
 ];
 
@@ -24,9 +24,74 @@ export const HERO_STATS = [
 ];
 
 export const UNIVERSITY_MARQUEE = [
-  "UCLA", "Cambridge", "Imperial", "LSE", "UCL", "Harvard", "Yale",
-  "Princeton", "Stanford", "Cornell", "Columbia", "MIT", "Amsterdam",
-  "Edinburgh", "Toronto", "Manchester",
+  {
+    name: "Harvard",
+    logo: "/univ/harvard.jpg",
+  },
+  {
+    name: "MIT",
+    logo: "/univ/mit.png",
+  },
+  {
+    name: "Stanford",
+    logo: "/univ/stanford.jpg",
+  },
+  {
+    name: "Cambridge",
+    logo: "/univ/cambridge.svg",
+  },
+  {
+    name: "Oxford",
+    logo: "/univ/oxford.svg",
+  },
+  {
+    name: "Imperial",
+    logo: "/univ/imperial.svg",
+  },
+  {
+    name: "LSE",
+    logo: "/univ/lse.svg",
+  },
+  {
+    name: "UCL",
+    logo: "/univ/ucl.svg",
+  },
+  {
+    name: "UCLA",
+    logo: "/univ/ucla.svg",
+  },
+  {
+    name: "Yale",
+    logo: "/univ/yale.svg",
+  },
+  {
+    name: "Princeton",
+    logo: "/univ/princeton.svg",
+  },
+  {
+    name: "Cornell",
+    logo: "/univ/cornell.svg",
+  },
+  {
+    name: "Columbia",
+    logo: "/univ/columbia.svg",
+  },
+  {
+    name: "Toronto",
+    logo: "/univ/toronto.svg",
+  },
+  {
+    name: "Manchester",
+    logo: "/univ/manchester.svg",
+  },
+  {
+    name: "Amsterdam",
+    logo: null,
+  },
+  {
+    name: "Edinburgh",
+    logo: null,
+  },
 ];
 
 export const WHY_ORVA_POINTS = [

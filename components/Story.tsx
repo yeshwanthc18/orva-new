@@ -9,6 +9,9 @@ import {
   useSpring,
 } from "framer-motion";
 import Image from "next/image";
+import { IS_ORVA_RIGHT_PAIN_POINTS } from "@/lib/constants";
+import { Button } from "./ui/Button";
+import GradientSection from "./AnimatedGradient";
 
 const COLORS = {
   primary: "#D51E20",
@@ -33,130 +36,6 @@ const SCENES = [
     stat: null,
     isRed: true,
   },
-  {
-    id: "02",
-    tag: "The Doorway",
-    img: "/images/img03.jpeg",
-    side: "left",
-    headline: "A world of possibilities awaits beyond.",
-    description:
-      "The path to great universities is filled with jargon, deadlines, and high-stakes decisions. We help families see the door, open it, and walk through with confidence.",
-    stat: null,
-  },
-  // {
-  //   id: "03",
-  //   tag: "The Journey",
-  //   img: "/images/img04.jpeg",
-  //   side: "right",
-  //   headline: "Guided steps today. Limitless futures tomorrow.",
-  //   description:
-  //     "We don't just point you toward a destination. We walk every step — from the first session to the day your student settles into their first term.",
-  //   stat: null,
-  // },
-  // {
-  //   id: "04",
-  //   tag: "Beyond Borders",
-  //   img: "/images/img05.jpeg",
-  //   side: "left",
-  //   headline: "Global opportunities. World-class universities.",
-  //   description:
-  //     "Top-ranked. Globally respected. From London to New York, Toronto to Amsterdam — your future has no borders.",
-  //   stat: { value: "150+", label: "Partner Universities" },
-  // },
-  {
-    id: "03",
-    tag: "Global Pathways",
-    img: "/images/img06.jpeg",
-    side: "right",
-    headline: "From iconic cities to iconic campuses.",
-    description:
-      "Your path. Your future. We map every route — UK, USA, Canada, Netherlands and beyond — finding the university that fits your life.",
-    stat: { value: "7", label: "Countries" },
-    isRed: true,
-  },
-  {
-    id: "05",
-    tag: "Families & Dreams",
-    img: "/images/img07.jpeg",
-    side: "left",
-    headline: "Proud families. Big dreams. A legacy of excellence.",
-    description:
-      "We answer to the family. We earn the trust of the institutions that shape them. Every relationship is built one conversation at a time.",
-    stat: { value: "500+", label: "Students Guided" },
-  },
-  // {
-  //   id: "05",
-  //   tag: "The Process",
-  //   img: "/images/img08.jpeg",
-  //   side: "right",
-  //   headline: "Personalised guidance at every step.",
-  //   description:
-  //     "From planning to placement — no two students are alike, so no two plans are alike. We build the strategy around each individual.",
-  //   stat: null,
-  // },
-  // {
-  //   id: "06",
-  //   tag: "Student Focus",
-  //   img: "/images/img09.jpeg",
-  //   side: "left",
-  //   headline: "Your goals. Our guidance. Extraordinary outcomes.",
-  //   description:
-  //     "We take time to understand each child — their character, their ambition, the world they are growing up in — and build around them.",
-  //   stat: { value: "98%", label: "Placement Rate" },
-  // },
-  // {
-  //   id: "09",
-  //   tag: "World-Class Universities",
-  //   img: "/images/img14.jpeg",
-  //   side: "right",
-  //   headline: "Top-ranked. Globally respected. Endless possibilities.",
-  //   description:
-  //     "Dubai. Abu Dhabi. Riyadh. Jeddah. Across the GCC, we connect ambitious students to universities that will shape their world.",
-  //   stat: null,
-  // },
-  // {
-  //   id: "10",
-  //   tag: "Achievement",
-  //   img: "/images/img11.jpeg",
-  //   side: "left",
-  //   headline: "Hard work today. Global success tomorrow.",
-  //   description:
-  //     "The offer letter is a milestone, not the finish line. We measure our work by what happens in the years that follow.",
-  //   stat: null,
-  // },
-  {
-    id: "07",
-    tag: "Purpose",
-    img: "/images/img12.jpeg",
-    side: "right",
-    headline: "Our purpose is your success.",
-    description:
-      "Your success is our pride. We serve the family, guide the student to what truly fits, and stay for the life that follows.",
-    isRed: true,
-    stat: null,
-  },
-  // {
-  //   id: "12",
-  //   tag: "Take the First Step",
-  //   img: "/images/img13.jpeg",
-  //   side: "left",
-  //   headline: "Your future starts now.",
-  //   description:
-  //     "We'll guide the way. Explore. Discover. Define your path — with expert guidance you can trust and global pathways that open every door.",
-  //   isCTA: true,
-  //   stat: null,
-  // },
-  // {
-  //   id: "13",
-  //   tag: "Rise. Guided.",
-  //   img: "/images/img15.jpeg",
-  //   side: "right",
-  //   headline: "The right guidance changes everything.",
-  //   description:
-  //     "We don't just open doors. We open the right ones. Your partner from the GCC to the world.",
-  //   isClosing: true,
-  //   stat: null,
-  // },
 ];
 
 function AnimatedCounter({
@@ -252,142 +131,103 @@ function SceneRow({
   );
 
   return (
+    <>
+    <GradientSection>
     <div
       ref={containerRef}
-      className="relative min-h-[80vh] lg:min-h-[90vh] grid grid-cols-1 lg:grid-cols-12 items-stretch overflow-hidden"
-      style={{
-        background: isRed
-          ? `linear-gradient(180deg, ${COLORS.primary} 0%, ${COLORS.primaryDark} 100%)`
-          : index % 2 === 0
-            ? COLORS.warmCream
-            : COLORS.warmSand,
-      }}
+      className="relative min-h-screen grid grid-cols-1 lg:grid-cols-2 overflow-hidden"
+     
     >
-      {/* ── Left Narrative Text Blade ── */}
-      <div
-        className={`relative lg:col-span-6 flex flex-col justify-between p-6 sm:p-10 md:p-12 lg:p-16 z-20 ${
-          isRight ? "order-1 lg:order-1" : "order-2 lg:order-2"
-        }`}
-      >
-        {/* Fine-lined Micro-HUD Header Frame inspired by image_c5afa3.png */}
-        <div className="flex items-center justify-between w-full opacity-80">
-          <div className="flex items-center gap-3">
-            <span className="relative flex h-2 w-2">
-              <span
-                className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-50 ${isRed ? "bg-white" : "bg-red-500"}`}
-              ></span>
-              <span
-                className={`relative inline-flex rounded-full h-2 w-2 ${isRed ? "bg-white" : "bg-red-600"}`}
-              ></span>
-            </span>
-            <span
-              className="text-[10px] font-bold tracking-[0.35em] uppercase"
-              style={{ color: isRed ? "#FFFFFF" : COLORS.textDark }}
-            >
-              {scene.tag}
-            </span>
-          </div>
-          <span
-            className="text-xs font-mono tracking-widest opacity-30"
-            style={{ color: isRed ? "#FFFFFF" : COLORS.textDark }}
+      {/* LEFT */}
+      <div className="relative z-10 flex items-center px-6 sm:px-10 lg:px-16 py-12 lg:py-16">
+        <div className="max-w-xl">
+          {/* Label */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-3 mb-5"
           >
-            // {scene.id}
-          </span>
-        </div>
+            <div className="h-px w-12 bg-white/60" />
+            <span className="uppercase tracking-[0.25em] text-sm font-semibold text-white/80">
+              Is ORVA Right For You?
+            </span>
+          </motion.div>
 
-        {/* High-Impact Scaled Typography Body Box */}
-        <div className="my-auto max-w-[500px] py-12 lg:py-8">
-          <div className="overflow-hidden mb-4 block">
-            <motion.h2
-              initial={{ y: "100%" }}
-              animate={inView ? { y: 0 } : { y: "100%" }}
-              transition={{
-                duration: 0.8,
-                ease: [0.16, 1, 0.3, 1],
-                delay: 0.05,
-              }}
-              className="font-normal tracking-tight leading-[1.1]"
-              style={{
-                fontSize: "clamp(30px, 3.8vw, 52px)",
-                color: isRed ? "#FFFFFF" : COLORS.textDark,
-                fontFamily: "'Cairo', sans-serif",
-              }}
-            >
-              {scene.headline}
-            </motion.h2>
-          </div>
+          {/* Heading */}
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-4xl lg:text-3xl font-bold leading-[1.1] text-white mb-6"
+          >
+            Does any of these challenges
+            <br />
+            <span className="text-white/70">sound familiar?</span>
+          </motion.h2>
 
+          {/* Intro */}
           <motion.p
-            initial={{ opacity: 0, y: 15 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-            className="text-sm md:text-base font-light leading-relaxed tracking-wide"
-            style={{
-              color: isRed ? "rgba(255,255,255,0.78)" : COLORS.textLight,
-            }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-lg leading-8 text-white/80 mb-5"
           >
-            {scene.description}
+            If you're feeling overwhelmed by university choices, applications,
+            or the admissions process, you're not alone. That's exactly where we
+            help.
           </motion.p>
 
-          {scene.stat && (
-            <AnimatedCounter
-              value={scene.stat.value}
-              label={scene.stat.label}
-              inView={inView}
-              isRed={isRed}
-            />
-          )}
-
-          {/* {scene.isCTA && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={inView ? { opacity: 1 } : {}}
-              transition={{ delay: 0.3 }}
-              className="mt-8"
-            >
-              <a
-                href="#contact"
-                className="inline-flex items-center gap-6 text-[11px] font-bold tracking-[0.35em] uppercase group"
-                style={{ color: isRed ? "#FFFFFF" : COLORS.primary }}
+          {/* Pain Points */}
+          <div className="space-y-4 mb-4">
+            {IS_ORVA_RIGHT_PAIN_POINTS.map((point, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08 }}
+                className="group flex items-start gap-2 mt-0 p-2  transition-all duration-300"
               >
-                Begin Your Journey
-                <span className="h-[1px] w-12 bg-current transition-all group-hover:w-20" />
-              </a>
-            </motion.div>
-          )} */}
-        </div>
+                <div className="flex items-center justify-center shrink-0 group-hover:scale-110 transition">
+                  <span className="text-xl text-white">→</span>
+                </div>
 
-        {/* Context Base Branding Anchor Row */}
-        {/* <div className="pt-4 lg:pt-0 border-t border-black/[0.04] lg:border-none">
-          {scene.isClosing ? (
-            <div
-              className="flex gap-5 opacity-50 text-[10px] font-bold tracking-[0.25em] uppercase"
-              style={{ color: isRed ? "#FFFFFF" : COLORS.textDark }}
-            >
-              {["UAE", "KSA", "Qatar", "UK", "USA"].map((c) => (
-                <span key={c}>{c}</span>
-              ))}
-            </div>
-          ) : (
-            <span
-              className="text-[10px] font-bold tracking-[0.25em] uppercase opacity-35"
-              style={{ color: isRed ? "#FFFFFF" : COLORS.textDark }}
-            >
-              Global Horizons Architecture
-            </span>
-          )}
-        </div> */}
+                <p className="text-white/90 leading-7">{point}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Bottom */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-white/75 leading-7 mb-8"
+          >
+            Every family receives personalised guidance from advisors
+            representing the world's leading universities—helping students make
+            confident, informed decisions.
+          </motion.p>
+
+          {/* CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <Button href="/contact" variant="secondaryLight" size="lg">
+              Book a Free Consultation
+            </Button>
+          </motion.div>
+        </div>
       </div>
 
-      {/* ── Right Aperture Image Slot (Out-of-the-Box Shutter Window) ── */}
-      <div
-        className={`relative lg:col-span-6 min-h-[40vh] lg:min-h-full overflow-hidden bg-black/5 ${
-          isRight ? "order-2 lg:order-2" : "order-1 lg:order-1"
-        }`}
-      >
+      {/* RIGHT */}
+      <div className="relative min-h-[320px] lg:min-h-screen">
         <motion.div
           style={{ clipPath: clipPathStyle }}
-          className="absolute inset-0 w-full h-full overflow-hidden"
+          className="absolute inset-0"
         >
           <motion.div
             style={{ y: imageTranslateY, scale: imageScale }}
@@ -397,22 +237,15 @@ function SceneRow({
               src={scene.img}
               alt={scene.tag}
               fill
-              priority={index < 2}
               className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 50vw"
+              sizes="(max-width:1024px)100vw,50vw"
             />
-            <div className="absolute inset-0 bg-black/[0.04] mix-blend-multiply pointer-events-none" />
           </motion.div>
         </motion.div>
-
-        {/* Subtle Accent Axis Boundary Separator Rule inspired by image_c5afa3.png */}
-        <div
-          className={`absolute top-0 bottom-0 w-[1px] bg-black/[0.06] hidden lg:block ${
-            isRight ? "left-0" : "right-0"
-          }`}
-        />
       </div>
     </div>
+    </GradientSection>
+    </>
   );
 }
 

@@ -15,25 +15,34 @@ import TimelineSection from "@/components/story/TimelineSection";
 import StatsSection from "@/components/story/StatsSection";
 import TeamValuesSection from "@/components/story/TeamValuesSection";
 import StoryCTA from "@/components/story/StoryCTA";
+import { useState } from "react";
+import EventPreheader from "@/components/PreHeader";
 
 export default function StoryPage() {
   useLenis();
+  const [isPreheaderOpen, setIsPreheaderOpen] = useState(true);
 
   return (
     <>
       <Cursor />
       <Trail />
-      <Navbar />
+
+      <EventPreheader onClose={setIsPreheaderOpen} />
+      <Navbar isPreheaderOpen={isPreheaderOpen} />
       <main className="pt-16">
         <StoryHero />
-           <FounderSection />
+        <FounderSection />
         <MissionVisionSection />
         <div className="relative w-full">
           {STORY_SECTIONS.map((section, index) => (
-            <StorySectionCard key={section.id} section={section} index={index} />
+            <StorySectionCard
+              key={section.id}
+              section={section}
+              index={index}
+            />
           ))}
         </div>
-     
+
         <TimelineSection />
         <StatsSection />
         <TeamValuesSection />

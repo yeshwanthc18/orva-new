@@ -10,24 +10,24 @@ const STEPS = [
     d: "We start by understanding the student — their strengths, aspirations, the life they want to build. No forms. Just a conversation.",
     img: "/images/img02.jpeg",
   },
-  {
-    n: "02",
-    t: "Strategy",
-    d: "A personalised roadmap: the right universities, the right courses, the right timeline. Every plan is unique — built around the individual.",
-    img: "/images/img03.jpeg",
-  },
-  {
-    n: "03",
-    t: "Preparation",
-    d: "Essays, applications, portfolios, interviews — every element crafted with precision so each submission truly reflects the student.",
-    img: "/images/img04.jpeg",
-  },
-  {
-    n: "04",
-    t: "Placement",
-    d: "From offer to enrolment — scholarships, visas, accommodation, and the full transition into university life. We stay until they settle in.",
-    img: "/images/img05.jpeg",
-  },
+  // {
+  //   n: "02",
+  //   t: "Strategy",
+  //   d: "A personalised roadmap: the right universities, the right courses, the right timeline. Every plan is unique — built around the individual.",
+  //   img: "/images/img03.jpeg",
+  // },
+  // {
+  //   n: "03",
+  //   t: "Preparation",
+  //   d: "Essays, applications, portfolios, interviews — every element crafted with precision so each submission truly reflects the student.",
+  //   img: "/images/img04.jpeg",
+  // },
+  // {
+  //   n: "04",
+  //   t: "Placement",
+  //   d: "From offer to enrolment — scholarships, visas, accommodation, and the full transition into university life. We stay until they settle in.",
+  //   img: "/images/img05.jpeg",
+  // },
 ];
 
 export default function Process() {

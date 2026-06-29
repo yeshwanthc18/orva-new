@@ -6,7 +6,7 @@ import Picture2 from "@/public/images/img02.jpeg";
 
 import Picture3 from "@/public/images/img03.jpeg";
 
-import Picture4 from "@/public/images/img04.jpeg";
+import Picture4 from "@/public/images/img09.jpeg";
 
 import Picture5 from "@/public/images/img05.jpeg";
 
@@ -111,7 +111,7 @@ export default function ZoomParallax() {
               className="absolute inset-0 flex items-center justify-center z-10"
             >
               <div
-                className={`relative overflow-hidden shadow-[0_24px_50px_rgba(0,0,0,0.15)] border border-white/10 ${containerClass}`}
+                className={`relative overflow-hidden rounded-md ${containerClass}`}
                 style={{ background: "#0F0F0F" }}
               >
                 {/* ── Text Contrast Shields ── */}
@@ -164,58 +164,120 @@ export default function ZoomParallax() {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="text-white/90 uppercase text-[9px] font-bold tracking-[0.45em] mb-3 block"
+            className="text-white/90 uppercase text-[14px] font-bold tracking-[0.45em] block"
           >
-            The Global Collective
+            What We Do
           </motion.span>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="text-white font-extrabold text-3xl md:text-4xl tracking-[-0.02em] leading-[1.1]"
-            style={{ filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.4))" }}
-          >
-            Architects of{" "}
-            <span className="italic font-light opacity-95">Ambition.</span>
-          </motion.h1>
 
           <motion.div
             initial={{ opacity: 0, width: 0 }}
             animate={{ opacity: 0.4, width: 24 }}
             transition={{ delay: 0.35, duration: 0.5 }}
-            className="h-[1px] bg-white my-5"
+            className="h-[1px] bg-white my-2"
           />
 
           <motion.p
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.7 }}
-            className="text-white/85 text-xs font-light max-w-[260px] leading-relaxed"
+            className="text-white/85 text-lg font-light max-w-[260px] leading-relaxed"
           >
-            Scroll to break perspective. Explore our network across world-class
-            educational landscapes.
+            The right university. The right major. The right future.
           </motion.p>
         </motion.div>
 
         {/* ── Secondary Manifesto Reveal Layer (At maximum depth) ── */}
 
-        <motion.div
-          style={{
-            opacity: useTransform(scrollYProgress, [0.75, 0.95], [0, 1]),
+       {/* ── Cinematic Manifesto Reveal ───────────────────────────── */}
+<motion.div
+  style={{
+    opacity: useTransform(scrollYProgress, [0.72, 0.9], [0, 1]),
+    y: useTransform(scrollYProgress, [0.72, 0.9], [60, 0]),
+    scale: useTransform(scrollYProgress, [0.72, 0.9], [0.96, 1]),
+  }}
+  className="absolute inset-0 z-30 flex items-center justify-center px-6"
+>
+  {/* Ambient vignette */}
+  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/70" />
 
-            y: useTransform(scrollYProgress, [0.75, 0.95], [20, 0]),
-          }}
-          className="absolute bottom-16 left-1/2 -translate-x-1/2 z-30 pointer-events-none text-center w-full max-w-xl px-6"
-        >
-          <span className="text-[#FA8322] font-extrabold text-[10px] tracking-[0.3em] uppercase block mb-2">
-            Legacy Anchored
-          </span>
+  <div className="relative max-w-5xl text-center">
+    {/* Premium Label */}
+    <div className="flex items-center justify-center gap-5 mb-8">
+      <span className="h-px w-16 bg-gradient-to-r from-transparent to-[#FA8322]" />
 
-          <p className="text-white text-base md:text-lg font-medium tracking-[-0.01em] leading-relaxed">
-            "We build the paths that outlast the simple letters of admission."
-          </p>
-        </motion.div>
+      <div className="flex items-center gap-2">
+        <span className="h-2 w-2 rounded-full bg-[#FA8322] shadow-[0_0_18px_rgba(250,131,34,0.9)]" />
+        <span className="uppercase tracking-[0.45em] text-[11px] font-semibold text-[#FA8322]">
+          Our Philosophy
+        </span>
+      </div>
+
+      <span className="h-px w-16 bg-gradient-to-l from-transparent to-[#FA8322]" />
+    </div>
+
+    {/* Manifesto */}
+    <motion.h2
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="text-white font-semibold tracking-[-0.04em] leading-[0.95] text-5xl md:text-4xl lg:text-5xl"
+    >
+      <span className="block">The right university.</span>
+
+      <span className="block text-white/90 mt-3">
+        The right major.
+      </span>
+
+      <span className="block bg-gradient-to-r from-[#FA8322] via-[#F45104] to-[#D51E20] bg-clip-text text-transparent mt-3">
+        The right future.
+      </span>
+    </motion.h2>
+
+    {/* Divider */}
+    <div className="mx-auto mt-12 mb-10 h-px w-32 bg-gradient-to-r from-transparent via-white/40 to-transparent" />
+
+    {/* Description */}
+    <p className="mx-auto max-w-3xl text-lg md:text-xl leading-9 text-white/75 font-light">
+      ORVA is a boutique university admissions consultancy for families in the
+      UAE and Saudi Arabia. We partner with ambitious students from
+      <span className="text-white font-medium"> Year 9 onwards</span>,
+      crafting a deliberate pathway to
+      <span className="text-white font-medium">
+        {" "}
+        Oxford, Cambridge, the Ivy League
+      </span>
+      , Europe's leading universities and ultimately a career built with
+      confidence and purpose.
+    </p>
+
+    {/* CTA */}
+    <motion.div
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.35 }}
+      className="mt-14 flex justify-center"
+    >
+      <button className="group flex items-center gap-3 uppercase tracking-[0.3em] text-xs font-semibold text-white transition-colors hover:text-[#FA8322]">
+        Discover ORVA
+
+        <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 transition-all duration-300 group-hover:border-[#FA8322] group-hover:bg-[#FA8322]/10">
+          <svg
+            className="h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2.5}
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M5 12h14m-5-5l5 5-5 5"
+            />
+          </svg>
+        </span>
+      </button>
+    </motion.div>
+  </div>
+</motion.div>
       </div>
     </div>
   );

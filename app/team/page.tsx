@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -9,6 +9,7 @@ import Trail from "@/components/Trail";
 import { useLenis } from "@/hooks/useLenis";
 import { TeamMemberCard, ValueCard, WhyChooseSection } from "@/components/team";
 import { COLORS } from "@/lib/constants";
+import EventPreheader from "@/components/PreHeader";
 
 const TEAM_MEMBERS = [
   {
@@ -16,7 +17,11 @@ const TEAM_MEMBERS = [
     name: "Daniela",
     role: "Founder & CEO",
     bio: "15+ years in international university admissions. Guided 500+ students to world-class universities. Education visionary with passion for bridging cultures.",
-    expertise: ["University Selection", "Strategic Planning", "Student Counseling"],
+    expertise: [
+      "University Selection",
+      "Strategic Planning",
+      "Student Counseling",
+    ],
     image: "/images/img02.jpeg",
     featured: true,
   },
@@ -43,7 +48,11 @@ const TEAM_MEMBERS = [
     name: "Layla Al Mansoori",
     role: "Student Success Coach",
     bio: "Specializes in transition support and student well-being. Helps students thrive in their first year abroad. 6+ years of experience.",
-    expertise: ["First Year Support", "Cultural Transition", "Well-being Coaching"],
+    expertise: [
+      "First Year Support",
+      "Cultural Transition",
+      "Well-being Coaching",
+    ],
     image: "/images/img05.jpeg",
     featured: false,
   },
@@ -52,7 +61,11 @@ const TEAM_MEMBERS = [
     name: "Rashid Al Dhaheri",
     role: "Scholarship & Financial Aid Expert",
     bio: "Navigates complex scholarship landscape for GCC students. Helped students secure over $10M in scholarships. Certified financial planning advisor.",
-    expertise: ["Scholarship Research", "Aid Package Analysis", "Financial Planning"],
+    expertise: [
+      "Scholarship Research",
+      "Aid Package Analysis",
+      "Financial Planning",
+    ],
     image: "/images/img06.jpeg",
     featured: false,
   },
@@ -61,7 +74,11 @@ const TEAM_MEMBERS = [
     name: "Zainab Al Mazrouei",
     role: "University Relations Manager",
     bio: "Direct relationships with 150+ universities worldwide. Advocates for ORVA students in admissions committees. Former university recruiter.",
-    expertise: ["University Relationships", "Application Advocacy", "Program Matching"],
+    expertise: [
+      "University Relationships",
+      "Application Advocacy",
+      "Program Matching",
+    ],
     image: "/images/img02.jpeg",
     featured: false,
   },
@@ -70,7 +87,11 @@ const TEAM_MEMBERS = [
     name: "Amir Al Harbi",
     role: "Visa & Immigration Specialist",
     bio: "Expert in student visa processes for UK, US, Canada, and beyond. Handles complex immigration cases. 10+ years of experience.",
-    expertise: ["Visa Applications", "Immigration Law", "Documentation Support"],
+    expertise: [
+      "Visa Applications",
+      "Immigration Law",
+      "Documentation Support",
+    ],
     image: "/images/img03.jpeg",
     featured: false,
   },
@@ -88,27 +109,33 @@ const TEAM_MEMBERS = [
 const COMPANY_VALUES = [
   {
     title: "Excellence in Everything",
-    description: "Every interaction, every email, every session is held to the highest standard. Mediocrity is not acceptable.",
+    description:
+      "Every interaction, every email, every session is held to the highest standard. Mediocrity is not acceptable.",
   },
   {
     title: "Student Success",
-    description: "Your success is our success. We don't move on until you've achieved your goals and are thriving.",
+    description:
+      "Your success is our success. We don't move on until you've achieved your goals and are thriving.",
   },
   {
     title: "Cultural Integrity",
-    description: "We honor where you come from while opening doors to global opportunities. Culture is strength, not limitation.",
+    description:
+      "We honor where you come from while opening doors to global opportunities. Culture is strength, not limitation.",
   },
   {
     title: "Radical Honesty",
-    description: "We tell you the truth, even when it's difficult. You deserve advisors who are honest about your profile and prospects.",
+    description:
+      "We tell you the truth, even when it's difficult. You deserve advisors who are honest about your profile and prospects.",
   },
   {
     title: "Continuous Learning",
-    description: "The admissions landscape changes. We stay current with every update, change, and trend in global higher education.",
+    description:
+      "The admissions landscape changes. We stay current with every update, change, and trend in global higher education.",
   },
   {
     title: "Genuine Care",
-    description: "This isn't transactional. We care about your well-being, your development, and your future success.",
+    description:
+      "This isn't transactional. We care about your well-being, your development, and your future success.",
   },
 ];
 
@@ -116,43 +143,51 @@ const WHY_CHOOSE_ORVA = [
   {
     number: "01",
     title: "GCC-Based Expertise",
-    description: "We understand the region's culture, values, and educational landscape deeply. Not generic international consultants.",
+    description:
+      "We understand the region's culture, values, and educational landscape deeply. Not generic international consultants.",
   },
   {
     number: "02",
     title: "Proven Track Record",
-    description: "500+ students successfully placed across UK, US, Canada, Netherlands, and beyond. Consistent results over 7+ years.",
+    description:
+      "500+ students successfully placed across UK, US, Canada, Netherlands, and beyond. Consistent results over 7+ years.",
   },
   {
     number: "03",
     title: "Personalization, Not Templates",
-    description: "Every student's plan is completely custom. We don't use cookie-cutter approaches or recycled strategies.",
+    description:
+      "Every student's plan is completely custom. We don't use cookie-cutter approaches or recycled strategies.",
   },
   {
     number: "04",
     title: "University Relationships",
-    description: "Direct connections with 150+ universities worldwide. Your profile is advocated for, not just submitted.",
+    description:
+      "Direct connections with 150+ universities worldwide. Your profile is advocated for, not just submitted.",
   },
   {
     number: "05",
     title: "Beyond Admission",
-    description: "We measure success by your thriving in year one and beyond. Support continues after enrollment.",
+    description:
+      "We measure success by your thriving in year one and beyond. Support continues after enrollment.",
   },
   {
     number: "06",
     title: "Expert Leadership",
-    description: "Founder with 15+ years in international admissions. Team includes former admissions officers from Oxford and Harvard.",
+    description:
+      "Founder with 15+ years in international admissions. Team includes former admissions officers from Oxford and Harvard.",
   },
 ];
 
 export default function TeamPage() {
   useLenis();
+  const [isPreheaderOpen, setIsPreheaderOpen] = useState(true);
 
   return (
     <>
       <Cursor />
       <Trail />
-      <Navbar />
+      <EventPreheader onClose={setIsPreheaderOpen} />
+      <Navbar isPreheaderOpen={isPreheaderOpen} />
       <main className="pt-16">
         {/* Hero Section */}
         <section
@@ -180,14 +215,19 @@ export default function TeamPage() {
                 Experts Dedicated to Your Success
               </h1>
               <p className="text-lg md:text-xl text-white/70 leading-relaxed max-w-2xl">
-                Our diverse team combines decades of experience in international admissions, education leadership, and student support. We&apos;re here to guide you every step of the way.
+                Our diverse team combines decades of experience in international
+                admissions, education leadership, and student support.
+                We&apos;re here to guide you every step of the way.
               </p>
             </motion.div>
           </div>
         </section>
 
         {/* Leadership Team */}
-        <section className="relative py-20 md:py-32 px-6 md:px-12" style={{ background: COLORS.warmCream }}>
+        <section
+          className="relative py-20 md:py-32 px-6 md:px-12"
+          style={{ background: COLORS.warmCream }}
+        >
           <div className="max-w-5xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -200,25 +240,38 @@ export default function TeamPage() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-50 bg-red-500"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
                 </span>
-                <span className="text-[10px] font-bold tracking-[0.35em] uppercase" style={{ color: COLORS.primary }}>
+                <span
+                  className="text-[10px] font-bold tracking-[0.35em] uppercase"
+                  style={{ color: COLORS.primary }}
+                >
                   Leadership
                 </span>
               </div>
-              <h2 className="text-3xl md:text-5xl font-bold mb-6 leading-tight" style={{ color: COLORS.textDark }}>
+              <h2
+                className="text-3xl md:text-5xl font-bold mb-6 leading-tight"
+                style={{ color: COLORS.textDark }}
+              >
                 Our Leadership Team
               </h2>
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {TEAM_MEMBERS.slice(0, 3).map((member) => (
-                <TeamMemberCard key={member.id} member={member} featured={true} />
+                <TeamMemberCard
+                  key={member.id}
+                  member={member}
+                  featured={true}
+                />
               ))}
             </div>
           </div>
         </section>
 
         {/* Extended Team */}
-        <section className="relative py-20 md:py-32 px-6 md:px-12" style={{ background: COLORS.warmSand }}>
+        <section
+          className="relative py-20 md:py-32 px-6 md:px-12"
+          style={{ background: COLORS.warmSand }}
+        >
           <div className="max-w-5xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -226,7 +279,10 @@ export default function TeamPage() {
               transition={{ duration: 0.8 }}
               className="text-center mb-16"
             >
-              <h2 className="text-3xl md:text-5xl font-bold mb-4 leading-tight" style={{ color: COLORS.textDark }}>
+              <h2
+                className="text-3xl md:text-5xl font-bold mb-4 leading-tight"
+                style={{ color: COLORS.textDark }}
+              >
                 Our Specialists
               </h2>
               <p className="text-lg" style={{ color: COLORS.textLight }}>
@@ -236,14 +292,21 @@ export default function TeamPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {TEAM_MEMBERS.slice(3).map((member) => (
-                <TeamMemberCard key={member.id} member={member} featured={false} />
+                <TeamMemberCard
+                  key={member.id}
+                  member={member}
+                  featured={false}
+                />
               ))}
             </div>
           </div>
         </section>
 
         {/* Company Values */}
-        <section className="relative py-20 md:py-32 px-6 md:px-12" style={{ background: COLORS.warmCream }}>
+        <section
+          className="relative py-20 md:py-32 px-6 md:px-12"
+          style={{ background: COLORS.warmCream }}
+        >
           <div className="max-w-5xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -256,11 +319,17 @@ export default function TeamPage() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-50 bg-red-500"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
                 </span>
-                <span className="text-[10px] font-bold tracking-[0.35em] uppercase" style={{ color: COLORS.primary }}>
+                <span
+                  className="text-[10px] font-bold tracking-[0.35em] uppercase"
+                  style={{ color: COLORS.primary }}
+                >
                   Our Values
                 </span>
               </div>
-              <h2 className="text-3xl md:text-5xl font-bold mb-6 leading-tight" style={{ color: COLORS.textDark }}>
+              <h2
+                className="text-3xl md:text-5xl font-bold mb-6 leading-tight"
+                style={{ color: COLORS.textDark }}
+              >
                 What We Stand For
               </h2>
             </motion.div>
@@ -277,18 +346,28 @@ export default function TeamPage() {
         <WhyChooseSection differentiators={WHY_CHOOSE_ORVA} />
 
         {/* CTA Section */}
-        <section className="relative py-20 md:py-28 px-6 md:px-12" style={{ background: COLORS.warmSand }}>
+        <section
+          className="relative py-20 md:py-28 px-6 md:px-12"
+          style={{ background: COLORS.warmSand }}
+        >
           <div className="max-w-3xl mx-auto text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <h2 className="text-3xl md:text-5xl font-bold mb-6 leading-tight" style={{ color: COLORS.textDark }}>
+              <h2
+                className="text-3xl md:text-5xl font-bold mb-6 leading-tight"
+                style={{ color: COLORS.textDark }}
+              >
                 Meet Our Team in Person
               </h2>
-              <p className="text-lg mb-8 leading-relaxed" style={{ color: COLORS.textLight }}>
-                Schedule a consultation and experience the ORVA difference firsthand.
+              <p
+                className="text-lg mb-8 leading-relaxed"
+                style={{ color: COLORS.textLight }}
+              >
+                Schedule a consultation and experience the ORVA difference
+                firsthand.
               </p>
               <a
                 href="/contact"
