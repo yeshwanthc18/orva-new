@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { COLORS, WHY_ORVA_POINTS } from "@/lib/constants";
 import { GridPattern } from "@/components/ui/GridPattern";
-import { StackingSection } from "@/components/whyorva/StackingSection";
+import { StackingSection } from "@/app/why-orva/StackingSection";
 
 export default function WhyOrvaSection() {
   return (
