@@ -76,10 +76,10 @@ body {
   background: #d51e20;
 }
 
-::selection {
+/* ::selection {
   background: rgba(213, 30, 32, 0.1);
   color: #d51e20;
-}
+} */
 
 /* ── Gradient text ── */
 .gr {
@@ -299,3 +299,7 @@ body {
     transform: translateX(-5%) translateY(-3%);
   }
 }
+
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

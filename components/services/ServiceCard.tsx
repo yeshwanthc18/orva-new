@@ -51,7 +51,7 @@ export default function ServiceCard({ service, index }: ServiceCardProps) {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-50 bg-red-500"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
             </span>
-            <span className="text-[10px] font-bold tracking-[0.35em] uppercase" style={{ color: COLORS.textDark }}>
+            <span className="text-[14px] font-bold tracking-[0.35em] uppercase" style={{ color: COLORS.textDark }}>
               Service
             </span>
           </div>

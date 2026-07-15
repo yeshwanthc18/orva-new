@@ -188,7 +188,7 @@ export default function WhyOrva() {
 
         {/* Ticker */}
         <div
-          className="absolute top-9 right-9 z-20 text-[10px] font-bold tracking-[0.2em]"
+          className="absolute top-9 right-9 z-20 text-[14px] font-bold tracking-[0.2em]"
           style={{
             color: "rgba(255,255,255,0.14)",
             fontVariantNumeric: "tabular-nums",
@@ -208,7 +208,7 @@ export default function WhyOrva() {
               <div className="flex flex-col justify-center w-full lg:w-[55%] px-10 md:px-14">
                 {/* Eyebrow */}
                 <div
-                  className="flex items-center gap-3 mb-4 text-[10px] font-bold tracking-[0.26em] uppercase"
+                  className="flex items-center gap-3 mb-4 text-[14px] font-bold tracking-[0.26em] uppercase"
                   style={{ color: COLORS.primary }}
                 >
                   <span
@@ -401,7 +401,7 @@ export default function WhyOrva() {
           className="absolute bottom-20 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-[6px] pointer-events-none"
         >
           <span
-            className="text-[10px] font-medium tracking-[0.18em] uppercase"
+            className="text-[14px] font-medium tracking-[0.18em] uppercase"
             style={{ color: "rgba(255,255,255,0.2)" }}
           >
             Scroll

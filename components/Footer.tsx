@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
 import { FaInstagram, FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
+import SignupSection from './SignUp'
 
 
 const FOOTER_LINKS = {
@@ -12,24 +13,25 @@ const FOOTER_LINKS = {
     ['Why Orva', '/why-orva'],
     ['How It Works', '/how-it-works'],
     // ['About Our Founder', '/about-daniela'],
-    ['Real Stories', '/stories'],
+    // ['Real Stories', '/stories'],
   ],
   explore: [
-    ["Discover Your Child's Profile Quiz", '/quiz'],
+    ["University Match Quiz", '/quiz'],
     ['Resources', '/resources'],
-    ['Our Services', '/services'],
+    // ['Our Services', '/services'],
     // ['Our Team', '/team'],
+    // ['Our Story', '/story'],
   ],
   connect: [
     ['Contact Us', '/contact'],
-    ['Our Story', '/story'],
+    
   ],
 };
 
 const SOCIAL_LINKS = [
-  { icon: FaInstagram, href: '#', label: 'Instagram' },
-  { icon: FaLinkedinIn, href: '#', label: 'LinkedIn' },
-  { icon: FaWhatsapp, href: '#', label: 'WhatsApp' },
+  { icon: FaInstagram, href: 'https://www.instagram.com/orvaeducation', label: 'Instagram' },
+  { icon: FaLinkedinIn, href: 'https://www.linkedin.com/company/orva-education/', label: 'LinkedIn' },
+  { icon: FaWhatsapp, href: 'https://wa.me/971503440568', label: 'WhatsApp' },
 ];
 
 export default function Footer() {
@@ -37,7 +39,9 @@ export default function Footer() {
   const inView = useInView(ref, { once: true })
 
   return (
-    <footer className="relative bg-gradient-to-r from-[#f0ede8] via-[#f5f2ed] to-[#ede9e2] border-t border-black/[0.07] overflow-hidden">
+    <>
+    <SignupSection />
+       <footer className="relative bg-gradient-to-r from-[#f0ede8] via-[#f5f2ed] to-[#ede9e2] border-t border-black/[0.07] overflow-hidden">
       {/* Background Image Layer */}
       <div className="absolute inset-0 right-0 opacity-20 pointer-events-none">
         <Image
@@ -112,6 +116,7 @@ export default function Footer() {
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
                     aria-label={social.label}
+                    target="_blank"
                   >
                     <Icon size={18} />
                   </motion.a>
@@ -203,5 +208,7 @@ export default function Footer() {
         </div>
       </div>
     </footer>
+    </>
+ 
   )
 }

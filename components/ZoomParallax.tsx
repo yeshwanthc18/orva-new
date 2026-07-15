@@ -19,6 +19,7 @@ import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 import { useRef } from "react";
+import Link from "next/link";
 
 export default function ZoomParallax() {
   const container = useRef<HTMLDivElement>(null);
@@ -118,31 +119,28 @@ export default function ZoomParallax() {
 
                 {hasText ? (
                   <>
-                    {/* Living overlay mask that lightens seamlessly as you zoom past it */}
-
                     <motion.div
                       style={{ opacity: dynamicOverlayOpacity }}
                       className="absolute inset-0 bg-black z-20 pointer-events-none"
                     />
 
-                    {/* Linear subtle bottom dark vignette for structural framing */}
-
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent z-25 pointer-events-none" />
                   </>
                 ) : (
-                  /* Standard ambient canvas guard for peripheral frames */
-
                   <div className="absolute inset-0 bg-black/15 z-20 pointer-events-none" />
                 )}
 
-                <Image
-                  src={src}
-                  fill
-                  alt="Institutional spaces"
-                  placeholder="blur"
-                  className="object-cover pointer-events-none select-none"
-                  sizes="(max-width: 768px) 40vw, 25vw"
-                />
+                <div className="relative w-full h-full overflow-hidden">
+                  <Image
+                    src={src}
+                    fill
+                    alt="Institutional spaces"
+                    placeholder="blur"
+                    className="object-cover pointer-events-none select-none"
+                    sizes="(max-width: 768px) 40vw, 25vw"
+                  />
+                  <div className="absolute inset-0 bg-black/15 z-20 pointer-events-none" />
+                </div>
               </div>
             </motion.div>
           );
@@ -164,7 +162,7 @@ export default function ZoomParallax() {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="text-white/90 uppercase text-[14px] font-bold tracking-[0.45em] block"
+            className="text-white/90 uppercase text-[18px] font-bold tracking-[0.15em] block"
           >
             What We Do
           </motion.span>
@@ -188,96 +186,96 @@ export default function ZoomParallax() {
 
         {/* ── Secondary Manifesto Reveal Layer (At maximum depth) ── */}
 
-       {/* ── Cinematic Manifesto Reveal ───────────────────────────── */}
-<motion.div
-  style={{
-    opacity: useTransform(scrollYProgress, [0.72, 0.9], [0, 1]),
-    y: useTransform(scrollYProgress, [0.72, 0.9], [60, 0]),
-    scale: useTransform(scrollYProgress, [0.72, 0.9], [0.96, 1]),
-  }}
-  className="absolute inset-0 z-30 flex items-center justify-center px-6"
->
-  {/* Ambient vignette */}
-  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/70" />
+        {/* ── Cinematic Manifesto Reveal ───────────────────────────── */}
+        <motion.div
+          style={{
+            opacity: useTransform(scrollYProgress, [0.72, 0.9], [0, 1]),
+            y: useTransform(scrollYProgress, [0.72, 0.9], [60, 0]),
+            scale: useTransform(scrollYProgress, [0.72, 0.9], [0.96, 1]),
+          }}
+          className="absolute inset-0 z-30 flex items-center top-16 justify-center px-6"
+        >
+          {/* Ambient vignette */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/70" />
 
-  <div className="relative max-w-5xl text-center">
-    {/* Premium Label */}
-    <div className="flex items-center justify-center gap-5 mb-8">
-      <span className="h-px w-16 bg-gradient-to-r from-transparent to-[#FA8322]" />
+          <div className="relative max-w-5xl text-center">
+            {/* Premium Label */}
+            <div className="flex items-center justify-center gap-5 mb-8">
+              <span className="h-px w-16 bg-gradient-to-r from-transparent to-[#FA8322]" />
 
-      <div className="flex items-center gap-2">
-        <span className="h-2 w-2 rounded-full bg-[#FA8322] shadow-[0_0_18px_rgba(250,131,34,0.9)]" />
-        <span className="uppercase tracking-[0.45em] text-[11px] font-semibold text-[#FA8322]">
-          Our Philosophy
-        </span>
-      </div>
+              <div className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-[#FA8322] shadow-[0_0_18px_rgba(250,131,34,0.9)]" />
+                <span className="uppercase tracking-[0.45em] text-[11px] font-semibold text-[#FA8322]">
+                  Our Philosophy
+                </span>
+              </div>
 
-      <span className="h-px w-16 bg-gradient-to-l from-transparent to-[#FA8322]" />
-    </div>
+              <span className="h-px w-16 bg-gradient-to-l from-transparent to-[#FA8322]" />
+            </div>
 
-    {/* Manifesto */}
-    <motion.h2
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="text-white font-semibold tracking-[-0.04em] leading-[0.95] text-5xl md:text-4xl lg:text-5xl"
-    >
-      <span className="block">The right university.</span>
+            {/* Manifesto */}
+            <motion.h2
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-white font-semibold tracking-[-0.04em] leading-[0.95] text-5xl md:text-4xl lg:text-5xl"
+            >
+              <span className="block">The right university.</span>
 
-      <span className="block text-white/90 mt-3">
-        The right major.
-      </span>
+              <span className="block text-white/90 mt-3">The right major.</span>
 
-      <span className="block bg-gradient-to-r from-[#FA8322] via-[#F45104] to-[#D51E20] bg-clip-text text-transparent mt-3">
-        The right future.
-      </span>
-    </motion.h2>
+              <span className="block bg-gradient-to-r from-[#FA8322] via-[#F45104] to-[#D51E20] bg-clip-text text-transparent mt-3">
+                The right future.
+              </span>
+            </motion.h2>
 
-    {/* Divider */}
-    <div className="mx-auto mt-12 mb-10 h-px w-32 bg-gradient-to-r from-transparent via-white/40 to-transparent" />
+            {/* Divider */}
+            <div className="mx-auto mt-12 mb-10 h-px w-32 bg-gradient-to-r from-transparent via-white/40 to-transparent" />
 
-    {/* Description */}
-    <p className="mx-auto max-w-3xl text-lg md:text-xl leading-9 text-white/75 font-light">
-      ORVA is a boutique university admissions consultancy for families in the
-      UAE and Saudi Arabia. We partner with ambitious students from
-      <span className="text-white font-medium"> Year 9 onwards</span>,
-      crafting a deliberate pathway to
-      <span className="text-white font-medium">
-        {" "}
-        Oxford, Cambridge, the Ivy League
-      </span>
-      , Europe's leading universities and ultimately a career built with
-      confidence and purpose.
-    </p>
+            {/* Description */}
+            <p className="mx-auto max-w-3xl text-lg md:text-xl leading-9 text-white/75 font-light">
+              ORVA is a boutique university admissions consultancy for families
+              in the UAE and Saudi Arabia. We partner with ambitious students
+              from
+              <span className="text-white font-medium"> Year 9 onwards</span>,
+              crafting a deliberate pathway to
+              <span className="text-white font-medium">
+                {" "}
+                Oxford, Cambridge, the Ivy League
+              </span>
+              , Europe's leading universities and ultimately a career built with
+              confidence and purpose.
+            </p>
 
-    {/* CTA */}
-    <motion.div
-      initial={{ opacity: 0, y: 15 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.35 }}
-      className="mt-14 flex justify-center"
-    >
-      <button className="group flex items-center gap-3 uppercase tracking-[0.3em] text-xs font-semibold text-white transition-colors hover:text-[#FA8322]">
-        Discover ORVA
-
-        <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 transition-all duration-300 group-hover:border-[#FA8322] group-hover:bg-[#FA8322]/10">
-          <svg
-            className="h-4 w-4"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={2.5}
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M5 12h14m-5-5l5 5-5 5"
-            />
-          </svg>
-        </span>
-      </button>
-    </motion.div>
-  </div>
-</motion.div>
+            {/* CTA */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.35 }}
+              className="mt-14 flex justify-center"
+            >
+              <Link href="/why-orva">
+                <button className="group flex items-center gap-3 uppercase tracking-[0.3em] text-xs font-semibold text-white transition-colors hover:text-[#FA8322]">
+                  Discover ORVA
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 transition-all duration-300 group-hover:border-[#FA8322] group-hover:bg-[#FA8322]/10">
+                    <svg
+                      className="h-4 w-4"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2.5}
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M5 12h14m-5-5l5 5-5 5"
+                      />
+                    </svg>
+                  </span>
+                </button>
+              </Link>
+            </motion.div>
+          </div>
+        </motion.div>
       </div>
     </div>
   );

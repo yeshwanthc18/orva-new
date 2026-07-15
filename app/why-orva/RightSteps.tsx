@@ -3,6 +3,7 @@ import { COLORS, IS_ORVA_RIGHT_PAIN_POINTS } from '@/lib/constants'
 import Image from 'next/image'
 import React, { useRef } from 'react'
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
+import GradientSection from '@/components/AnimatedGradient'
 
 // ── Tokens, scoped to this section ──────────────────────────────────────
 // Concept: a case file being marked up live. Parchment ink on near-black,
@@ -38,7 +39,7 @@ const PainLine = ({
     <div ref={ref} className="relative py-5 md:py-[22px] border-b" style={{ borderColor: RULE }}>
       <div className="flex items-start gap-5 md:gap-7">
         <span
-          className="font-mono text-[11px] tracking-[0.18em] pt-2 flex-shrink-0 select-none"
+          className=" text-[11px] tracking-[0.18em] pt-2 flex-shrink-0 select-none"
           style={{ color: INK_DIM }}
         >
           {String(idx + 1).padStart(2, '0')}
@@ -53,7 +54,7 @@ const PainLine = ({
           />
           <motion.p
             style={{ color: textColor, x }}
-            className="relative z-10 text-xl md:text-[27px] leading-snug font-medium tracking-tight"
+            className="relative z-10 text-xl md:text-[18px] leading-snug font-medium tracking-tight"
           >
             {point}
           </motion.p>
@@ -100,18 +101,10 @@ const RightSteps = () => {
   const stampOpacity = useTransform(stampProgress, [0, 0.4], [0, 1])
 
   return (
-    <section ref={sectionRef} className="relative overflow-hidden" style={{ background: COLORS.deepBlack }}>
-      <div
-        className="absolute inset-0 opacity-[0.05] mix-blend-overlay pointer-events-none"
-        style={{
-          backgroundImage:
-            'url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27120%27 height=%27120%27%3E%3Cfilter id=%27n%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%270.9%27 numOctaves=%272%27/%3E%3C/filter%3E%3Crect width=%27120%27 height=%27120%27 filter=%27url(%23n)%27/%3E%3C/svg%3E")',
-        }}
-      />
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(120% 90% at 15% 8%, transparent 38%, rgba(0,0,0,0.55) 100%)' }}
-      />
+    <>
+    <GradientSection  className="py-12">
+      <section ref={sectionRef} className="relative overflow-hidden">
+    
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-0 items-stretch relative z-10">
         <div className="lg:col-span-3 px-6 md:px-12 py-24 md:py-32">
@@ -120,13 +113,13 @@ const RightSteps = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-15%' }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-14"
+            className="mb-4"
           >
             <motion.span
-              style={{ x: eyebrowX, color: HILITE }}
-              className="inline-flex items-center gap-2 font-mono text-xs tracking-[0.22em] uppercase mb-7"
+              style={{ x: eyebrowX, color: 'white' }}
+              className="inline-flex items-center gap-2  text-xs tracking-[0.22em] uppercase mb-2"
             >
-              <span className="w-6 h-px" style={{ background: HILITE }} />
+              <span className="w-6 h-px" style={{ background: 'white' }} />
               Case file — is Orva right for you?
             </motion.span>
             <h2
@@ -135,24 +128,24 @@ const RightSteps = () => {
             >
               <span
                 className="block text-[clamp(34px,5.2vw,56px)] font-bold"
-                style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+                
               >
                 Does any of this
               </span>
               <span
                 className="block text-[clamp(34px,5.2vw,56px)] italic font-normal"
-                style={{ fontFamily: 'Georgia, "Times New Roman", serif', color: INK_DIM }}
+                
               >
                 sound familiar?
               </span>
             </h2>
-            <p className="text-lg leading-relaxed max-w-md" style={{ color: INK_DIM }}>
+            <p className="text-lg leading-relaxed max-w-md" style={{ color: "white" }}>
               You don&apos;t need to have it all figured out — you just need
               to see your child somewhere in this.
             </p>
           </motion.div>
 
-          <div className="mb-14">
+          <div className="mb-4">
             {IS_ORVA_RIGHT_PAIN_POINTS.map((point, idx) => (
               <PainLine key={idx} point={point} idx={idx} total={IS_ORVA_RIGHT_PAIN_POINTS.length} />
             ))}
@@ -165,7 +158,7 @@ const RightSteps = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-10%' }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              style={{ background: PANEL }}
+            //   style={{ background: PANEL }}
               className="border rounded-sm p-7 md:p-9 overflow-hidden relative"
             >
               <p className="text-base leading-relaxed max-w-lg" style={{ color: 'rgba(237,230,214,0.82)' }}>
@@ -178,8 +171,8 @@ const RightSteps = () => {
                 <Button href="/contact" variant="primary" size="md">
                   Talk to ORVA
                 </Button>
-                <Button href="/quiz" variant="secondary" size="md">
-                  Take the Quiz
+                <Button href="/quiz" variant="secondaryLight" size="md">
+                  University Match Quiz
                 </Button>
               </div>
 
@@ -189,12 +182,12 @@ const RightSteps = () => {
                   scale: stampScale,
                   rotate: stampRotate,
                   opacity: stampOpacity,
-                  borderColor: HILITE,
-                  color: HILITE,
+                  borderColor: "white",
+                  color: "white",
                 }}
                 className="absolute top-5 right-5 md:top-7 md:right-9 w-[88px] h-[88px] md:w-[104px] md:h-[104px] rounded-full border-[3px] flex items-center justify-center pointer-events-none"
               >
-                <span className="font-mono text-[10px] md:text-[11px] font-bold tracking-[0.12em] text-center leading-tight uppercase">
+                <span className=" text-[14px] md:text-[11px] font-bold tracking-[0.12em] text-center leading-tight uppercase">
                   A fit
                   <br />
                   worth
@@ -240,13 +233,16 @@ const RightSteps = () => {
             transition={{ duration: 0.6, delay: 0.15 }}
             className="absolute bottom-10 left-10 right-10"
           >
-            <p className="font-mono text-[11px] tracking-[0.18em] uppercase" style={{ color: 'rgba(237,230,214,0.55)' }}>
+            <p className=" text-[11px] tracking-[0.18em] uppercase" style={{ color: 'rgba(237,230,214,0.55)' }}>
               Every family, on file
             </p>
           </motion.div>
         </div>
       </div>
     </section>
+    </GradientSection>
+    </>
+  
   )
 }
 

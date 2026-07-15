@@ -376,7 +376,7 @@ export default function EventsPage() {
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
               </span>
               <span
-                className="text-[10px] font-bold tracking-[0.35em] uppercase"
+                className="text-[14px] font-bold tracking-[0.35em] uppercase"
                 style={{ color: COLORS.primary }}
               >
                 Featured Events
@@ -474,7 +474,7 @@ export default function EventsPage() {
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
               </span>
               <span
-                className="text-[10px] font-bold tracking-[0.35em] uppercase"
+                className="text-[14px] font-bold tracking-[0.35em] uppercase"
                 style={{ color: COLORS.primary }}
               >
                 Multi-Week Programs

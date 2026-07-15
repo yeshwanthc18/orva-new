@@ -12,85 +12,97 @@ export const COLORS = {
 export const NAV_LINKS = [
   ["Why Orva", "/why-orva"],
   ["How It Works", "/how-it-works"],
-  ["Blogs", "/resources"],
+  ["Insights", "/resources"],
   ["Contact", "/contact"],
 ];
 
 export const HERO_STATS = [
-  { value: "Top 100", label: "The universities our students get into" },
-  { value: "15+", label: "Years in Higher Education" },
-  { value: "50", label: "Families accepted each year — by selection only" },
-  { value: "100%", label: "Of our students receive a personalised strategy" },
+  {
+    prefix: "Top ",
+    value: 100,
+    label: "The universities our students get into",
+  },
+  {
+    value: 15,
+    suffix: "+",
+    label: "Years in Higher Education",
+  },
+  {
+    value: 50,
+    label: "Families accepted each year — by selection only",
+  },
+  {
+    value: 100,
+    suffix: "%",
+    label: "Of our students receive a personalised strategy",
+  },
 ];
 
 export const UNIVERSITY_MARQUEE = [
   {
     name: "Harvard",
-    logo: "/univ/harvard.jpg",
+    logo: "/images/universities/harvard.png",
   },
   {
     name: "MIT",
-    logo: "/univ/mit.png",
+    logo: "/images/universities/mit.png",
   },
   {
     name: "Stanford",
-    logo: "/univ/stanford.jpg",
+    logo: "/images/universities/stanford.png",
   },
   {
     name: "Cambridge",
-    logo: "/univ/cambridge.svg",
+    logo: "/images/universities/cambridge.png",
   },
-  {
-    name: "Oxford",
-    logo: "/univ/oxford.svg",
-  },
+
   {
     name: "Imperial",
-    logo: "/univ/imperial.svg",
+    logo: "/images/universities/imperial.png",
   },
   {
     name: "LSE",
-    logo: "/univ/lse.svg",
+    logo: "/images/universities/mit.png",
   },
   {
     name: "UCL",
-    logo: "/univ/ucl.svg",
+    logo: "/images/universities/ucl.png",
   },
   {
     name: "UCLA",
-    logo: "/univ/ucla.svg",
+    logo: "/images/universities/ucla.png",
   },
   {
     name: "Yale",
-    logo: "/univ/yale.svg",
+    logo: "/images/universities/stanford.png",
   },
   {
     name: "Princeton",
-    logo: "/univ/princeton.svg",
+    logo: "/images/universities/princeton.png",
   },
   {
     name: "Cornell",
-    logo: "/univ/cornell.svg",
+    logo: "/images/universities/cornell.png",
   },
   {
     name: "Columbia",
-    logo: "/univ/columbia.svg",
+    logo: "/images/universities/columbia.png",
   },
   {
     name: "Toronto",
-    logo: "/univ/toronto.svg",
+    logo: "/images/universities/toronto.png",
   },
   {
     name: "Manchester",
-    logo: "/univ/manchester.svg",
+    logo: "/images/universities/manchester.png",
   },
   {
     name: "Amsterdam",
-    logo: null,
+    logo: "/images/universities/ucla.png",
   },
   {
     name: "Edinburgh",
-    logo: null,
+    logo: "/images/universities/edinburgh.png",
   },
 ];
 
@@ -291,128 +303,191 @@ export const WHATS_INCLUDED = {
   ],
 };
 
+export const TIER_LABELS = {
+  "1": { label: "Reach", description: "Aim high — most selective, a stretch target worth aiming for" },
+  "2": { label: "Strong", description: "Excellent, realistic fit for a strong profile" },
+  "3": { label: "Comfortable", description: "Well-matched, high-confidence option" },
+  "4": { label: "Foundation", description: "Accessible entry, often via pathway, with strong support" },
+};
+
 export const QUIZ_QUESTIONS = [
   {
     id: 1,
-    question: "It\u2019s a free Saturday with no plans. Your child is most likely\u2026",
-    options: [
-      { id: "A", text: "Researching something they got curious about during the week", signal: { uk: 0, us: 0, trait: "intellectual" } },
-      { id: "B", text: "Working on a creative project \u2014 writing, designing, building something", signal: { uk: 0, us: 0, trait: "creative" } },
-      { id: "C", text: "Out with people, organizing something social or sporty", signal: { uk: 0, us: 0, trait: "social" } },
-      { id: "D", text: "Reading, watching something, or just thinking quietly", signal: { uk: 0, us: 0, trait: "reflective" } },
-      { id: "E", text: "Looking for a way to earn, start something, or solve a problem", signal: { uk: 0, us: 0, trait: "entrepreneurial" } },
+    question: "How decided is your child on what to study?",
+    answers: [
+      {
+        text: "Knows exactly what they want",
+        helper: "e.g. set on Law, Medicine, Engineering",
+        uk: 2,
+        us: 0,
+      },
+      {
+        text: "Has a strong leaning",
+        helper: "a field in mind, open to nuance",
+        uk: 1,
+        us: 1,
+      },
+      {
+        text: "Still exploring",
+        helper: "wants to keep options open",
+        uk: 0,
+        us: 2,
+      },
     ],
   },
   {
     id: 2,
-    question: "When your child talks about the future, what do they focus on?",
-    options: [
-      { id: "A", text: "The impact they want to have on the world", signal: { uk: 0, us: 0, trait: "intellectual" } },
-      { id: "B", text: "The thing they want to become really good at", signal: { uk: 0, us: 0, trait: "creative" } },
-      { id: "C", text: "The kind of life they want to live \u2014 the city, the people, the experience", signal: { uk: 0, us: 0, trait: "social" } },
-      { id: "D", text: "The problem they want to solve", signal: { uk: 0, us: 0, trait: "reflective" } },
-      { id: "E", text: "Honestly, they\u2019re not sure yet \u2014 and that\u2019s fine", signal: { uk: 0, us: 0, trait: "entrepreneurial" } },
+    question: "Which field is closest to your child's interest?",
+    isSubjectQuestion: true,
+    answers: [
+      { text: "Law, Politics & International Relations", subject: "law", uk: 1, us: 0 },
+      { text: "Business, Economics & Finance", subject: "business", uk: 1, us: 1 },
+      { text: "Engineering, Computer Science & Tech", subject: "engineering", uk: 0, us: 1 },
+      { text: "Medicine & Health Sciences", subject: "medicine", uk: 1, us: 0 },
+      { text: "Natural Sciences & Maths", subject: "sciences", uk: 1, us: 0 },
+      { text: "Arts, Humanities & Social Sciences", subject: "arts", uk: 0, us: 1 },
+      { text: "Not sure yet — wants to explore", subject: "exploring", uk: 0, us: 2 },
     ],
   },
   {
     id: 3,
-    question: "How decided is your child on what to study?",
-    options: [
-      { id: "A", text: "Knows exactly what they want", signal: { uk: 2, us: 0, trait: "" } },
-      { id: "B", text: "Has a strong leaning \u2014 a field in mind, open to nuance", signal: { uk: 1, us: 1, trait: "" } },
-      { id: "C", text: "Still exploring \u2014 wants to keep options open", signal: { uk: 0, us: 2, trait: "" } },
+    question: "What kind of university experience fits best?",
+    answers: [
+      {
+        text: "A focused, faster route into a profession",
+        helper: "specialise from day one",
+        uk: 2,
+        us: 0,
+      },
+      {
+        text: "A broad experience with room to explore",
+        helper: "try subjects before committing",
+        uk: 0,
+        us: 2,
+      },
     ],
   },
   {
     id: 4,
-    question: "What kind of university experience fits best?",
-    options: [
-      { id: "A", text: "A focused, faster route into a profession \u2014 specialise from day one", signal: { uk: 2, us: 0, trait: "" } },
-      { id: "B", text: "A broad experience with room to explore \u2014 try subjects before committing", signal: { uk: 0, us: 2, trait: "" } },
+    question: "What environment excites your child most?",
+    answers: [
+      {
+        text: "Historic, structured, close to Europe",
+        helper: "tradition, heritage campuses, easy travel home",
+        uk: 2,
+        us: 0,
+      },
+      {
+        text: "Start-up & tech energy, warm weather, big cultural shift",
+        helper: "innovation, sport, scale, sunshine",
+        uk: 0,
+        us: 2,
+      },
     ],
   },
   {
     id: 5,
-    question: "On length and cost of the degree, your family prefers\u2026",
-    options: [
-      { id: "A", text: "A shorter, lower-cost degree \u2014 3 years, get going sooner", signal: { uk: 2, us: 0, trait: "" } },
-      { id: "B", text: "A longer degree for flexibility \u2014 4 years, breadth and time to grow", signal: { uk: 0, us: 2, trait: "" } },
+    question: "On length and cost of the degree, your family prefers…",
+    answers: [
+      {
+        text: "A shorter, lower-cost degree",
+        helper: "3 years, get going sooner",
+        uk: 2,
+        us: 0,
+      },
+      {
+        text: "A longer degree for flexibility",
+        helper: "4 years, breadth and time to grow",
+        uk: 0,
+        us: 2,
+      },
     ],
   },
   {
     id: 6,
-    question: "How would you describe your child\u2019s academic profile?",
-    options: [
-      { id: "A", text: "Top of the class \u2014 A*/A, 38+ IB, 1500+ SAT", signal: { uk: 0, us: 0, trait: "", tier: 1 } },
-      { id: "B", text: "Strong \u2014 A/B, 34\u201337 IB, 1400+ SAT", signal: { uk: 0, us: 0, trait: "", tier: 2 } },
-      { id: "C", text: "Solid and consistent \u2014 B/C, 30\u201333 IB, 1250+ SAT", signal: { uk: 0, us: 0, trait: "", tier: 3 } },
-      { id: "D", text: "Mixed but motivated \u2014 building momentum", signal: { uk: 0, us: 0, trait: "", tier: 4 } },
+    question: "How would you describe your child's academic profile?",
+    isTierQuestion: true,
+    answers: [
+      {
+        text: "Top of the class",
+        helper: "A*/A · 38+ IB · 1500+ SAT",
+        uk: 0,
+        us: 0,
+        tier: "1",
+      },
+      {
+        text: "Strong",
+        helper: "A/B · 34–37 IB · 1400+ SAT",
+        uk: 0,
+        us: 0,
+        tier: "2",
+      },
+      {
+        text: "Solid and consistent",
+        helper: "B/C · 30–33 IB · 1250+ SAT",
+        uk: 0,
+        us: 0,
+        tier: "3",
+      },
+      {
+        text: "Mixed but motivated",
+        helper: "building momentum",
+        uk: 0,
+        us: 0,
+        tier: "4",
+      },
     ],
   },
 ];
 
-export const QUIZ_PROFILES = {
-  investigator: {
-    name: "The Investigator",
-    description: "Intellectually driven, curious, and drawn to understanding how things work at depth. They\u2019re not satisfied with surface answers. They want to know why.",
-    universities: [
-      { name: "Imperial College London", reason: "for minds that want rigour and real-world application" },
-      { name: "University of Edinburgh", reason: "strong research culture, excellent for Sciences and Medicine" },
-      { name: "UCLA", reason: "if Engineering is the direction, this is #14 in the world for a reason" },
-    ],
-    quote: "The Investigator type is one I recognize immediately. They\u2019re often underestimated at school because they ask harder questions than the syllabus expects. The right university meets them at that level.",
+// University shortlist by subject & tier
+// Structure: subject -> tier -> { uk: university_name, us: university_name }
+export const UNIVERSITIES = {
+  law: {
+    "1": { uk: "University of Oxford", us: "Georgetown University" },
+    "2": { uk: "LSE", us: "UC Berkeley" },
+    "3": { uk: "University of Bristol", us: "Boston University" },
+    "4": { uk: "University of Leeds", us: "Arizona State University" },
   },
-  builder: {
-    name: "The Builder",
-    description: "Creative, entrepreneurial, and energized by making things exist that didn\u2019t before. Whether it\u2019s a product, a company, a piece of work, or an idea \u2014 they need to create.",
-    universities: [
-      { name: "University of Amsterdam", reason: "internationally minded, business-creative, genuinely global" },
-      { name: "King\u2019s College London", reason: "strong creative and business programmes in one of the world\u2019s great cities" },
-      { name: "University of Pennsylvania (Wharton)", reason: "for Builders who want the world\u2019s most respected business school" },
-    ],
-    quote: "Builders are the hardest to place badly \u2014 they adapt. But they\u2019re also the most likely to choose the wrong major because the right one doesn\u2019t have an obvious name. That\u2019s where we come in.",
+  business: {
+    "1": { uk: "LSE", us: "University of Pennsylvania" },
+    "2": { uk: "University of Warwick", us: "NYU (Stern)" },
+    "3": { uk: "University of Bath", us: "Northeastern University" },
+    "4": { uk: "University of Surrey", us: "Arizona State University" },
   },
-  leader: {
-    name: "The Leader",
-    description: "Social, driven by impact, and energized by people. They don\u2019t just want to succeed \u2014 they want to bring others with them. Campus life matters. So does the network.",
-    universities: [
-      { name: "London School of Economics", reason: "the network is unmatched, the campus is London" },
-      { name: "UC Berkeley", reason: "leadership culture runs through every programme" },
-      { name: "University of Toronto", reason: "genuinely international, city-integrated, outstanding in Business and Law" },
-    ],
-    quote: "Leaders often underestimate how much the right university community shapes them. The name on the degree matters less than the people they meet while earning it.",
+  engineering: {
+    "1": { uk: "University of Cambridge", us: "Stanford University" },
+    "2": { uk: "University of Edinburgh", us: "Georgia Institute of Technology" },
+    "3": { uk: "University of Glasgow", us: "UC San Diego" },
+    "4": { uk: "Brunel University London", us: "Arizona State University" },
   },
-  thinker: {
-    name: "The Thinker",
-    description: "Reflective, idea-led, drawn to the big questions. History, philosophy, literature, law, politics \u2014 subjects where the depth is in the argument, not the experiment.",
-    universities: [
-      { name: "University of Manchester", reason: "tutorial system built for exactly this kind of mind" },
-      { name: "King\u2019s College London", reason: "for Thinkers who also want rigour and structure" },
-      { name: "NYU", reason: "strong humanities, genuinely international student body" },
-    ],
-    quote: "Thinkers are the students most often told to be \u2018more practical.\u2019 The research consistently shows the opposite \u2014 humanities graduates end up in the most senior leadership positions. The key is knowing how to present that path.",
+  medicine: {
+    "1": { uk: "University of Oxford", us: "Johns Hopkins University" },
+    "2": { uk: "King's College London", us: "UCLA" },
+    "3": { uk: "University of Manchester", us: "University of Pittsburgh" },
+    "4": { uk: "University of Central Lancashire", us: "Arizona State University" },
   },
-  solver: {
-    name: "The Solver",
-    description: "Driven by impact, drawn to fixing things. Medicine, engineering, technology, public policy \u2014 fields where the measure of success is whether things got better.",
-    universities: [
-      { name: "University of Manchester", reason: "exceptional Medicine, Engineering, and Computer Science" },
-      { name: "Imperial College London", reason: "Engineering and Medicine at world-class level" },
-      { name: "MIT", reason: "for Solvers who want to work on the hardest problems in the world" },
-    ],
-    quote: "Solvers are often the most certain about their direction \u2014 but the least certain about how to get there. The path to Medicine, Engineering, or Law from the GCC has specific requirements most families don\u2019t know about. We do.",
+  sciences: {
+    "1": { uk: "Imperial College London", us: "MIT" },
+    "2": { uk: "University College London", us: "Cornell University" },
+    "3": { uk: "University of Sheffield", us: "UC San Diego" },
+    "4": { uk: "University of Leicester", us: "Arizona State University" },
   },
-  explorer: {
-    name: "The Explorer",
-    description: "Curious about everything, committed to nothing yet \u2014 and that\u2019s not a problem. It\u2019s actually an advantage. Explorers, when guided well, make the most surprising and most fulfilling choices.",
-    universities: [
-      { name: "UCL", reason: "breadth of programmes, genuinely open culture, central London" },
-      { name: "Cornell", reason: "flexible degree structures, time to find their direction" },
-      { name: "University of Amsterdam", reason: "Liberal Arts programme, designed for exactly this mind" },
-    ],
-    quote: "Explorers are my favorite to work with \u2014 and the most likely to be rushed into the wrong choice by well-meaning people. The best thing Orva does for an Explorer is buy them time and perspective.",
+  arts: {
+    "1": { uk: "University of Cambridge", us: "Yale University" },
+    "2": { uk: "University of St Andrews", us: "NYU" },
+    "3": { uk: "University of Manchester", us: "Boston University" },
+    "4": { uk: "Royal Holloway, London", us: "Arizona State University" },
+  },
+  exploring: {
+    "1": { uk: "University of St Andrews", us: "Brown University" },
+    "2": { uk: "University of Edinburgh", us: "University of Michigan" },
+    "3": { uk: "University of Glasgow", us: "Northeastern University" },
+    "4": { uk: "University of Stirling", us: "Arizona State University" },
   },
 };
+
+
 
 export const STUDENT_STORIES = [
   {

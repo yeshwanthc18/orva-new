@@ -38,6 +38,7 @@ import ZoomParallax from "@/components/ZoomParallax";
 import ChooseOrva from "./ChooseOrva";
 import Process from "@/components/Process";
 import Story from "@/components/Story";
+import BrandVideoSection from "./Video";
 
 export default function HomeNewPage() {
   useLenis();
@@ -71,25 +72,15 @@ export default function HomeNewPage() {
           <InfiniteMovingCards
             items={UNIVERSITY_MARQUEE.map((uni) => ({
               content: (
-                <div className="flex items-center gap-4 px-8 whitespace-nowrap">
-                  {/* {uni.logo ? (
+                <div className="flex items-center justify-center px-8">
+                  <div className="relative h-12 w-32">
                     <Image
-                      src={uni.logo}
+                      src={uni.logo!}
                       alt={uni.name}
                       fill
-                      className="object-contain brightness-0 invert"
+                      className="object-contain grayscale brightness-0 invert opacity-80 hover:opacity-100 transition-all duration-300"
                     />
-                  ) : (
-                    <div className="h-12 w-12 rounded-full bg-white/10 flex items-center justify-center">
-                      {(uni.name ?? "?").charAt(0)}
-                    </div>
-                  )} */}
-
-                  {/* <span>{uni.name}</span> */}
-
-                  <span className="text-2xl md:text-3xl font-semibold tracking-tight text-white/85">
-                    {uni.name}
-                  </span>
+                  </div>
                 </div>
               ),
             }))}
@@ -100,127 +91,9 @@ export default function HomeNewPage() {
           />
         </section>
         {/* What We Do — Split with Image + Floating Geometry */}
-        {/* <section
-          className="relative overflow-hidden noise-bg"
-          style={{ background: COLORS.warmCream }}
-        >
-          <FloatingGeometry variant="light" density="normal" />
-          <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-0 items-stretch">
-        
-            <div className="px-8 md:px-16 py-20 md:py-32 flex flex-col justify-center">
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="text-[11px] font-bold tracking-[0.2em] uppercase mb-6"
-                style={{ color: COLORS.primary }}
-              >
-                What We Do
-              </motion.div>
 
-              <TextGenerateEffect
-                words="The right university. The right major. The right future."
-                className="text-[clamp(32px,5vw,48px)] leading-[1.15] tracking-tight mb-8"
-                style={{ color: COLORS.textDark }}
-                filter
-                duration={0.5}
-              />
-
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: 0.5 }}
-                className="text-base md:text-lg leading-relaxed mb-10"
-                style={{ color: COLORS.textLight }}
-              >
-                ORVA is a boutique university admissions consultancy for
-                families in the UAE and Saudi Arabia. We work with ambitious
-                students from Year 9 onwards, building a deliberate path to
-                Oxford, Cambridge, the Ivy League, and Europe&apos;s finest
-                universities & beyond, to a future-proof career they genuinely
-                want to build.
-              </motion.p>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: 0.6 }}
-                className="mb-10 py-6 pl-6 border-l-2 rounded-r-xl"
-                style={{
-                  borderColor: COLORS.primary,
-                  background: "rgba(213,30,32,0.06)",
-                }}
-              >
-                <p
-                  className="text-lg md:text-xl font-medium italic leading-relaxed"
-                  style={{ color: COLORS.textDark }}
-                >
-                  &ldquo;We serve you. Not universities.&rdquo;
-                </p>
-                <p className="text-sm mt-2" style={{ color: COLORS.textMuted }}>
-                  — Founder, Orva Education
-                </p>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: 0.7 }}
-              >
-                <div className="flex flex-wrap gap-3">
-                  <Button href="/contact" variant="primary" size="lg">
-                    Talk to Our Founder
-                  </Button>
-                  <Button href="/why-orva" variant="secondary" size="lg">
-                    Why Orva
-                  </Button>
-                </div>
-              </motion.div>
-            </div>
-
-            <div className="relative hidden lg:block min-h-[600px]">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.9, delay: 0.2 }}
-                className="absolute inset-0"
-              >
-                <Image
-                  src="/images/img02.jpeg"
-                  alt="Students at university"
-                  fill
-                  className="object-cover"
-                  sizes="50vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-[#FBF9F6] via-transparent to-transparent" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#FBF9F6]/50 via-transparent to-transparent" />
-              </motion.div>
-
-              <RotateOnScroll
-                className="absolute top-10 right-10 w-32 h-32 opacity-30"
-                range={[0, 360]}
-              >
-                <svg viewBox="0 0 100 100" className="w-full h-full">
-                  <circle
-                    cx="50"
-                    cy="50"
-                    r="45"
-                    fill="none"
-                    stroke="#D51E20"
-                    strokeWidth="0.5"
-                    strokeDasharray="4 6"
-                  />
-                </svg>
-              </RotateOnScroll>
-            </div>
-          </div>
-        </section> */}
         <ZoomParallax />
+        <BrandVideoSection />
 
         {/* Is ORVA Right For You + Grid Pattern */}
         {/* <ChooseOrva /> */}
@@ -235,13 +108,28 @@ export default function HomeNewPage() {
         >
           <ScrollRevealStrip direction="left">
             <span
-              className="text-[20px] md:text-[30px] font-black tracking-tighter whitespace-nowrap"
-              style={{ color: `${COLORS.primary}1` }}
+              className="text-[18px] md:text-[20px] font-medium tracking-tighter whitespace-nowrap"
+              style={{ color: "rgba(28, 28, 28, 0.671)" }}
             >
-              STRATEGY &nbsp; PROFILE &nbsp; APPLICATIONS &nbsp; FUTURE &nbsp;
-              CAREER &nbsp; UNIVERSITY &nbsp; AMBITION &nbsp; EXCELLENCE &nbsp;
-              STRATEGY &nbsp; PROFILE &nbsp; APPLICATIONS &nbsp; FUTURE &nbsp;
-              CAREER &nbsp; UNIVERSITY &nbsp; AMBITION &nbsp; EXCELLENCE
+              STRATEGY &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+              &nbsp; &nbsp; PROFILE &nbsp; &nbsp; &nbsp; &nbsp; APPLICATIONS
+              &nbsp; &nbsp; &nbsp; &nbsp; FUTURE &nbsp; &nbsp; &nbsp; &nbsp;
+              CAREER &nbsp; &nbsp; &nbsp; &nbsp; UNIVERSITY &nbsp; &nbsp; &nbsp;
+              &nbsp; AMBITION &nbsp; &nbsp; &nbsp; &nbsp; EXCELLENCE &nbsp;
+              &nbsp; &nbsp; &nbsp; STRATEGY &nbsp; &nbsp; &nbsp; &nbsp; PROFILE
+              &nbsp; &nbsp; &nbsp; &nbsp; APPLICATIONS &nbsp; &nbsp; &nbsp;
+              &nbsp; FUTURE &nbsp; &nbsp; &nbsp; &nbsp; CAREER &nbsp; &nbsp;
+              &nbsp; &nbsp; UNIVERSITY &nbsp; &nbsp; &nbsp; &nbsp; AMBITION
+              &nbsp; &nbsp; &nbsp; &nbsp; EXCELLENCE &nbsp; &nbsp; &nbsp; &nbsp;
+              STRATEGY &nbsp; &nbsp; &nbsp; &nbsp; PROFILE &nbsp; &nbsp; &nbsp;
+              &nbsp; APPLICATIONS &nbsp; &nbsp; &nbsp; &nbsp; FUTURE &nbsp;
+              &nbsp; &nbsp; &nbsp; CAREER &nbsp; &nbsp; &nbsp; &nbsp; UNIVERSITY
+              &nbsp; &nbsp; &nbsp; &nbsp; AMBITION &nbsp; &nbsp; &nbsp; &nbsp;
+              EXCELLENCE &nbsp; &nbsp; &nbsp; &nbsp; STRATEGY &nbsp; &nbsp;
+              &nbsp; &nbsp; PROFILE &nbsp; &nbsp; &nbsp; &nbsp; APPLICATIONS
+              &nbsp; &nbsp; &nbsp; &nbsp; FUTURE &nbsp; CAREER &nbsp; &nbsp;
+              &nbsp; &nbsp; UNIVERSITY &nbsp; &nbsp; &nbsp; &nbsp; AMBITION
+              &nbsp; &nbsp; &nbsp; &nbsp; EXCELLENCE
             </span>
           </ScrollRevealStrip>
         </section>
@@ -381,7 +269,7 @@ export default function HomeNewPage() {
               className="text-[clamp(28px,5vw,48px)] font-bold leading-[1.2] italic tracking-tight mb-6"
               style={{ color: COLORS.warmCream }}
             >
-              The window is shorter than most families realize.
+              Starting early gives you more choices and greater peace of mind.
             </motion.h2>
 
             <motion.p
@@ -405,10 +293,10 @@ export default function HomeNewPage() {
               className="flex flex-wrap gap-4 justify-center"
             >
               <Button href="/contact" variant="primary" size="lg">
-                Talk to Our Founder
+                Talk to Orva
               </Button>
               <Button href="/quiz" variant="secondary" size="lg">
-                Discover Your Child's Profile
+                University Match Quiz
               </Button>
             </motion.div>
           </div>

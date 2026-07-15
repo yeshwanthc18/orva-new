@@ -13,7 +13,7 @@ import { Button } from "./ui/Button";
 
 // Free Unsplash — Oxford Radcliffe Camera, iconic university
 const UNI_URL =
-  "https://images.unsplash.com/photo-1568792923760-d70635a89fdc?w=1800&q=82&auto=format&fit=crop";
+  "/images/harvard.jpg";
 
 export default function Hero() {
   const containerRef = useRef<HTMLElement>(null);
@@ -154,7 +154,7 @@ export default function Hero() {
               width: "100%",
               height: "100%",
               objectFit: "cover",
-              objectPosition: "center 45%",
+              objectPosition: "center 55%",
             }}
           />
           <div
@@ -195,7 +195,7 @@ export default function Hero() {
               lineHeight: 0.8,
               letterSpacing: "-0.02em",
               fontFamily: "Cairo, sans-serif",
-              color: "#0f0f0f",
+              color: "#000000",
               userSelect: "none",
               textAlign: "center",
               margin: 0,
@@ -224,15 +224,16 @@ export default function Hero() {
           }}
         >
           <motion.img
-            src="/girl-new.png"
+            src="/girl.png"
             alt="Student portrait reference cutout"
-            initial={{ opacity: 0, scale: 0.97, y: 25 }}
+            initial={{ opacity: 0, scale: 0.77, y: 25 }}
             animate={ready ? { opacity: 1, scale: 1, y: 0 } : {}}
             transition={{
               duration: 0.95,
               delay: 0.04,
               ease: [0.16, 1, 0.3, 1],
             }}
+            className="relative top-10"
             style={{
               width: "100%",
               height: "100%",
@@ -386,12 +387,12 @@ export default function Hero() {
               </svg>
             </Button>
             <Button
-              href="/contact"
+              href="/how-it-works"
               variant="secondaryLight"
               size="lg"
               className="inline-flex"
             >
-              Our Story
+              Our Approach
             </Button>
           </motion.div>
         </motion.div>
@@ -416,7 +417,7 @@ export default function Hero() {
               <span
                 key={c}
                 style={{
-                  fontSize: 11,
+                  fontSize: 13,
                   letterSpacing: ".25em",
                   fontWeight: 700,
                   textTransform: "uppercase",

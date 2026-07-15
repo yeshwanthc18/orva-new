@@ -82,7 +82,7 @@ function AnimatedCounter({
         {isPercentage ? `${count}%` : hasPlus ? `${count}+` : count}
       </div>
       <div
-        className="text-[10px] font-bold tracking-[0.25em] uppercase mt-1"
+        className="text-[14px] font-bold tracking-[0.25em] uppercase mt-1"
         style={{ color: isRed ? "rgba(255,255,255,0.4)" : COLORS.textMuted }}
       >
         {label}
@@ -148,8 +148,8 @@ function SceneRow({
             viewport={{ once: true }}
             className="inline-flex items-center gap-3 mb-5"
           >
-            <div className="h-px w-12 bg-white/60" />
-            <span className="uppercase tracking-[0.25em] text-sm font-semibold text-white/80">
+            <div className="h-px w-12 bg-white" />
+            <span className="uppercase tracking-[0.25em] text-sm font-semibold text-white">
               Is ORVA Right For You?
             </span>
           </motion.div>
@@ -187,7 +187,7 @@ function SceneRow({
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
-                className="group flex items-start gap-2 mt-0 p-2  transition-all duration-300"
+                className="group flex items-start gap-2 mt-0  transition-all duration-300"
               >
                 <div className="flex items-center justify-center shrink-0 group-hover:scale-110 transition">
                   <span className="text-xl text-white">→</span>

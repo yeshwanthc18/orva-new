@@ -104,7 +104,7 @@ function HorizontalProcessScroll() {
 
                 {/* Content */}
                 <div className="lg:col-span-7 p-6 md:p-10 flex flex-col justify-center">
-                  <div className="flex items-center gap-3 mb-3 text-xs font-bold tracking-[0.15em] uppercase">
+                  <div className="flex items-center gap-3 mb-3 text-sm font-bold tracking-[0.15em] uppercase">
                     <span style={{ color: COLORS.primary }}>{step.year}</span>
                     <span style={{ color: COLORS.textMuted }}>
                       &bull; {step.age}
@@ -145,12 +145,12 @@ function HorizontalProcessScroll() {
         </div>
 
         {/* Step indicators */}
-        <div className="absolute bottom-[32px] left-6 right-6 md:left-12 md:right-12 flex justify-between z-20">
+        <div className="absolute bottom-[28px] left-6 right-6 md:left-12 md:right-12 flex justify-between z-20">
           {PROCESS_STEPS.map((step) => (
             <div key={step.number} className="flex flex-col items-center">
               <div className="w-3 h-3 rounded-full bg-gradient-to-br from-[#D51E20] to-[#FA8322]" />
               <span
-                className="text-[9px] font-bold mt-1 tracking-wider uppercase hidden md:block"
+                className="text-[14px] font-bold mt-0 tracking-wider uppercase hidden md:block"
                 style={{ color: COLORS.textMuted }}
               >
                 {step.year}

@@ -153,7 +153,7 @@ const menuIconColor = isLightNav ? "#FFFFFF" : "#1C1C1C";
 
         {/* CTA */}
         <motion.a
-          href="/contact"
+          href="/quiz"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: .15 }}
@@ -173,7 +173,7 @@ const menuIconColor = isLightNav ? "#FFFFFF" : "#1C1C1C";
             e.currentTarget.style.borderColor = buttonBorder;
           }}
         >
-          Talk to ORVA
+          University Match Quiz
 
           <svg
             className="w-3 h-3 transition-transform group-hover:translate-x-1"
@@ -278,11 +278,11 @@ const menuIconColor = isLightNav ? "#FFFFFF" : "#1C1C1C";
         ))}
 
         <a
-          href="/contact"
+          href="/quiz"
           className="block mt-5 rounded-lg bg-[#D51E20] text-white text-center py-3 font-bold uppercase tracking-wider"
           onClick={() => setIsMobileMenuOpen(false)}
         >
-          Talk to ORVA
+          University Match Quiz
         </a>
       </nav>
     </motion.div>

@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { ACCEPTANCE_TIMELINE, COLORS } from "@/lib/constants";
 import { Spotlight } from "@/components/ui/Spotlight";
@@ -9,7 +8,6 @@ import TimelineAccordion from "./TimelineAccordion";
 import AcceptanceTimeline from "./TimelineAccordion";
 
 export default function AcceptanceTimelineSection() {
-  const [expandedYear, setExpandedYear] = useState<string | null>("Year 9/10");
 
   return (
     <section
@@ -44,20 +42,7 @@ export default function AcceptanceTimelineSection() {
           </p>
         </motion.div>
 
-        <div className="space-y-4">
-          {ACCEPTANCE_TIMELINE.map((timeline) => (
-            <AcceptanceTimeline
-              key={timeline.year}
-              timeline={timeline}
-              isExpanded={expandedYear === timeline.year}
-              onToggle={() =>
-                setExpandedYear(
-                  expandedYear === timeline.year ? null : timeline.year,
-                )
-              }
-            />
-          ))}
-        </div>
+       <AcceptanceTimeline />
       </div>
     </section>
   );

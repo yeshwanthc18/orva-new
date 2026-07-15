@@ -8,7 +8,7 @@ import { FloatingGeometry } from "@/components/ui/FloatingGeometry";
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-[70vh] flex items-center overflow-hidden">
+    <section className="relative min-h-[80vh] flex items-center overflow-hidden">
       <div className="absolute inset-0">
         <Image
           src="/images/img05.jpeg"
@@ -18,7 +18,7 @@ export default function HeroSection() {
           sizes="100vw"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0F0F0F] via-[#0F0F0F]/85 to-[#0F0F0F]/50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0F0F0F] via-[#0F0F0F]/45 to-[#0F0F0F]/20" />
       </div>
       <FloatingGeometry variant="dark" density="sparse" />
       <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-12 py-20 md:py-32">

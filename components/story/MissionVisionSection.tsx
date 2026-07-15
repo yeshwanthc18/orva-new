@@ -28,7 +28,7 @@ export default function MissionVisionSection() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-50 bg-white"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
             </span>
-            <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-white/80">
+            <span className="text-[14px] font-bold tracking-[0.35em] uppercase text-white/80">
               Our Purpose
             </span>
           </div>

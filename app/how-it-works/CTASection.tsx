@@ -10,7 +10,7 @@ export default function CTASection() {
     <section className="relative py-20 md:py-28 overflow-hidden">
       <div className="absolute inset-0">
         <Image
-          src="/images/img14.jpeg"
+          src="/images/image8.png"
           alt=""
           fill
           className="object-cover"
@@ -33,8 +33,8 @@ export default function CTASection() {
             <Button href="/contact" variant="primary" size="lg">
               Get in Touch
             </Button>
-            <Button href="/quiz" variant="secondary" size="lg">
-              Take the Quiz
+            <Button href="/quiz" variant="secondaryLight" size="lg">
+              University Match Quiz
             </Button>
           </div>
         </motion.div>

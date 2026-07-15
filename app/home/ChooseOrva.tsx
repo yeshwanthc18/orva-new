@@ -113,7 +113,7 @@ const ChooseOrva = () => {
                   transition={{ duration: 0.7, delay: 0.7 }}
                 >
                   <Button href="/contact" variant="primary" size="lg">
-                    Talk to Our Founder
+                    Talk to Orva
                   </Button>
                 </motion.div>
               </div>

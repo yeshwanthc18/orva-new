@@ -13,6 +13,14 @@ import {
   FAQSection,
 } from "@/components/resources";
 import { COLORS } from "@/lib/constants";
+import {
+  FileText,
+  ClipboardCheck,
+  PencilLine,
+  BadgeDollarSign,
+  Mic,
+  CircleHelp,
+} from "lucide-react";
 import EventPreheader from "@/components/PreHeader";
 
 const BLOG_POSTS = [
@@ -22,7 +30,7 @@ const BLOG_POSTS = [
     title: "The Complete Guide to SAT vs ACT: Which Test Should You Take?",
     excerpt:
       "Understanding the differences between SAT and ACT to make the right choice for your profile and timeline.",
-    date: "Mar 15, 2024",
+    date: "July 08, 2026",
     readTime: "8 min read",
     image: "/images/img02.jpeg",
     featured: true,
@@ -33,7 +41,7 @@ const BLOG_POSTS = [
     title: "How to Write a Compelling University Essay from the Middle East",
     excerpt:
       "Strategies for showcasing your unique cultural perspective while appealing to international admissions teams.",
-    date: "Mar 12, 2024",
+    date: "July 08, 2026",
     readTime: "6 min read",
     image: "/images/img03.jpeg",
     featured: true,
@@ -44,7 +52,7 @@ const BLOG_POSTS = [
     title: "Maximizing Your Financial Aid Package: A GCC Student's Guide",
     excerpt:
       "Learn how to understand aid offers, negotiate packages, and find scholarships you qualify for.",
-    date: "Mar 10, 2024",
+    date: "July 08, 2026",
     readTime: "7 min read",
     image: "/images/img04.jpeg",
     featured: true,
@@ -55,7 +63,7 @@ const BLOG_POSTS = [
     title: "First Year Abroad: Navigating Culture Shock and Thriving on Campus",
     excerpt:
       "Real advice from ORVA students who have successfully transitioned to universities in the UK, USA, and Canada.",
-    date: "Mar 8, 2024",
+    date: "July 08, 2026",
     readTime: "9 min read",
     image: "/images/img05.jpeg",
     featured: false,
@@ -66,7 +74,7 @@ const BLOG_POSTS = [
     title: "Beyond Rankings: How to Choose a University That's Right for You",
     excerpt:
       "A framework for evaluating universities based on your values, interests, and post-graduation goals.",
-    date: "Mar 5, 2024",
+    date: "July 08, 2026",
     readTime: "10 min read",
     image: "/images/img06.jpeg",
     featured: false,
@@ -77,12 +85,14 @@ const BLOG_POSTS = [
     title: "Mastering the Common App: Timeline and Tips for Success",
     excerpt:
       "Step-by-step guidance through the Common Application process used by 900+ universities worldwide.",
-    date: "Mar 1, 2024",
+    date: "July 08, 2026",
     readTime: "7 min read",
     image: "/images/img02.jpeg",
     featured: false,
   },
 ];
+
+
 
 const GUIDES = [
   {
@@ -92,7 +102,7 @@ const GUIDES = [
       "A comprehensive month-by-month timeline from junior year to enrollment, with key deadlines and action items.",
     downloadCount: 2450,
     type: "PDF Guide",
-    icon: "📋",
+    icon: FileText,
   },
   {
     id: 2,
@@ -101,7 +111,7 @@ const GUIDES = [
       "Evaluate your academic profile with our comprehensive assessment tool. Know your competitive range across universities.",
     downloadCount: 1890,
     type: "Interactive Checklist",
-    icon: "✓",
+    icon: ClipboardCheck,
   },
   {
     id: 3,
@@ -110,7 +120,7 @@ const GUIDES = [
       "50+ essay topic ideas specifically for Middle Eastern students, with a brainstorming framework.",
     downloadCount: 3120,
     type: "Worksheet",
-    icon: "✏️",
+    icon: PencilLine,
   },
   {
     id: 4,
@@ -119,7 +129,7 @@ const GUIDES = [
       "Searchable database of 500+ scholarships for international students from the GCC region.",
     downloadCount: 2890,
     type: "Database",
-    icon: "💰",
+    icon: BadgeDollarSign,
   },
   {
     id: 5,
@@ -128,7 +138,7 @@ const GUIDES = [
       "Everything you need to know about university interviews: types, common questions, and preparation strategies.",
     downloadCount: 2120,
     type: "PDF Guide",
-    icon: "🎤",
+    icon: Mic,
   },
   {
     id: 6,
@@ -137,7 +147,7 @@ const GUIDES = [
       "Frequently asked questions answered by admissions officers from Oxford, MIT, Stanford, and more.",
     downloadCount: 1650,
     type: "FAQ Document",
-    icon: "❓",
+    icon: CircleHelp,
   },
 ];
 
@@ -145,33 +155,25 @@ const FAQS = [
   {
     question: "When should I start preparing for university applications?",
     answer:
-      "The best time to start is during 10th or 11th grade. This gives you time to explore universities, prepare for standardized tests, and craft thoughtful essays. However, it's never too late—even 12th graders can successfully navigate the process with focused preparation.",
+      "From 9th grade onwards",
   },
   {
     question: "How long does the ORVA guidance process take?",
     answer:
-      "Our comprehensive services typically span 6-9 months, from initial strategy to enrollment. This timeline is flexible and can be adjusted based on your starting point and target universities. We also offer accelerated programs for students starting in the 12th grade.",
+      "Typically 2 years instead of 6-9 months",
   },
   {
     question: "What makes ORVA different from other admissions consultants?",
     answer:
-      "We are based in and understand the GCC region deeply. Our team has 15+ years of experience placing GCC students in top universities worldwide. We don't just focus on getting you in—we measure success by your thriving in year one and beyond. Every plan is genuinely personalized, not templated.",
+      "We help students choose majors aligned with future industries, local economies, and AI-resilient careers.",
   },
-  {
-    question: "How much do ORVA services cost?",
-    answer:
-      "We offer flexible pricing starting from AED 15,000 for our Starter package up to custom Premium packages. Each tier includes varying levels of support and guidance. We can discuss your budget and create a customized plan that works for your family.",
-  },
+  
   {
     question: "Do you offer support for students applying to specific regions?",
     answer:
-      "Yes! We specialize in US, UK, Canadian, and Netherlands-based universities. Our team has deep connections with institutions in these regions and understands their specific application requirements and expectations.",
+      "We focus on global best universities regardless of their location, with specific focus across UK, US and Europe",
   },
-  {
-    question: "Can you help with scholarships and financial aid?",
-    answer:
-      "Absolutely. We have a dedicated expert on our team who helps students identify scholarships, understand aid packages, and negotiate offers. We've helped students secure over $10M in scholarships collectively.",
-  },
+
 ];
 
 export default function ResourcesPage() {
@@ -236,7 +238,7 @@ export default function ResourcesPage() {
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
                 </span>
                 <span
-                  className="text-[10px] font-bold tracking-[0.35em] uppercase"
+                  className="text-[14px] font-bold tracking-[0.35em] uppercase"
                   style={{ color: COLORS.primary }}
                 >
                   Featured Articles
@@ -259,7 +261,7 @@ export default function ResourcesPage() {
         </section>
 
         {/* All Blog Posts */}
-        <section
+        {/* <section
           className="relative py-20 md:py-32 px-6 md:px-12"
           style={{ background: COLORS.warmSand }}
         >
@@ -287,10 +289,10 @@ export default function ResourcesPage() {
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* Downloadable Guides */}
-        <section
+        {/* <section
           className="relative py-20 md:py-32 px-6 md:px-12"
           style={{ background: COLORS.warmCream }}
         >
@@ -307,7 +309,7 @@ export default function ResourcesPage() {
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
                 </span>
                 <span
-                  className="text-[10px] font-bold tracking-[0.35em] uppercase"
+                  className="text-[14px] font-bold tracking-[0.35em] uppercase"
                   style={{ color: COLORS.primary }}
                 >
                   Free Tools
@@ -330,7 +332,7 @@ export default function ResourcesPage() {
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* FAQ */}
         <FAQSection faqs={FAQS} />

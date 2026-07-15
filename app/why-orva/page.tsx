@@ -83,7 +83,7 @@ export default function WhyOrvaPage() {
                 <Button href="/contact" variant="primary" size="lg">
                   Talk to Orva
                 </Button>
-                <Button href="/how-it-works" variant="secondary" size="lg">
+                <Button href="/how-it-works" variant="secondaryLight" size="lg">
                   See How It Works
                 </Button>
               </motion.div>
@@ -202,7 +202,7 @@ export default function WhyOrvaPage() {
                 is simple: we want them to thrive — at the world&apos;s best
                 universities, and in the life that follows.
               </blockquote>
-              <p className="text-lg text-white/80 mb-10">— Orva's Founder</p>
+              <p className="text-lg text-white/80 mb-10">— Founder, Orva Education</p>
               <Button href="/about-daniela" variant="primary" size="lg">
                 Talk to Orva
               </Button>

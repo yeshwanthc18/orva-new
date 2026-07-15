@@ -90,7 +90,7 @@ export default function IsOrvaRightSection() {
                 Talk to ORVA
               </Button>
               <Button href="/quiz" variant="secondary" size="md">
-                Take the Quiz
+                University Match Quiz
               </Button>
             </div>
           </motion.div>

@@ -73,12 +73,12 @@ export function StackCard({ card, index, total, progress }: StackCardProps) {
         {/* Left – Image */}
         <div className="lg:w-5/12 relative h-[240px] lg:h-full flex-shrink-0">
           <Image
-            src={`/images/reason${index + 1}.jpg`}
+            src={`/images/image${index + 1}.png`}
             alt={card.title}
             fill
             className="object-cover"
             sizes="(max-width: 1024px) 100vw, 40vw"
-            priority={index < 2}
+            // priority={index < 2}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
           

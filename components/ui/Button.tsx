@@ -47,7 +47,7 @@ export function Button({
         )
       : cn(
           base,
-          "bg-transparent border border-white/80 text-white hover:bg-white hover:text-[#D51E20] hover:border-white hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(255,255,255,0.2)]"
+          "bg-transparent border border-white/80 text-white hover:bg-transparent hover:text-[#F45104] hover:border-[#F45104] hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(255,255,255,0.2)]"
         );
 
   const content =

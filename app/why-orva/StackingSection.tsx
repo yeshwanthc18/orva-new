@@ -64,7 +64,7 @@ function PrincipleCard({
       <div className="w-full max-w-5xl rounded-[20px] bg-white border border-black/[0.06] shadow-[0_30px_80px_-30px_rgba(20,15,10,0.25)] overflow-hidden flex flex-col lg:flex-row h-[480px] lg:h-[460px]">
         <div className="lg:w-[42%] relative h-[200px] lg:h-full flex-shrink-0">
           <Image
-            src={`/images/reason${index + 1}.jpg`}
+            src={`/images/image${index + 1}.png`}
             alt={card.title}
             fill
             className="object-cover"
@@ -134,7 +134,7 @@ function RailItem({
   progress: MotionValue<number>;
 }) {
   const mid = (start + end) / 2;
-  const opacity = useTransform(progress, [start, mid, end], [0.35, 1, 0.35]);
+  const opacity = useTransform(progress, [start, mid, end], [0.55, 1, 0.35]);
   const lineScale = useSpring(useTransform(progress, [start, mid, end], [0, 1, 0]), {
     stiffness: 200,
     damping: 28,
@@ -145,13 +145,13 @@ function RailItem({
   });
 
   return (
-    <motion.div style={{ opacity }} className="py-3 border-t border-black/[0.06] first:border-t-0">
+    <motion.div style={{ opacity }} className="py-2 border-t border-black/[0.06] first:border-t-0">
       <motion.div style={{ scaleX: lineScale }} className="h-[2px] origin-left mb-2 bg-gradient-to-r from-[#D51E20] to-[#FA8322]" />
       <motion.div style={{ scale: textScale }} className="origin-left">
-        <span className="block font-mono text-[11px] tracking-widest mb-0.5" style={{ color: COLORS.primary }}>
+        <span className="block font-mono text-sm tracking-widest" style={{ color: COLORS.primary }}>
           {card.number}
         </span>
-        <span className="block text-sm font-semibold leading-snug" style={{ color: COLORS.textDark }}>
+        <span className="block text-[16px] font-semibold leading-snug" style={{ color: COLORS.textDark }}>
           {card.title}
         </span>
       </motion.div>
@@ -175,8 +175,8 @@ export function StackingSection({ cards }: StackingSectionProps) {
     >
       <div className="sticky top-0 h-screen overflow-hidden flex flex-col">
         {/* Header */}
-        <div className="relative z-20 border-b border-black/[0.06] bg-[#FBF9F6]/70 backdrop-blur-lg">
-          <div className="max-w-7xl mx-auto px-6 lg:px-10 py-8 lg:py-10">
+        <div className="relative z-20  bg-[#FBF9F6]/70 backdrop-blur-lg">
+          <div className="max-w-7xl mx-auto px-6 lg:px-10 py-4 lg:pt-24">
             <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5">
               <div>
                 <span className="uppercase text-xs font-bold tracking-[0.22em] block mb-3" style={{ color: COLORS.primary }}>
@@ -205,7 +205,7 @@ export function StackingSection({ cards }: StackingSectionProps) {
         </div>
 
         {/* Body: rail + card stage */}
-        <div className="relative flex-1 max-w-7xl mx-auto w-full px-6 lg:px-10 py-10 lg:py-12 flex gap-10 lg:gap-16">
+        <div className="relative flex-1 max-w-7xl mx-auto w-full px-6 lg:px-10 py-4 lg:py-2 flex gap-10 lg:gap-16">
           <IndexRail cards={cards} progress={scrollYProgress} />
           <div className="relative flex-1">
             {cards.map((card, index) => (

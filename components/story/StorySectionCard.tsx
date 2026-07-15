@@ -80,7 +80,7 @@ export default function StorySectionCard({ section, index }: StorySectionProps) 
               ></span>
             </span>
             <span
-              className="text-[10px] font-bold tracking-[0.35em] uppercase"
+              className="text-[14px] font-bold tracking-[0.35em] uppercase"
               style={{ color: isRed ? "#FFFFFF" : COLORS.textDark }}
             >
               {section.tag}

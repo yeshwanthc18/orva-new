@@ -20,7 +20,7 @@ const INPUT_BASE =
   "w-full bg-white border border-black/10 rounded-xl px-4 py-3.5 text-sm text-[#181818] font-[Cairo,sans-serif] outline-none transition-all duration-200 focus:border-red-500/50 focus:shadow-md focus:ring-2 focus:ring-red-500/10";
 
 const LABEL_BASE =
-  "block text-[10px] tracking-[0.2em] uppercase font-bold text-[rgba(24,24,24,0.4)] mb-2";
+  "block text-[14px] tracking-[0.2em] uppercase font-bold text-[rgba(24,24,24,0.4)] mb-2";
 
 const TIME_SLOTS = [
   "09:00",

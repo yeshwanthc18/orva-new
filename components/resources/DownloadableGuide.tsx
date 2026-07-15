@@ -17,7 +17,7 @@ interface Guide {
   description: string;
   downloadCount: number;
   type: string;
-  icon: string;
+  icon: any;
 }
 
 interface DownloadableGuideProps {
@@ -28,6 +28,7 @@ interface DownloadableGuideProps {
 export default function DownloadableGuide({ guide, index }: DownloadableGuideProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const inView = useInView(containerRef, { amount: 0.3, once: false });
+     const Icon = guide.icon;
 
   return (
     <motion.div
@@ -38,12 +39,18 @@ export default function DownloadableGuide({ guide, index }: DownloadableGuidePro
       className="p-6 rounded-lg bg-white border border-black/[0.06] hover:border-red-300 hover:shadow-lg transition-all group cursor-pointer"
     >
       <div className="flex items-start gap-4">
-        <div
-          className="w-16 h-16 rounded-lg flex items-center justify-center flex-shrink-0 text-3xl"
-          style={{ background: `${COLORS.primary}15` }}
-        >
-          {guide.icon}
-        </div>
+    
+
+<div
+  className="w-16 h-16 rounded-lg flex items-center justify-center flex-shrink-0"
+  style={{ background: `${COLORS.primary}15` }}
+>
+  <Icon
+    size={30}
+    strokeWidth={2}
+    style={{ color: COLORS.primary }}
+  />
+</div>
 
         <div className="flex-1 min-w-0">
           <div className="text-xs font-semibold tracking-[0.1em] uppercase mb-2" style={{ color: COLORS.primary }}>
