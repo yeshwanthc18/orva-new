@@ -28,7 +28,7 @@ export default function EventPreheader({
       {isOpen && (
         <motion.div
           initial={{ opacity: 0, y: -20 }}
-          animate={ready ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{
             duration: 0.5,
@@ -36,15 +36,14 @@ export default function EventPreheader({
           }}
           className="fixed top-0 left-0 right-0 z-[600] bg-gradient-to-r from-[#F75105] to-[#AA1A12]"
         >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3 flex-1 min-w-0">
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-white/20 rounded-full text-xs font-bold uppercase tracking-wider text-white whitespace-nowrap flex-shrink-0">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3 flex items-center justify-between gap-2 sm:gap-4">
+            <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
+              <span className="hidden sm:inline-flex items-center gap-1 px-2.5 py-1 bg-white/20 rounded-full text-xs font-bold uppercase tracking-wider text-white whitespace-nowrap flex-shrink-0">
                Stay Updated
               </span>
 
-              <p className="text-white text-sm font-semibold truncate">
-                Be the first to hear about upcoming events, workshops, webinars,
-                and exclusive ORVA updates.
+              <p className="text-white text-xs sm:text-sm font-semibold truncate">
+                Be the first to hear about upcoming events, workshops, and exclusive ORVA updates.
               </p>
             </div>
 
@@ -52,7 +51,7 @@ export default function EventPreheader({
               href="#signup"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-4 py-1.5 bg-white text-[#AA1A12] rounded-full text-xs font-bold uppercase tracking-wider whitespace-nowrap hover:shadow-lg transition-shadow duration-200 flex-shrink-0"
+              className="px-3 sm:px-4 py-1.5 bg-white text-[#AA1A12] rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider whitespace-nowrap hover:shadow-lg transition-shadow duration-200 flex-shrink-0"
             >
               Sign Up
             </motion.a>
@@ -60,7 +59,7 @@ export default function EventPreheader({
             <button
               onClick={handleClose}
               aria-label="Close announcement"
-              className="hidden sm:flex items-center justify-center w-8 h-8 rounded-lg hover:bg-white/10 transition-colors duration-200 flex-shrink-0 text-white"
+              className="flex items-center justify-center w-8 h-8 rounded-lg hover:bg-white/10 transition-colors duration-200 flex-shrink-0 text-white"
             >
               <svg
                 width="18"

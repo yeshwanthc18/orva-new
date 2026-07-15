@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { usePathname } from "next/navigation";
@@ -20,20 +20,38 @@ export default function Navbar({ isPreheaderOpen }: NavbarProps) {
 
   const isLightNav = isHome && !useRedLogo;
 
-const navColor = isLightNav ? "#FFFFFF" : "rgba(56,2,2,.65)";
-const underlineColor = isLightNav ? "#FFFFFF" : "#D51E20";
-const buttonBorder = isLightNav ? "#FFFFFF" : "#D51E20";
-const buttonText = isLightNav ? "#FFFFFF" : "#D51E20";
-const buttonHoverBg = isLightNav ? "#FFFFFF" : "#D51E20";
-const buttonHoverText = isLightNav ? "#D51E20" : "#FFFFFF";
-const menuIconColor = isLightNav ? "#FFFFFF" : "#1C1C1C";
+  const navColor = isLightNav ? "#FFFFFF" : "rgba(56,2,2,.65)";
+  const underlineColor = isLightNav ? "#FFFFFF" : "#D51E20";
+  const buttonBorder = isLightNav ? "#FFFFFF" : "#D51E20";
+  const buttonText = isLightNav ? "#FFFFFF" : "#D51E20";
+  const buttonHoverBg = isLightNav ? "#FFFFFF" : "#D51E20";
+  const buttonHoverText = isLightNav ? "#D51E20" : "#FFFFFF";
+  const menuIconColor = isLightNav ? "#FFFFFF" : "#1C1C1C";
 
   const { scrollY } = useScroll();
 
-  useEffect(() => {
-    const t = setTimeout(() => setReady(true), 500);
-    return () => clearTimeout(t);
+  const closeMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen(false);
   }, []);
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+    document.body.style.overflow = "hidden";
+
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeMobileMenu();
+    };
+    window.addEventListener("keydown", handleEsc);
+
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleEsc);
+    };
+  }, [isMobileMenuOpen, closeMobileMenu]);
+
+  useEffect(() => {
+    closeMobileMenu();
+  }, [pathname, closeMobileMenu]);
 
   const getHeroThresholds = () => {
     if (typeof window !== "undefined") {
@@ -219,6 +237,8 @@ const menuIconColor = isLightNav ? "#FFFFFF" : "#1C1C1C";
         <button
           className="md:hidden flex items-center justify-center w-10 h-10 rounded-lg hover:bg-white/10 transition"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label="Toggle menu"
+          aria-expanded={isMobileMenuOpen}
         >
           <svg
             width="24"

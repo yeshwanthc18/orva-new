@@ -359,9 +359,11 @@ export default function Hero() {
             animate={ready ? "show" : "hidden"}
             style={{
               display: "flex",
-              gap: 16,
+              gap: 12,
+              flexWrap: "wrap",
               justifyContent: "center",
               alignItems: "center",
+              padding: "0 16px",
             }}
           >
             <Button
@@ -401,13 +403,13 @@ export default function Hero() {
             LAYER 7 — Left Margin: Vertically Centered Country Columns
             ═══════════════════════════════════════════ */}
         <div
+          className="hidden lg:flex"
           style={{
             position: "absolute",
             left: 48,
             top: "50%",
             transform: "translateY(-50%)",
             zIndex: 20,
-            display: "flex",
             flexDirection: "column",
             gap: 28,
           }}
@@ -441,13 +443,13 @@ export default function Hero() {
           variants={stagger}
           initial="hidden"
           animate={ready ? "show" : "hidden"}
+          className="hidden lg:flex"
           style={{
             position: "absolute",
             right: 48,
             top: "50%",
             transform: "translateY(-50%)",
             zIndex: 20,
-            display: "flex",
             flexDirection: "column",
             gap: 36,
             borderLeft: "1px solid rgba(248, 246, 242, 0.12)",

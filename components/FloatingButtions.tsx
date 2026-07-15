@@ -1,14 +1,11 @@
 "use client";
 
-import { ArrowUp, Play } from "lucide-react";
+import { ArrowUp } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import { useEffect, useState } from "react";
 
-const VIDEO_URL = "https://www.youtube.com/embed/YOUR_VIDEO_ID";
-
 export default function FloatingButtons() {
   const [showTop, setShowTop] = useState(false);
-  const [showVideo, setShowVideo] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setShowTop(window.scrollY > 400);
@@ -19,55 +16,19 @@ export default function FloatingButtons() {
 
   return (
     <>
-      <div className="fixed bottom-8 right-8 z-[9999] flex flex-col gap-4">
-        {/* Video Button */}
-        {/* <button
-          onClick={() => setShowVideo(true)}
-          className="
-            group
-            relative
-            flex
-            h-16
-            w-16
-            items-center
-            justify-center
-            rounded-full
-            bg-[#AA1A12]
-            shadow-[0_15px_35px_rgba(170,26,18,.35)]
-            transition-all
-            duration-300
-            hover:scale-110
-          "
-        >
-          <Play
-            size={28}
-            className="fill-white text-white ml-1"
-          />
-
-          <span
-            className="
-              absolute
-              inset-0
-              rounded-full
-              border-2
-              border-[#AA1A12]
-              animate-ping
-              opacity-20
-            "
-          />
-        </button> */}
-
+      <div className="fixed bottom-5 right-4 sm:bottom-8 sm:right-8 z-[9999] flex flex-col gap-3 sm:gap-4">
         {/* WhatsApp */}
         <a
           href="https://wa.me/971503440568?text=Hello%20ORVA,%20I%20would%20like%20to%20know%20more."
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Chat on WhatsApp"
           className="
             group
             relative
             flex
-            h-16
-            w-16
+            h-12 w-12
+            sm:h-16 sm:w-16
             items-center
             justify-center
             rounded-full
@@ -79,8 +40,12 @@ export default function FloatingButtons() {
           "
         >
           <FaWhatsapp
+            size={24}
+            className="text-white sm:hidden"
+          />
+          <FaWhatsapp
             size={32}
-            className="text-white"
+            className="text-white hidden sm:block"
           />
 
           <span
@@ -104,6 +69,7 @@ export default function FloatingButtons() {
               behavior: "smooth",
             })
           }
+          aria-label="Scroll to top"
           className={`
             group relative transition-all duration-500
             ${
@@ -118,7 +84,7 @@ export default function FloatingButtons() {
           <div
             className="
               relative
-              flex h-16 w-16 items-center justify-center
+              flex h-12 w-12 sm:h-16 sm:w-16 items-center justify-center
               rounded-full
               border border-white/15
               bg-white/90
@@ -131,39 +97,16 @@ export default function FloatingButtons() {
             "
           >
             <ArrowUp
+              size={20}
+              className="text-[#AA1A12] sm:hidden transition-transform duration-300 group-hover:-translate-y-1"
+            />
+            <ArrowUp
               size={26}
-              className="text-[#AA1A12] transition-transform duration-300 group-hover:-translate-y-1"
+              className="text-[#AA1A12] hidden sm:block transition-transform duration-300 group-hover:-translate-y-1"
             />
           </div>
         </button>
       </div>
-
-    
-   {/* Video Modal */}
-{showVideo && (
-  <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/80 p-4">
-    <div className="relative w-full max-w-5xl">
-      <button
-        onClick={() => setShowVideo(false)}
-        className="absolute -top-12 right-0 text-5xl text-white hover:text-gray-300"
-      >
-        ×
-      </button>
-
-      <div className="overflow-hidden rounded-2xl shadow-2xl bg-black">
-        <video
-          src="/v2.mp4"
-          controls
-          autoPlay
-          playsInline
-          className="w-full aspect-video"
-        >
-          Your browser does not support the video tag.
-        </video>
-      </div>
-    </div>
-  </div>
-)}
     </>
   );
 }

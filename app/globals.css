@@ -24,7 +24,20 @@ body {
   color: #181818;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  cursor: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  body {
+    cursor: none;
+  }
+
+  a, button, [role="button"], input[type="submit"], input[type="button"] {
+    cursor: none;
+  }
+
+  .cursor-none {
+    cursor: none;
+  }
 }
 
 /* ── Cursor ── */

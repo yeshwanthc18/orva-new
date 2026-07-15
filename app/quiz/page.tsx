@@ -12,12 +12,13 @@ import { useState } from "react";
 import { useLenis } from "@/hooks/useLenis";
 import Footer from "@/components/Footer";
 import EmailCapture from "@/components/quiz/EmailCapture";
+import ResultPopup from "@/components/quiz/ResultPopup";
 
 export default function QuizPage() {
-
-   useLenis();
-    const [isPreheaderOpen, setIsPreheaderOpen] = useState(true);
-    const [emailSubmitted, setEmailSubmitted] = useState(false);
+  useLenis();
+  const [isPreheaderOpen, setIsPreheaderOpen] = useState(true);
+  const [emailSubmitted, setEmailSubmitted] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
 
   const {
     currentQuestion,
@@ -28,40 +29,55 @@ export default function QuizPage() {
     totalQuestions,
   } = useQuizLogic();
 
+  const handleEmailContinue = () => {
+    setEmailSubmitted(true);
+    setShowPopup(true);
+  };
+
+  const handleReset = () => {
+    setEmailSubmitted(false);
+    setShowPopup(false);
+    resetQuiz();
+  };
+
   return (
     <>
-       <Cursor />
-          <Trail />
-          <EventPreheader onClose={setIsPreheaderOpen} />
-          <Navbar isPreheaderOpen={isPreheaderOpen} />
-              <main>
-      <QuizHero />
+      <Cursor />
+      <Trail />
+      <EventPreheader onClose={setIsPreheaderOpen} />
+      <Navbar isPreheaderOpen={isPreheaderOpen} />
+      <main>
+        <QuizHero />
 
-      {!showResult && (
-        <QuizSection
-          currentQuestion={currentQuestion}
-          totalQuestions={totalQuestions}
-          onSelectAnswer={handleSelectAnswer}
-        />
-      )}
+        {!showResult && (
+          <QuizSection
+            currentQuestion={currentQuestion}
+            totalQuestions={totalQuestions}
+            onSelectAnswer={handleSelectAnswer}
+          />
+        )}
 
-     {showResult &&
-  result &&
-  (!emailSubmitted ? (
-    <EmailCapture
-      onContinue={() => setEmailSubmitted(true)}
-    />
-  ) : (
-    <ResultSection
-      profile={result}
-      ukPercent={result.ukPercent}
-      usPercent={result.usPercent}
-      onResetQuiz={resetQuiz}
-    />
-  ))}
-    </main>
+        {showResult &&
+          result &&
+          (!emailSubmitted ? (
+            <EmailCapture
+              onContinue={handleEmailContinue}
+              result={result}
+            />
+          ) : (
+            <ResultSection
+              profile={result}
+              onResetQuiz={handleReset}
+            />
+          ))}
+      </main>
       <Footer />
-    </>
 
+      <ResultPopup
+        result={result}
+        isOpen={showPopup}
+        onClose={() => setShowPopup(false)}
+      />
+    </>
   );
 }

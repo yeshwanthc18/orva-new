@@ -33,7 +33,7 @@ export function QuestionCard({
         transition={{ duration: 0.4 }}
       >
         <h2
-          className="text-3xl md:text-4xl font-bold mb-10 leading-snug"
+          className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-6 sm:mb-8 md:mb-10 leading-snug"
           style={{ color: COLORS.textDark }}
         >
           {question}
@@ -46,13 +46,13 @@ export function QuestionCard({
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: idx * 0.08 }}
               onClick={() => onSelectAnswer(idx)}
-              className="w-full text-left p-6 rounded-xl border-2 border-[#E5E5E5] bg-white hover:border-[#D51E20] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group cursor-pointer"
+              className="w-full text-left p-4 sm:p-5 md:p-6 rounded-xl border-2 border-[#E5E5E5] bg-white hover:border-[#D51E20] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group cursor-pointer"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              <div className="flex items-start gap-5">
+              <div className="flex items-start gap-3 sm:gap-4 md:gap-5">
                 <div
-                  className="mt-1 text-sm font-bold rounded-full h-10 w-10 flex items-center justify-center flex-shrink-0 group-hover:scale-125 group-hover:shadow-lg transition-all duration-300"
+                  className="mt-1 text-xs sm:text-sm font-bold rounded-full h-8 w-8 sm:h-10 sm:w-10 flex items-center justify-center flex-shrink-0 group-hover:scale-125 group-hover:shadow-lg transition-all duration-300"
                   style={{
                     backgroundColor: COLORS.primary,
                     color: "white",
@@ -62,13 +62,16 @@ export function QuestionCard({
                 </div>
                 <div className="flex-1 pt-1">
                   <p
-                    className="text-lg md:text-lg leading-relaxed font-semibold"
+                    className="text-sm sm:text-base md:text-lg leading-relaxed font-semibold"
                     style={{ color: COLORS.textDark }}
                   >
                     {answer.text}
                   </p>
                   {answer.helper && (
-                    <p className="text-sm mt-2" style={{ color: COLORS.textLight }}>
+                    <p
+                      className="text-xs sm:text-sm mt-1 sm:mt-2"
+                      style={{ color: COLORS.textLight }}
+                    >
                       {answer.helper}
                     </p>
                   )}

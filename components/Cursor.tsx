@@ -3,8 +3,12 @@ import { useEffect } from 'react'
 
 export default function Cursor() {
   useEffect(() => {
-    const dot = document.getElementById('c-dot')!
-    const ring = document.getElementById('c-ring')!
+    if (!window.matchMedia('(pointer: fine)').matches) return
+
+    const dot = document.getElementById('c-dot')
+    const ring = document.getElementById('c-ring')
+    if (!dot || !ring) return
+
     let lx = -300, ly = -300, rx = -300, ry = -300
     let raf: number
 

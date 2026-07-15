@@ -9,7 +9,7 @@ interface SelectedAnswer {
   tier?: string;
 }
 
-interface QuizResult {
+export interface QuizResult {
   destination: "UK" | "US";
   ukPercent: number;
   usPercent: number;

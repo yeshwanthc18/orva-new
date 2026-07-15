@@ -29,7 +29,7 @@ export function Button({
   };
 
   const base = cn(
-    "relative inline-flex items-center justify-center gap-2 rounded-full font-bold uppercase tracking-[0.12em] transition-all duration-300 overflow-hidden group cursor-none",
+    "relative inline-flex items-center justify-center gap-2 rounded-full font-bold uppercase tracking-[0.12em] transition-all duration-300 overflow-hidden group",
     sizeClasses[size],
     className
   );

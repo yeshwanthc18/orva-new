@@ -142,7 +142,7 @@ export default function HomeNewPage() {
             className="relative px-6 md:px-12 py-20 md:py-28"
           >
             <FloatingGeometry variant="dark" density="sparse" />
-            <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
               <div>
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
@@ -206,7 +206,7 @@ export default function HomeNewPage() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.9, delay: 0.3 }}
-                className="relative h-[400px] md:h-[500px] rounded-2xl overflow-hidden hidden lg:block"
+                className="relative h-[300px] sm:h-[400px] md:h-[500px] rounded-2xl overflow-hidden hidden md:block"
               >
                 <Image
                   src="/images/img10.jpeg"

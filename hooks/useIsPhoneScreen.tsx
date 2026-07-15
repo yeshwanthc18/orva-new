@@ -6,13 +6,13 @@ const useIsPhoneScreen = () => {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const mediaQuery = window.matchMedia("(max-width: 700px)");
+    const mediaQuery = window.matchMedia("(max-width: 640px)");
 
     const handleChange = () => {
       setIsSmallScreen(mediaQuery.matches);
     };
 
-    handleChange(); // initial check
+    handleChange();
 
     mediaQuery.addEventListener("change", handleChange);
 

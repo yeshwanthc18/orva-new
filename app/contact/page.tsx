@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -12,63 +12,24 @@ import { COLORS, CONTACT_INFO } from "@/lib/constants";
 import { TextGenerateEffect } from "@/components/ui/TextGenerateEffect";
 import { Button } from "@/components/ui/Button";
 import { FloatingGeometry } from "@/components/ui/FloatingGeometry";
-import { GridPattern } from "@/components/ui/GridPattern";
-import { supabase } from "@/lib/supabase";
+import { submitForm } from "@/lib/api";
 import EventPreheader from "@/components/PreHeader";
+import { CheckCircle, Calendar } from "lucide-react";
 
 const INPUT_BASE =
   "w-full bg-white border border-black/10 rounded-xl px-4 py-3.5 text-sm text-[#181818] font-[Cairo,sans-serif] outline-none transition-all duration-200 focus:border-red-500/50 focus:shadow-md focus:ring-2 focus:ring-red-500/10";
 
 const LABEL_BASE =
-  "block text-[14px] tracking-[0.2em] uppercase font-bold text-[rgba(24,24,24,0.4)] mb-2";
+  "block text-[11px] sm:text-[14px] tracking-[0.2em] uppercase font-bold text-[rgba(24,24,24,0.4)] mb-2";
 
-const TIME_SLOTS = [
-  "09:00",
-  "09:30",
-  "10:00",
-  "10:30",
-  "11:00",
-  "11:30",
-  "12:00",
-  "14:00",
-  "14:30",
-  "15:00",
-  "15:30",
-  "16:00",
-  "16:30",
-  "17:00",
-];
-
-function getAvailableDates(): string[] {
-  const dates: string[] = [];
-  const now = new Date();
-  let count = 0;
-  let day = new Date(now);
-  day.setDate(day.getDate() + 1);
-
-  while (count < 14) {
-    const dayOfWeek = day.getDay();
-    if (dayOfWeek !== 0 && dayOfWeek !== 6) {
-      dates.push(day.toISOString().split("T")[0]);
-      count++;
-    }
-    day.setDate(day.getDate() + 1);
-  }
-  return dates;
-}
-
-function formatDate(dateStr: string): string {
-  const date = new Date(dateStr + "T00:00:00");
-  return date.toLocaleDateString("en-GB", {
-    weekday: "short",
-    day: "numeric",
-    month: "short",
-  });
-}
+// Replace this with your actual Google Calendar Appointment Scheduling URL.
+// Create one at: https://calendar.google.com/calendar/r/schedulinga
+// Then share the booking page link here.
+const GOOGLE_BOOKING_URL =
+  "https://calendar.google.com/calendar/appointments/AEgnkPdr3kG3r1q6qG3p1r6qG3p1r6qG3p1r6qG3p1r6=?gv=true";
 
 export default function ContactPage() {
   useLenis();
-  const [step, setStep] = useState<"form" | "booking" | "success">("form");
   const [form, setForm] = useState({
     childName: "",
     schoolName: "",
@@ -77,12 +38,10 @@ export default function ContactPage() {
     year: "",
     message: "",
   });
-  const [selectedDate, setSelectedDate] = useState("");
-  const [selectedTime, setSelectedTime] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
-
-  const availableDates = useMemo(() => getAvailableDates(), []);
+  const [isPreheaderOpen, setIsPreheaderOpen] = useState(true);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -92,40 +51,35 @@ export default function ContactPage() {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleFormNext = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setStep("booking");
-  };
-
-  const handleBooking = async () => {
-    if (!selectedDate || !selectedTime) return;
     setSubmitting(true);
     setError("");
 
-    const { error: dbError } = await supabase.from("bookings").insert({
-      child_name: form.childName,
-      school_name: form.schoolName,
-      parent_email: form.email,
-      whatsapp: form.whatsapp,
-      child_year: form.year,
-      message: form.message,
-      booking_date: selectedDate,
-      booking_time: selectedTime,
+    const result = await submitForm({
+      formType: "contact",
+      email: form.email,
+      data: {
+        child_name: form.childName,
+        school_name: form.schoolName,
+        whatsapp: form.whatsapp,
+        child_year: form.year,
+        message: form.message,
+      },
     });
 
     setSubmitting(false);
 
-    if (dbError) {
-      setError("Something went wrong. Please try again.");
+    if (!result.success) {
+      setError(result.error || "Something went wrong. Please try again.");
       return;
     }
 
-    setStep("success");
+    setSubmitted(true);
   };
-  const [isPreheaderOpen, setIsPreheaderOpen] = useState(true);
 
   const reset = () => {
-    setStep("form");
+    setSubmitted(false);
     setForm({
       childName: "",
       schoolName: "",
@@ -134,8 +88,6 @@ export default function ContactPage() {
       year: "",
       message: "",
     });
-    setSelectedDate("");
-    setSelectedTime("");
   };
 
   return (
@@ -159,7 +111,7 @@ export default function ContactPage() {
             <div className="absolute inset-0 bg-gradient-to-r from-[#0F0F0F] via-[#0F0F0F]/90 to-[#0F0F0F]/60" />
           </div>
           <FloatingGeometry variant="dark" density="sparse" />
-          <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-12 py-20 md:py-32">
+          <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 md:px-12 py-20 md:py-32">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -179,7 +131,7 @@ export default function ContactPage() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.5 }}
-                className="text-lg md:text-xl leading-relaxed max-w-3xl"
+                className="text-base sm:text-lg md:text-xl leading-relaxed max-w-3xl"
                 style={{ color: "rgba(251,249,246,0.7)" }}
               >
                 No pitch. No obligation. Just 30 honest minutes about your
@@ -191,10 +143,12 @@ export default function ContactPage() {
         </section>
 
         {/* Contact Info Cards */}
-        {/* <section className="relative py-16 md:py-24 px-6 md:px-12" style={{ background: COLORS.warmCream }}>
-          <GridPattern variant="light" />
+        <section
+          className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-12"
+          style={{ background: COLORS.warmCream }}
+        >
           <div className="relative z-10 max-w-5xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
               {CONTACT_INFO.map((info, idx) => (
                 <motion.div
                   key={idx}
@@ -202,407 +156,272 @@ export default function ContactPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: idx * 0.1 }}
-                  className="group p-6 md:p-8 rounded-2xl bg-white border border-black/[0.06] hover:border-red-300/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+                  className="group p-5 sm:p-6 md:p-8 rounded-2xl bg-white border border-black/[0.06] hover:border-red-300/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
                 >
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center mb-4" style={{ background: "rgba(213,30,32,0.08)" }}>
+                  <div
+                    className="w-10 h-10 rounded-full flex items-center justify-center mb-4"
+                    style={{ background: "rgba(213,30,32,0.08)" }}
+                  >
                     <span className="text-lg">
-                      {info.icon === "location" ? "📍" : info.icon === "email" ? "✉️" : "💬"}
+                      {info.icon === "location"
+                        ? "📍"
+                        : info.icon === "email"
+                          ? "✉️"
+                          : "💬"}
                     </span>
                   </div>
-                  <h3 className="text-lg font-bold mb-3" style={{ color: COLORS.textDark }}>{info.title}</h3>
+                  <h3
+                    className="text-base sm:text-lg font-bold mb-3"
+                    style={{ color: COLORS.textDark }}
+                  >
+                    {info.title}
+                  </h3>
                   <div className="space-y-1">
                     {info.details.map((detail, i) => (
-                      <p key={i} className="text-sm" style={{ color: COLORS.textMuted }}>{detail}</p>
+                      <p
+                        key={i}
+                        className="text-sm"
+                        style={{ color: COLORS.textMuted }}
+                      >
+                        {detail}
+                      </p>
                     ))}
                   </div>
                 </motion.div>
               ))}
             </div>
           </div>
-        </section> */}
+        </section>
 
-        {/* Booking Form Section */}
+        {/* Form + Google Calendar Booking */}
         <section
-          className="relative overflow-hidden mt-20"
+          className="relative overflow-hidden"
           style={{ background: COLORS.warmSand }}
         >
           <FloatingGeometry variant="light" density="sparse" />
           <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-0">
-            {/* Form / Booking Steps */}
-            <div className="px-6 md:px-12 lg:px-16 py-16 md:py-24">
-              <AnimatePresence mode="wait">
-                {step === "form" && (
-                  <motion.div
-                    key="form-step"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.4 }}
+            {/* Form */}
+            <div className="px-4 sm:px-6 md:px-12 lg:px-16 py-12 sm:py-16 md:py-24">
+              {submitted ? (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                  className="text-center py-12"
+                >
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-[#D51E20] to-[#FA8322] flex items-center justify-center">
+                    <CheckCircle
+                      size={32}
+                      className="text-white"
+                    />
+                  </div>
+                  <h2
+                    className="text-2xl sm:text-3xl font-bold mb-4"
+                    style={{ color: COLORS.textDark }}
                   >
-                    {/* Step indicator */}
-                    <div className="flex items-center gap-3 mb-8">
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#D51E20] to-[#FA8322] flex items-center justify-center text-white text-xs font-bold">
-                        1
-                      </div>
-                      <div className="h-[2px] flex-1 bg-black/[0.06]" />
-                      <div className="w-8 h-8 rounded-full bg-black/[0.06] flex items-center justify-center text-[rgba(28,28,28,0.3)] text-xs font-bold">
-                        2
-                      </div>
-                    </div>
+                    Thank You!
+                  </h2>
+                  <p
+                    className="text-base sm:text-lg mb-2"
+                    style={{ color: COLORS.textLight }}
+                  >
+                    Your message has been received.
+                  </p>
+                  <p
+                    className="text-sm sm:text-base mb-8 max-w-md mx-auto"
+                    style={{ color: COLORS.textMuted }}
+                  >
+                    Now pick a time that works for you using the calendar on the
+                    right. We&apos;ll send a confirmation to {form.email}.
+                  </p>
+                  <Button onClick={reset} variant="secondary" size="md">
+                    Submit Another
+                  </Button>
+                </motion.div>
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.4 }}
+                >
+                  <h2
+                    className="text-2xl sm:text-3xl font-bold mb-2"
+                    style={{ color: COLORS.textDark }}
+                  >
+                    Tell us about your child
+                  </h2>
+                  <p
+                    className="text-sm sm:text-base mb-6 sm:mb-8"
+                    style={{ color: COLORS.textLight }}
+                  >
+                    Fill in the form, then schedule your free 30-minute
+                    consultation on the right.
+                  </p>
 
-                    <h2
-                      className="text-2xl md:text-3xl font-bold mb-2"
-                      style={{ color: COLORS.textDark }}
-                    >
-                      Tell us about your child
-                    </h2>
-                    <p
-                      className="text-base mb-8"
-                      style={{ color: COLORS.textLight }}
-                    >
-                      We&apos;ll get back to you personally to confirm.
-                    </p>
-
-                    <form onSubmit={handleFormNext} className="space-y-5">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        <div>
-                          <label className={LABEL_BASE}>
-                            Your child&apos;s name
-                          </label>
-                          <input
-                            type="text"
-                            name="childName"
-                            value={form.childName}
-                            onChange={handleChange}
-                            placeholder="First and last name"
-                            className={INPUT_BASE}
-                            required
-                          />
-                        </div>
-                        <div>
-                          <label className={LABEL_BASE}>School name</label>
-                          <input
-                            type="text"
-                            name="schoolName"
-                            value={form.schoolName}
-                            onChange={handleChange}
-                            placeholder="Current school"
-                            className={INPUT_BASE}
-                            required
-                          />
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        <div>
-                          <label className={LABEL_BASE}>Your email</label>
-                          <input
-                            type="email"
-                            name="email"
-                            value={form.email}
-                            onChange={handleChange}
-                            placeholder="your@email.com"
-                            className={INPUT_BASE}
-                            required
-                          />
-                        </div>
-                        <div>
-                          <label className={LABEL_BASE}>
-                            Your WhatsApp number
-                          </label>
-                          <input
-                            type="tel"
-                            name="whatsapp"
-                            value={form.whatsapp}
-                            onChange={handleChange}
-                            placeholder="+971 50 123 4567"
-                            className={INPUT_BASE}
-                            required
-                          />
-                        </div>
-                      </div>
-
+                  <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                       <div>
                         <label className={LABEL_BASE}>
-                          Your child&apos;s current year
+                          Your child&apos;s name
                         </label>
-                        <select
-                          name="year"
-                          value={form.year}
+                        <input
+                          type="text"
+                          name="childName"
+                          value={form.childName}
                           onChange={handleChange}
-                          className={`${INPUT_BASE} appearance-none`}
-                          style={{
-                            backgroundImage: `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(24,24,24,.5)' stroke-width='2'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e")`,
-                            backgroundRepeat: "no-repeat",
-                            backgroundPosition: "right 12px center",
-                            backgroundSize: "20px",
-                            paddingRight: "40px",
-                          }}
+                          placeholder="First and last name"
+                          className={INPUT_BASE}
                           required
-                        >
-                          <option value="">Select a year</option>
-                          <option value="Year 9">Year 9</option>
-                          <option value="Year 10">Year 10</option>
-                          <option value="Year 11">Year 11</option>
-                          <option value="Year 12">Year 12</option>
-                          <option value="Year 13">Year 13</option>
-                        </select>
-                      </div>
-
-                      <div>
-                        <label className={LABEL_BASE}>
-                          What are you hoping to achieve?
-                        </label>
-                        <textarea
-                          name="message"
-                          value={form.message}
-                          onChange={handleChange}
-                          placeholder="Tell us a little about your child and what you're thinking about."
-                          className={`${INPUT_BASE} resize-none`}
-                          rows={4}
                         />
                       </div>
-
-                      <Button type="submit" variant="primary" size="lg">
-                        Choose a Time
-                      </Button>
-                    </form>
-                  </motion.div>
-                )}
-
-                {step === "booking" && (
-                  <motion.div
-                    key="booking-step"
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 20 }}
-                    transition={{ duration: 0.4 }}
-                  >
-                    {/* Step indicator */}
-                    <div className="flex items-center gap-3 mb-8">
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#D51E20] to-[#FA8322] flex items-center justify-center text-white text-xs font-bold">
-                        <svg
-                          width="12"
-                          height="12"
-                          viewBox="0 0 12 12"
-                          fill="none"
-                        >
-                          <path
-                            d="M2 6l3 3 5-5"
-                            stroke="white"
-                            strokeWidth="1.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </div>
-                      <div className="h-[2px] flex-1 bg-gradient-to-r from-[#D51E20] to-[#FA8322]" />
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#D51E20] to-[#FA8322] flex items-center justify-center text-white text-xs font-bold">
-                        2
+                      <div>
+                        <label className={LABEL_BASE}>School name</label>
+                        <input
+                          type="text"
+                          name="schoolName"
+                          value={form.schoolName}
+                          onChange={handleChange}
+                          placeholder="Current school"
+                          className={INPUT_BASE}
+                          required
+                        />
                       </div>
                     </div>
 
-                    <h2
-                      className="text-2xl md:text-3xl font-bold mb-2"
-                      style={{ color: COLORS.textDark }}
-                    >
-                      Pick a date and time
-                    </h2>
-                    <p
-                      className="text-base mb-8"
-                      style={{ color: COLORS.textLight }}
-                    >
-                      30-minute consultation with Daniela. Free, no obligation.
-                    </p>
-
-                    {/* Date Selection */}
-                    <div className="mb-8">
-                      <label className={LABEL_BASE}>Select a date</label>
-                      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2 mt-3">
-                        {availableDates.map((date) => (
-                          <button
-                            key={date}
-                            type="button"
-                            onClick={() => {
-                              setSelectedDate(date);
-                              setSelectedTime("");
-                            }}
-                            className={`p-3 rounded-xl text-center transition-all duration-200 border text-xs font-bold ${
-                              selectedDate === date
-                                ? "bg-gradient-to-br from-[#D51E20] to-[#FA8322] text-white border-transparent shadow-lg scale-105"
-                                : "bg-white border-black/[0.06] hover:border-red-300/60 hover:shadow-md"
-                            }`}
-                            style={{
-                              color:
-                                selectedDate === date
-                                  ? undefined
-                                  : COLORS.textDark,
-                            }}
-                          >
-                            {formatDate(date)}
-                          </button>
-                        ))}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+                      <div>
+                        <label className={LABEL_BASE}>Your email</label>
+                        <input
+                          type="email"
+                          name="email"
+                          value={form.email}
+                          onChange={handleChange}
+                          placeholder="your@email.com"
+                          className={INPUT_BASE}
+                          required
+                        />
                       </div>
-                    </div>
-
-                    {/* Time Selection */}
-                    {selectedDate && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3 }}
-                      >
+                      <div>
                         <label className={LABEL_BASE}>
-                          Select a time (Dubai time, GMT+4)
+                          Your WhatsApp number
                         </label>
-                        <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-7 gap-2 mt-3">
-                          {TIME_SLOTS.map((time) => (
-                            <button
-                              key={time}
-                              type="button"
-                              onClick={() => setSelectedTime(time)}
-                              className={`py-3 px-2 rounded-xl text-center transition-all duration-200 border text-sm font-bold ${
-                                selectedTime === time
-                                  ? "bg-gradient-to-br from-[#D51E20] to-[#FA8322] text-white border-transparent shadow-lg scale-105"
-                                  : "bg-white border-black/[0.06] hover:border-red-300/60 hover:shadow-md"
-                              }`}
-                              style={{
-                                color:
-                                  selectedTime === time
-                                    ? undefined
-                                    : COLORS.textDark,
-                              }}
-                            >
-                              {time}
-                            </button>
-                          ))}
-                        </div>
-                      </motion.div>
-                    )}
+                        <input
+                          type="tel"
+                          name="whatsapp"
+                          value={form.whatsapp}
+                          onChange={handleChange}
+                          placeholder="+971 50 123 4567"
+                          className={INPUT_BASE}
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className={LABEL_BASE}>
+                        Your child&apos;s current year
+                      </label>
+                      <select
+                        name="year"
+                        value={form.year}
+                        onChange={handleChange}
+                        className={`${INPUT_BASE} appearance-none`}
+                        style={{
+                          backgroundImage: `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(24,24,24,.5)' stroke-width='2'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e")`,
+                          backgroundRepeat: "no-repeat",
+                          backgroundPosition: "right 12px center",
+                          backgroundSize: "20px",
+                          paddingRight: "40px",
+                        }}
+                        required
+                      >
+                        <option value="">Select a year</option>
+                        <option value="Year 9">Year 9</option>
+                        <option value="Year 10">Year 10</option>
+                        <option value="Year 11">Year 11</option>
+                        <option value="Year 12">Year 12</option>
+                        <option value="Year 13">Year 13</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className={LABEL_BASE}>
+                        What are you hoping to achieve?
+                      </label>
+                      <textarea
+                        name="message"
+                        value={form.message}
+                        onChange={handleChange}
+                        placeholder="Tell us a little about your child and what you're thinking about."
+                        className={`${INPUT_BASE} resize-none`}
+                        rows={4}
+                      />
+                    </div>
 
                     {error && (
-                      <p className="text-sm text-red-600 font-semibold mt-4">
+                      <p className="text-sm text-red-600 font-semibold">
                         {error}
                       </p>
                     )}
 
-                    <div className="flex flex-wrap gap-3 mt-8">
-                      <Button
-                        onClick={handleBooking}
-                        variant="primary"
-                        size="lg"
-                        className={
-                          !selectedDate || !selectedTime || submitting
-                            ? "opacity-50 pointer-events-none"
-                            : ""
-                        }
-                      >
-                        {submitting ? "Booking..." : "Confirm Booking"}
-                      </Button>
-                      <Button
-                        onClick={() => setStep("form")}
-                        variant="secondary"
-                        size="md"
-                      >
-                        Back
-                      </Button>
-                    </div>
-                  </motion.div>
-                )}
-
-                {step === "success" && (
-                  <motion.div
-                    key="success-step"
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5 }}
-                    className="text-center py-12"
-                  >
-                    <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-[#D51E20] to-[#FA8322] flex items-center justify-center">
-                      <svg
-                        width="32"
-                        height="32"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="white"
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                      </svg>
-                    </div>
-                    <h2
-                      className="text-3xl font-bold mb-4"
-                      style={{ color: COLORS.textDark }}
+                    <Button
+                      type="submit"
+                      variant="primary"
+                      size="lg"
+                      className={submitting ? "opacity-60 pointer-events-none" : ""}
                     >
-                      Booking Confirmed
-                    </h2>
-                    <p
-                      className="text-lg mb-2"
-                      style={{ color: COLORS.textLight }}
-                    >
-                      Your consultation is scheduled for:
-                    </p>
-                    <p
-                      className="text-xl font-bold mb-6"
-                      style={{ color: COLORS.primary }}
-                    >
-                      {formatDate(selectedDate)} at {selectedTime} (Dubai time)
-                    </p>
-                    <p
-                      className="text-base mb-8"
-                      style={{ color: COLORS.textMuted }}
-                    >
-                      We&apos;ll send a confirmation to {form.email} shortly.
-                    </p>
-                    <Button onClick={reset} variant="secondary" size="md">
-                      Book Another
+                      {submitting ? "Submitting..." : "Send Message"}
                     </Button>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                  </form>
+                </motion.div>
+              )}
             </div>
 
-            {/* Side Image */}
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="hidden lg:block relative min-h-[700px]"
-            >
-              <Image
-                src="/images/image15.png"
-                alt="Consultation"
-                fill
-                className="object-cover"
-                sizes="50vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-l from-transparent to-[#F5F2ED]/40" />
-              {/* Glassmorphism overlay */}
-              <div className="absolute bottom-8 left-8 right-8 p-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20">
-                <p className="text-white text-lg font-bold mb-2">
-                  30 minutes. Zero obligation.
+            {/* Google Calendar Appointment Scheduling */}
+            <div className="px-4 sm:px-6 md:px-12 lg:px-16 py-12 sm:py-16 md:py-24 lg:border-l border-black/[0.06]">
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.15 }}
+              >
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#D51E20] to-[#FA8322] flex items-center justify-center flex-shrink-0">
+                    <Calendar size={20} className="text-white" />
+                  </div>
+                  <h2
+                    className="text-2xl sm:text-3xl font-bold"
+                    style={{ color: COLORS.textDark }}
+                  >
+                    Schedule a Time
+                  </h2>
+                </div>
+                <p
+                  className="text-sm sm:text-base mb-6 sm:mb-8"
+                  style={{ color: COLORS.textLight }}
+                >
+                  Pick an available slot directly from our calendar. 30-minute
+                  consultation with Daniela. Free, no obligation.
                 </p>
-                <p className="text-white/70 text-sm">
-                  Every journey starts with an honest conversation.
-                </p>
-              </div>
-              <div className="absolute top-8 right-8 w-16 h-16 animate-spin-slow opacity-20">
-                <svg viewBox="0 0 60 60" className="w-full h-full">
-                  <circle
-                    cx="30"
-                    cy="30"
-                    r="25"
-                    fill="none"
-                    stroke="rgba(255,255,255,0.5)"
-                    strokeWidth="0.5"
-                    strokeDasharray="4 6"
+
+                <div className="rounded-2xl overflow-hidden border border-black/[0.06] bg-white shadow-sm">
+                  <iframe
+                    src={GOOGLE_BOOKING_URL}
+                    title="Schedule a consultation"
+                    className="w-full"
+                    style={{ minHeight: "600px", border: "none" }}
+                    loading="lazy"
                   />
-                </svg>
-              </div>
-            </motion.div>
+                </div>
+
+                <p
+                  className="mt-4 text-xs sm:text-sm text-center"
+                  style={{ color: COLORS.textMuted }}
+                >
+                  Times shown in your local timezone. You&apos;ll receive a
+                  Google Calendar invitation after booking.
+                </p>
+              </motion.div>
+            </div>
           </div>
         </section>
       </main>

@@ -81,7 +81,7 @@ export default function Footer() {
           initial={{ opacity: 0, y: 18 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8 py-14"
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-10 lg:gap-8 py-12 sm:py-14"
         >
           {/* Brand Column */}
           <div className="lg:col-span-2">
@@ -92,10 +92,10 @@ export default function Footer() {
               height={48}
               className="h-10 w-auto mb-5"
             />
-            <h3 className="text-lg font-bold tracking-[0.1em] text-[rgba(24,24,24,0.88)] mb-3">
+            <h3 className="text-base sm:text-lg font-bold tracking-[0.1em] text-[rgba(24,24,24,0.88)] mb-3">
               Elite Admissions.
             </h3>
-            <p className="text-lg font-light leading-[1.78] text-[rgba(24,24,24,0.77)] max-w-[280px] mb-3">
+            <p className="text-base sm:text-lg font-light leading-[1.78] text-[rgba(24,24,24,0.77)] max-w-[280px] mb-3">
               The competitive edge your child needs for admission to the world&apos;s
               best universities — and a future-proof career.
             </p>
@@ -127,7 +127,7 @@ export default function Footer() {
 
           {/* Navigate Column */}
           <div>
-            <h4 className="text-[16px] tracking-[0.3em] uppercase font-bold text-[#AA1A12] mb-5">
+            <h4 className="text-[14px] sm:text-[16px] tracking-[0.3em] uppercase font-bold text-[#AA1A12] mb-5">
               Navigate
             </h4>
             <ul className="flex flex-col gap-3">
@@ -135,7 +135,7 @@ export default function Footer() {
                 <li key={label}>
                   <Link
                     href={href}
-                    className="text-lg font-light text-[rgba(24,24,24,0.77)] hover:text-[#D51E20] transition-colors duration-200 cursor-none"
+                    className="text-base sm:text-lg font-light text-[rgba(24,24,24,0.77)] hover:text-[#D51E20] transition-colors duration-200 cursor-none"
                   >
                     {label}
                   </Link>
@@ -146,7 +146,7 @@ export default function Footer() {
 
           {/* Explore Column */}
           <div>
-            <h4 className="text-[16px] tracking-[0.3em] uppercase font-bold text-[#AA1A12] mb-5">
+            <h4 className="text-[14px] sm:text-[16px] tracking-[0.3em] uppercase font-bold text-[#AA1A12] mb-5">
               Explore
             </h4>
             <ul className="flex flex-col gap-3">
@@ -154,7 +154,7 @@ export default function Footer() {
                 <li key={label}>
                   <Link
                     href={href}
-                    className="text-lg font-light text-[rgba(24,24,24,0.77)] hover:text-[#D51E20] transition-colors duration-200 cursor-none"
+                    className="text-base sm:text-lg font-light text-[rgba(24,24,24,0.77)] hover:text-[#D51E20] transition-colors duration-200 cursor-none"
                   >
                     {label}
                   </Link>
@@ -165,7 +165,7 @@ export default function Footer() {
 
           {/* Contact + Serving Column */}
           <div>
-            <h4 className="text-[16px] tracking-[0.3em] uppercase font-bold text-[#AA1A12] mb-5">
+            <h4 className="text-[14px] sm:text-[16px] tracking-[0.3em] uppercase font-bold text-[#AA1A12] mb-5">
               Contact
             </h4>
             <ul className="flex flex-col gap-3 mb-8">
@@ -173,7 +173,7 @@ export default function Footer() {
                 <li key={label}>
                   <Link
                     href={href}
-                    className="text-lg font-light text-[rgba(24,24,24,0.77)] hover:text-[#D51E20] transition-colors duration-200 cursor-none"
+                    className="text-base sm:text-lg font-light text-[rgba(24,24,24,0.77)] hover:text-[#D51E20] transition-colors duration-200 cursor-none"
                   >
                     {label}
                   </Link>
@@ -182,27 +182,27 @@ export default function Footer() {
               <li>
                 <a
                   href="mailto:hello@orvaedu.com"
-                  className="text-lg font-light text-[rgba(24,24,24,0.77)] hover:text-[#D51E20] transition-colors duration-200 cursor-none"
+                  className="text-base sm:text-lg font-light text-[rgba(24,24,24,0.77)] hover:text-[#D51E20] transition-colors duration-200 cursor-none"
                 >
                   hello@orvaedu.com
                 </a>
               </li>
             </ul>
-            <h4 className="text-[16px] tracking-[0.3em] uppercase font-bold text-[#AA1A12] mb-5">
+            <h4 className="text-[14px] sm:text-[16px] tracking-[0.3em] uppercase font-bold text-[#AA1A12] mb-5">
               Serving
             </h4>
-            <p className="text-lg font-light text-[rgba(24,24,24,0.77)] leading-relaxed">
+            <p className="text-base sm:text-lg font-light text-[rgba(24,24,24,0.77)] leading-relaxed">
               Dubai · Abu Dhabi · Riyadh · Jeddah · Online globally
             </p>
           </div>
         </motion.div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-black/[0.07] py-5 flex flex-wrap items-center justify-between gap-3">
-          <p className="text-[16px] text-[rgba(24,24,24,0.77)]">
+        <div className="border-t border-black/[0.07] py-5 flex flex-col sm:flex-row flex-wrap items-center justify-between gap-3">
+          <p className="text-sm sm:text-[16px] text-[rgba(24,24,24,0.77)]">
             © 2026 Orva Education. All rights reserved.
           </p>
-          <p className="text-[16px] text-[rgba(24,24,24,0.77)] font-medium tracking-[0.05em]">
+          <p className="text-sm sm:text-[16px] text-[rgba(24,24,24,0.77)] font-medium tracking-[0.05em]">
             Elite Admissions. The competitive edge your child needs.
           </p>
         </div>

@@ -10,22 +10,22 @@ export function QuizProgress({
   currentQuestion,
   totalQuestions,
 }: QuizProgressProps) {
-  const progressPercent = ((currentQuestion) / totalQuestions) * 100;
+  const progressPercent = (currentQuestion / totalQuestions) * 100;
 
   return (
-    <div className="mb-12 space-y-4">
+    <div className="mb-8 sm:mb-10 md:mb-12 space-y-3 sm:space-y-4">
       <div className="flex items-center justify-between">
         <span
-          className="text-sm font-bold uppercase tracking-wider"
+          className="text-xs sm:text-sm font-bold uppercase tracking-wider"
           style={{ color: COLORS.primary }}
         >
           Question {currentQuestion} of {totalQuestions}
         </span>
-        <span className="text-xs font-semibold text-[#666666]">
+        <span className="text-[10px] sm:text-xs font-semibold text-[#666666]">
           {Math.round(progressPercent)}% complete
         </span>
       </div>
-      
+
       <div className="relative w-full h-2 bg-[#E5E5E5] rounded-full overflow-hidden">
         <motion.div
           initial={{ width: 0 }}
@@ -43,7 +43,7 @@ export function QuizProgress({
           <motion.div
             key={i}
             initial={{ scaleY: 0.6, opacity: 0.5 }}
-            animate={{ 
+            animate={{
               scaleY: i < currentQuestion ? 1 : 0.8,
               opacity: i < currentQuestion ? 1 : 0.4,
               backgroundColor: i < currentQuestion ? COLORS.primary : "#E5E5E5"
